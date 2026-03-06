@@ -13,77 +13,77 @@
             font-family: 'Pyidaungsu', sans-serif;
             background-color: #050810;
             color: #ffffff;
+            margin: 0;
+            padding: 0;
         }
 
-        .golden-banner {
-            background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+        .golden-banner-top {
+            background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728);
             color: #1a1a1a;
-            box-shadow: 0 10px 40px rgba(179, 135, 40, 0.4);
+            border-radius: 20px 20px 0 0;
         }
 
-        .btn-link {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .btn-link:hover {
-            transform: translateY(-3px);
-            background-color: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
+        .golden-banner-bottom {
+            background: linear-gradient(180deg, #fcf6ba, #bf953f);
+            color: #000;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 30px rgba(179, 135, 40, 0.4);
         }
 
-        .live-pulse-btn {
+        .btn-action {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-action:hover {
+            background: rgba(51, 65, 85, 0.8);
+            transform: scale(1.02);
+        }
+
+        .live-btn {
             background: linear-gradient(90deg, #ef4444, #b91c1c);
             animation: pulse-red 2s infinite;
         }
 
         @keyframes pulse-red {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-            70% { transform: scale(1.02); box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+            70% { transform: scale(1.03); box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col items-center p-4">
 
     <!-- Header -->
-    <header class="bg-slate-900/95 border-b border-slate-800 p-5 sticky top-0 z-50 backdrop-blur-md">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="w-12 h-12 bg-red-600 rounded-2xl flex items-center justify-center rotate-3 shadow-lg shadow-red-900/40">
-                    <i class="fas fa-futbol text-white text-2xl"></i>
-                </div>
-                <div>
-                    <h1 class="text-2xl font-black tracking-tighter leading-none text-white">WE SPORT LIVE</h1>
-                    <p class="text-[10px] text-red-500 font-bold uppercase tracking-[0.2em] italic mt-1">GGMU Community</p>
-                </div>
+    <header class="w-full max-w-lg flex justify-between items-center py-4 px-2">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center shadow-lg shadow-red-900/40">
+                <i class="fas fa-futbol text-white"></i>
             </div>
-            <a href="https://t.me/WinExpress99" target="_blank" class="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-500 transition shadow-lg">
-                <i class="fab fa-telegram-plane"></i>
-            </a>
+            <div>
+                <h1 class="text-xl font-black tracking-tighter italic">WE SPORT LIVE</h1>
+                <p class="text-[10px] text-red-500 font-bold uppercase tracking-widest italic">GGMU Community</p>
+            </div>
         </div>
+        <a href="https://t.me/WinExpress99" target="_blank" class="bg-blue-600 p-2 rounded-full hover:bg-blue-500">
+            <i class="fab fa-telegram-plane text-white text-lg px-1"></i>
+        </a>
     </header>
 
-    <main class="flex-grow max-w-xl mx-auto w-full p-4 md:p-8 space-y-10">
+    <main class="w-full max-w-lg space-y-6 mt-4">
         
-        <!-- Live Link Section -->
-        <div class="text-center space-y-6 pt-4">
-            <div class="space-y-3">
-                <h2 class="text-4xl md:text-6xl font-black italic uppercase tracking-tighter leading-none">
-                    ဒီနေ့ပွဲတွေကို <br> အတူတူအားပေးမယ်!
-                </h2>
-                <p class="text-slate-400 text-sm italic px-4 leading-relaxed">
-                    ပွဲစဉ်များကို အကောင်းဆုံး Quality ဖြင့် ကြည့်ရှုရန် အောက်ကခလုတ်ကို နှိပ်ပါ
-                </p>
-            </div>
-
-            <a href="https://dlive.tv/WeSportLive" target="_blank" class="live-pulse-btn w-full block py-7 rounded-[2rem] text-2xl font-black uppercase italic tracking-widest text-white shadow-2xl transition group">
-                <i class="fas fa-play-circle mr-3 group-hover:rotate-12 transition-transform"></i> LIVE ကြည့်ရှုရန် နှိပ်ပါ
+        <!-- Live Link Button -->
+        <div class="text-center space-y-4">
+            <h2 class="text-3xl font-black italic uppercase leading-none">ဒီနေ့ပွဲတွေကို <br> အတူတူအားပေးကြမယ်!</h2>
+            <a href="https://dlive.tv/WeSportLive" target="_blank" class="live-btn w-full block py-6 rounded-3xl text-2xl font-black italic text-white shadow-xl transition">
+                <i class="fas fa-play-circle mr-2"></i> LIVE ကြည့်ရှုရန် နှိပ်ပါ
             </a>
         </div>
 
-        <!-- Fan Message -->
-        <div class="text-center bg-slate-900/30 rounded-[2rem] border border-slate-800/50 p-6 shadow-inner">
-            <p class="text-slate-300 text-lg font-medium leading-relaxed italic">
+        <!-- Community Tone -->
+        <div class="bg-slate-900/40 rounded-3xl p-6 border border-slate-800 text-center">
+            <p class="text-slate-300 italic font-medium leading-relaxed">
                 "ယူနိုက်တက် ပရိသတ်တွေ အားလုံး အသင့်ပဲလား? ဒီနေ့ပွဲက တကယ့်ကို အကြိတ်အနယ် ရှိမှာနော်။ လက်မလွှတ်ဘဲ အတူတူ အားပေးကြရအောင်။ <span class="text-red-500 font-bold">GGMU!</span>"
             </p>
             <p class="text-[10px] text-slate-500 mt-4 uppercase tracking-widest font-bold italic">
@@ -91,40 +91,61 @@
             </p>
         </div>
 
-        <!-- Action Buttons -->
-        <div class="space-y-4">
-            <a href="https://t.me/ZINXBET_support_bot/register" target="_blank" class="btn-link flex items-center justify-between p-5 bg-slate-900/50 rounded-2xl w-full border-l-4 border-l-orange-500 group">
+        <!-- Navigation Buttons -->
+        <div class="grid grid-cols-1 gap-3">
+            <a href="https://t.me/ZINXBET_support_bot/register" target="_blank" class="btn-action flex items-center justify-between p-4 rounded-2xl">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-orange-500/10 rounded-xl flex items-center justify-center text-orange-500 group-hover:scale-110 transition">
-                        <i class="fas fa-rocket text-xl"></i>
-                    </div>
-                    <span class="font-bold text-lg text-white">1XBET အကောင့်ဖွင့်မယ်</span>
+                    <span class="text-xl">🚀</span>
+                    <span class="font-bold">1XBET အကောင့်ဖွင့်မယ်</span>
                 </div>
-                <i class="fas fa-chevron-right text-slate-700"></i>
+                <i class="fas fa-chevron-right text-slate-600"></i>
             </a>
 
-            <a href="https://reffpa.com/L?tag=d_5044128m_70865c_&site=5044128&ad=70865" target="_blank" class="btn-link flex items-center justify-between p-5 bg-slate-900/50 rounded-2xl w-full group">
+            <a href="https://reffpa.com/L?tag=d_5044128m_70865c_&site=5044128&ad=70865" target="_blank" class="btn-action flex items-center justify-between p-4 rounded-2xl">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center text-green-500 group-hover:scale-110 transition">
-                        <i class="fas fa-download text-xl"></i>
-                    </div>
-                    <span class="font-bold text-lg text-white">Android App ဒေါင်းမယ်</span>
+                    <span class="text-xl">📥</span>
+                    <span class="font-bold">Android App ဒေါင်းမယ်</span>
                 </div>
-                <i class="fas fa-chevron-right text-slate-700"></i>
+                <i class="fas fa-chevron-right text-slate-600"></i>
             </a>
 
-            <a href="https://t.me/WinExpress99" target="_blank" class="btn-link flex items-center justify-between p-5 bg-slate-900/50 rounded-2xl w-full group">
+            <a href="https://t.me/WinExpress99" target="_blank" class="btn-action flex items-center justify-between p-4 rounded-2xl">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-yellow-500/10 rounded-xl flex items-center justify-center text-yellow-500 group-hover:scale-110 transition">
-                        <i class="fas fa-wallet text-xl"></i>
-                    </div>
-                    <span class="font-bold text-lg text-white">Unit ဖြည့်မယ်</span>
+                    <span class="text-xl">💵</span>
+                    <span class="font-bold">Unit ဖြည့်မယ်</span>
                 </div>
-                <i class="fas fa-chevron-right text-slate-700"></i>
+                <i class="fas fa-chevron-right text-slate-600"></i>
             </a>
 
-            <a href="https://t.me/OneXBetMyanmar2/3" target="_blank" class="btn-link flex items-center justify-between p-5 bg-slate-900/50 rounded-2xl w-full group">
+            <a href="https://t.me/OneXBetMyanmar2/3" target="_blank" class="btn-action flex items-center justify-between p-4 rounded-2xl">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-500 group-hover:scale-110 transition">
-                        <i class="fas fa-book-open text-xl"></i>
-                    </div>
+                    <span class="text-xl">📖</span>
+                    <span class="font-bold">အကောင့်ဖွင့်နည်း ကြည့်မယ်</span>
+                </div>
+                <i class="fas fa-chevron-right text-slate-600"></i>
+            </a>
+
+            <a href="https://t.me/ZINXBET_support_bot" target="_blank" class="btn-action flex items-center justify-between p-4 rounded-2xl border-l-4 border-l-blue-600">
+                <div class="flex items-center space-x-4">
+                    <span class="text-xl">💬</span>
+                    <span class="font-bold text-blue-400">အက်မင်ကို မေးမြန်းမယ်</span>
+                </div>
+                <i class="fas fa-chevron-right text-slate-600"></i>
+            </a>
+        </div>
+
+        <!-- TWO-TIERED GOLDEN BANNER -->
+        <section class="mt-8">
+            <!-- Top Tier -->
+            <div class="golden-banner-top px-4 py-4 text-center font-bold text-sm md:text-base border-b border-black/10">
+                <div class="flex items-center justify-center">
+                    <i class="fas fa-shield-alt mr-2 opacity-70"></i>
+                    ယုံကြည်စိတ်ချရဆုံး 1XBET Agent
+                </div>
+                <div class="mt-1 tracking-tight font-black">
+                    📲 ငွေသွင်း/ထုတ် - @WinExpress99
+                </div>
+            </div>
+            <!-- Bottom Tier -->
+            <div class="golden-banner-bottom p-8 text-center">
+                <h3 class="text-5xl font-black italic uppercase tracking-tighter dr

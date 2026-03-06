@@ -49,7 +49,7 @@
 
         /* Match Card Styles */
         .match-card {
-            min-width: 290px;
+            min-width: 300px;
             background: linear-gradient(145deg, rgba(31, 41, 55, 0.9), rgba(17, 24, 39, 0.9));
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -200,7 +200,7 @@
             </div>
             
             <!-- Match Cards Container -->
-            <div id="matches-container" class="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-2 hide-scrollbar min-h-[140px] items-center">
+            <div id="matches-container" class="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-2 hide-scrollbar min-h-[160px] items-center">
                 <!-- Loading State -->
                 <div class="w-full flex flex-col items-center justify-center text-gray-400 space-y-3 py-6">
                     <div class="loader"></div>
@@ -340,7 +340,6 @@
         // --- AUTO FETCH MATCHES FROM ESPN API ---
         async function fetchMatches() {
             const container = document.getElementById('matches-container');
-            // Popular Leagues
             const leagues = ['eng.1', 'esp.1', 'ita.1', 'uefa.champions', 'ger.1', 'fra.1'];
             let allMatches = [];
 
@@ -370,7 +369,6 @@
                     }
                 });
 
-                // Sort by time
                 allMatches.sort((a, b) => a.date - b.date);
 
                 container.innerHTML = ''; 
@@ -385,16 +383,19 @@
                 }
 
                 allMatches.forEach(match => {
-                    // Check if Man Utd
                     const homeName = match.homeTeam.team.name;
                     const awayName = match.awayTeam.team.name;
+                    // Extracting Logos from API (Using a fallback empty shield icon if logo is missing)
+                    const fallbackLogo = 'https://cdn-icons-png.flaticon.com/512/3593/3593455.png';
+                    const homeLogo = match.homeTeam.team.logo || fallbackLogo;
+                    const awayLogo = match.awayTeam.team.logo || fallbackLogo;
+
                     const isUtd = homeName.includes('Manchester United') || awayName.includes('Manchester United');
                     
                     const utdBadge = isUtd ? `<div class="absolute -top-2 -right-2 bg-red-600 text-[10px] font-black px-2.5 py-0.5 rounded-full border border-red-400 shadow-[0_0_10px_rgba(239,68,68,0.8)] animate-pulse z-10">GGMU!</div>` : '';
                     const cardClass = isUtd ? 'match-card man-utd snap-center rounded-2xl p-4 relative' : 'match-card snap-center rounded-2xl p-4 relative';
                     const leagueColor = isUtd ? 'text-red-400' : 'text-blue-400';
 
-                    // DATE AND TIME FORMATTING (e.g., Mar 7 • 10:00 PM)
                     const dateOptions = { month: 'short', day: 'numeric' };
                     const timeOptions = { hour: '2-digit', minute:'2-digit' };
                     const formattedDate = match.date.toLocaleDateString('en-US', dateOptions);
@@ -404,46 +405,50 @@
                     let homeScoreHtml = '';
                     let awayScoreHtml = '';
 
-                    // Determine Status and Scores
                     if (match.status === 'post') {
-                        // Finished (FT)
                         statusHtml = `<span class="text-[11px] bg-red-900/60 text-red-200 px-2 py-1 rounded-md font-bold border border-red-500/30">ပွဲပြီး (FT)</span>`;
                         homeScoreHtml = `<div class="text-2xl font-black ${parseInt(match.homeTeam.score) > parseInt(match.awayTeam.score) ? 'text-green-400' : 'text-gray-400'}">${match.homeTeam.score}</div>`;
                         awayScoreHtml = `<div class="text-2xl font-black ${parseInt(match.awayTeam.score) > parseInt(match.homeTeam.score) ? 'text-green-400' : 'text-gray-400'}">${match.awayTeam.score}</div>`;
                     } else if (match.status === 'in') {
-                        // Live (Showing Match Minute)
                         statusHtml = `<span class="text-[11px] bg-red-600 text-white px-2 py-1 rounded-md font-bold animate-pulse border border-red-400"><i class="fas fa-circle text-[8px] mr-1"></i> LIVE ${match.displayClock}</span>`;
                         homeScoreHtml = `<div class="text-2xl font-black text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">${match.homeTeam.score}</div>`;
                         awayScoreHtml = `<div class="text-2xl font-black text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">${match.awayTeam.score}</div>`;
                     } else {
-                        // Pre-match (Showing Date and Time clearly)
                         statusHtml = `<span class="text-[11px] bg-black/60 px-2.5 py-1 rounded-md font-bold tracking-wide border border-white/10"><i class="far fa-clock mr-1 text-yellow-500"></i> ${formattedDate} • ${formattedTime}</span>`;
                         homeScoreHtml = `<div class="text-sm font-black text-gray-500">-</div>`;
                         awayScoreHtml = `<div class="text-sm font-black text-gray-500">-</div>`;
                     }
 
-                    // Shorten names
+                    // Clean names for display
                     const shortHomeName = homeName.replace('Manchester United', 'Man Utd').replace('Manchester City', 'Man City').substring(0, 15);
                     const shortAwayName = awayName.replace('Manchester United', 'Man Utd').replace('Manchester City', 'Man City').substring(0, 15);
 
                     const cardHTML = `
                         <div class="${cardClass}">
                             ${utdBadge}
-                            <div class="flex justify-between items-center mb-4">
+                            <div class="flex justify-between items-center mb-5">
                                 <span class="text-[10px] font-bold ${leagueColor} uppercase tracking-wider bg-white/5 px-2 py-1 rounded"><i class="fas fa-trophy mr-1"></i> ${match.leagueName}</span>
                                 ${statusHtml}
                             </div>
                             
                             <div class="flex justify-between items-center px-1">
+                                <!-- Home Team with Logo -->
                                 <div class="text-center flex-1 flex flex-col items-center">
-                                    <h4 class="font-black text-[14px] leading-tight mb-2 ${isUtd && shortHomeName.includes('Man Utd') ? 'text-red-500 drop-shadow-md' : 'text-slate-200'}">${shortHomeName}</h4>
+                                    <div class="w-12 h-12 mb-2 bg-white/10 rounded-full flex items-center justify-center p-1.5 shadow-inner border border-white/10 relative">
+                                        <img src="${homeLogo}" class="w-full h-full object-contain drop-shadow-md" alt="${shortHomeName}" onerror="this.src='${fallbackLogo}'">
+                                    </div>
+                                    <h4 class="font-black text-[13px] leading-tight mb-2 ${isUtd && shortHomeName.includes('Man Utd') ? 'text-red-500 drop-shadow-md' : 'text-slate-200'}">${shortHomeName}</h4>
                                     ${homeScoreHtml}
                                 </div>
                                 
                                 <div class="mx-2 text-[10px] font-black text-gray-500 italic bg-white/5 px-2 py-1 rounded-full mb-4">VS</div>
                                 
+                                <!-- Away Team with Logo -->
                                 <div class="text-center flex-1 flex flex-col items-center">
-                                    <h4 class="font-black text-[14px] leading-tight mb-2 ${isUtd && shortAwayName.includes('Man Utd') ? 'text-red-500 drop-shadow-md' : 'text-slate-200'}">${shortAwayName}</h4>
+                                    <div class="w-12 h-12 mb-2 bg-white/10 rounded-full flex items-center justify-center p-1.5 shadow-inner border border-white/10 relative">
+                                        <img src="${awayLogo}" class="w-full h-full object-contain drop-shadow-md" alt="${shortAwayName}" onerror="this.src='${fallbackLogo}'">
+                                    </div>
+                                    <h4 class="font-black text-[13px] leading-tight mb-2 ${isUtd && shortAwayName.includes('Man Utd') ? 'text-red-500 drop-shadow-md' : 'text-slate-200'}">${shortAwayName}</h4>
                                     ${awayScoreHtml}
                                 </div>
                             </div>
@@ -462,10 +467,7 @@
             }
         }
 
-        // Fetch matches when page loads
         document.addEventListener('DOMContentLoaded', fetchMatches);
-        
-        // Auto-refresh match data every 5 minutes
         setInterval(fetchMatches, 300000);
 
     </script>

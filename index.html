@@ -1,63 +1,86 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="my" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>We Sport Live - အကောင်းဆုံး ဘောလုံးပွဲစဉ်များ</title>
+    <title>W.E Sports - Live Match Hub</title>
+    <!-- Tailwind CSS with Dark Mode Config -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#050810',
+                        lightbg: '#f8fafc',
+                    }
+                }
+            }
+        }
+    </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Pyidaungsu:wght@400;700&display=swap');
         
         body {
             font-family: 'Pyidaungsu', sans-serif;
-            background-color: #050810;
-            background-image: radial-gradient(circle at top right, rgba(30, 58, 138, 0.1), transparent 400px),
-                              radial-gradient(circle at bottom left, rgba(153, 27, 27, 0.1), transparent 400px);
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
             -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Light Mode Specific Gradients */
+        body:not(.dark) {
+            background-image: radial-gradient(circle at top right, rgba(30, 58, 138, 0.05), transparent 500px),
+                              radial-gradient(circle at bottom left, rgba(234, 179, 8, 0.05), transparent 500px);
+        }
+
+        /* Dark Mode Specific Gradients */
+        body.dark {
+            background-image: radial-gradient(circle at top right, rgba(30, 58, 138, 0.2), transparent 500px),
+                              radial-gradient(circle at bottom left, rgba(234, 179, 8, 0.05), transparent 500px);
         }
 
         /* Golden Banner Styles */
         .golden-gradient-top {
             background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728);
             color: #1a1a1a;
-            border-top: 1px solid rgba(255,255,255,0.2);
         }
 
         .golden-gradient-bottom {
             background: linear-gradient(180deg, #fcf6ba, #bf953f);
             color: #000;
-            box-shadow: 0 -10px 30px rgba(179, 135, 40, 0.2);
         }
 
-        /* Interactive Buttons & Cards */
+        /* Custom Card Styles (Light & Dark) */
         .glass-card {
-            background: rgba(17, 24, 39, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         .glass-card:active {
             transform: scale(0.97);
-            background: rgba(31, 41, 55, 0.8);
-            border-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Match Card Styles */
+        .dark .match-card {
+            background: linear-gradient(145deg, rgba(31, 41, 55, 0.9), rgba(17, 24, 39, 0.9));
+        }
         .match-card {
             min-width: 300px;
-            background: linear-gradient(145deg, rgba(31, 41, 55, 0.9), rgba(17, 24, 39, 0.9));
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(145deg, #ffffff, #f3f4f6);
         }
-        
-        .match-card.man-utd {
-            border: 1px solid rgba(239, 68, 68, 0.5);
-            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.2);
+
+        .dark .match-card.man-utd {
             background: linear-gradient(145deg, rgba(69, 10, 10, 0.9), rgba(17, 24, 39, 0.9));
+        }
+        .match-card.man-utd {
+            background: linear-gradient(145deg, #fef2f2, #ffffff);
+        }
+
+        .dark .finished-match-card {
+            background: linear-gradient(145deg, rgba(31, 41, 55, 0.5), rgba(17, 24, 39, 0.7));
+        }
+        .finished-match-card {
+            min-width: 250px;
+            background: linear-gradient(145deg, #f9fafb, #ffffff);
         }
 
         /* Animations */
@@ -67,7 +90,7 @@
         }
 
         .telegram-pulse {
-            background: linear-gradient(90deg, #2563eb, #1d4ed8);
+            background: linear-gradient(90deg, #1e3a8a, #2563eb); 
             animation: pulse-blue 2.5s infinite;
             animation-delay: 1.25s;
         }
@@ -109,23 +132,19 @@
             animation: float 2.5s ease-in-out infinite;
         }
 
+        .btn-glow { animation: button-glow 2s infinite; }
         @keyframes button-glow {
-            0% { box-shadow: 0 0 5px rgba(0,0,0,0.2); }
-            50% { box-shadow: 0 0 15px rgba(0,0,0,0.6); }
-            100% { box-shadow: 0 0 5px rgba(0,0,0,0.2); }
-        }
-        .btn-glow {
-            animation: button-glow 2s infinite;
+            0% { box-shadow: 0 0 5px rgba(234, 179, 8, 0.2); }
+            50% { box-shadow: 0 0 15px rgba(234, 179, 8, 0.6); }
+            100% { box-shadow: 0 0 5px rgba(234, 179, 8, 0.2); }
         }
 
-        /* Hide scrollbar */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* Loading Spinner */
         .loader {
-            border: 3px solid rgba(255,255,255,0.1);
-            border-top: 3px solid #3b82f6;
+            border: 3px solid rgba(156, 163, 175, 0.2);
+            border-top: 3px solid #3b82f6; 
             border-radius: 50%;
             width: 24px;
             height: 24px;
@@ -133,189 +152,450 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Crawler Animation */
         .marquee-wrapper {
             width: 100%;
             overflow: hidden;
             white-space: nowrap;
             background-color: #000;
-            border-top: 1px solid rgba(234, 179, 8, 0.3);
-            padding: 4px 0;
         }
         .animate-marquee {
             display: inline-block;
             padding-left: 100%;
             animation: marquee 15s linear infinite;
         }
-        @keyframes marquee {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-100%, 0); }
+        @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+
+        .partners-marquee {
+            display: flex;
+            width: max-content;
+            animation: scroll-left 25s linear infinite;
         }
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center">
+<body class="min-h-screen flex flex-col items-center bg-lightbg dark:bg-darkbg text-slate-800 dark:text-white">
 
-    <!-- Header Section -->
-    <header class="w-full max-w-md flex justify-between items-center p-4 sticky top-0 bg-[#050810]/90 backdrop-blur-lg z-40 border-b border-white/5">
-        <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-red-900/40">
-                <i class="fas fa-futbol text-white"></i>
+    <!-- OVERLAY FOR SIDEBAR MENU -->
+    <div id="menu-overlay" class="fixed inset-0 bg-black/60 dark:bg-black/80 z-50 hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="toggleMenu()"></div>
+    
+    <!-- SIDEBAR MENU -->
+    <aside id="sidebar" class="fixed top-0 left-0 h-full w-[80%] max-w-[320px] bg-white dark:bg-[#0a0f1d] border-r border-slate-200 dark:border-white/10 z-50 transform -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
+        <!-- Sidebar Header (W.E Sports Theme) -->
+        <div class="p-5 border-b border-slate-200 dark:border-white/10 flex justify-between items-center bg-slate-50 dark:bg-black/40">
+            <div class="flex items-center space-x-3">
+                <!-- W.E Sports Mascot Logo -->
+                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center border-2 border-yellow-400 overflow-hidden shadow-lg shrink-0">
+                    <img src="https://i.ibb.co/Tx06dFv3/image.png" alt="W.E Sports Logo" class="w-full h-full object-cover" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=wesports&backgroundColor=ffffff'">
+                </div>
+                <div>
+                    <h2 class="font-black text-lg leading-tight tracking-tighter text-blue-800 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-white dark:to-yellow-400">W.E Sports</h2>
+                    <p class="text-[9px] text-blue-600 dark:text-blue-300 font-bold uppercase tracking-widest leading-tight">Live Match Hub</p>
+                </div>
             </div>
-            <div>
-                <h1 class="text-xl font-black tracking-tighter italic">WE SPORT LIVE</h1>
-                <p class="text-[10px] text-red-500 font-bold uppercase tracking-widest italic">Live Match Hub</p>
+            <button onclick="toggleMenu()" class="text-slate-500 dark:text-white/60 hover:text-slate-800 dark:hover:text-white transition p-2 active:scale-95 shrink-0">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- Sidebar Links -->
+        <div class="flex-1 overflow-y-auto p-4 space-y-3">
+            <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest px-2 mb-1">Menu</p>
+            
+            <a href="https://t.me/ZINXBET_support_bot/register" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-orange-100 dark:bg-gradient-to-br dark:from-orange-400/20 dark:to-orange-600/20 rounded-xl flex items-center justify-center text-orange-600 dark:text-orange-500 border border-orange-200 dark:border-orange-500/20">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <span class="font-bold text-sm">1XBET အကောင့်ဖွင့်မယ်</span>
+                </div>
+                <i class="fas fa-chevron-right text-slate-400 dark:text-gray-600 text-xs"></i>
+            </a>
+
+            <a href="https://reffpa.com/L?tag=d_5044128m_70865c_&site=5044128&ad=70865" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-green-100 dark:bg-gradient-to-br dark:from-green-400/20 dark:to-green-600/20 rounded-xl flex items-center justify-center text-green-600 dark:text-green-500 border border-green-200 dark:border-green-500/20">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <span class="font-bold text-sm">Android App ဒေါင်းမယ်</span>
+                </div>
+                <i class="fas fa-chevron-right text-slate-400 dark:text-gray-600 text-xs"></i>
+            </a>
+
+            <a href="https://t.me/WinExpress99" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-yellow-100 dark:bg-gradient-to-br dark:from-yellow-400/20 dark:to-yellow-600/20 rounded-xl flex items-center justify-center text-yellow-600 dark:text-yellow-500 border border-yellow-200 dark:border-yellow-500/20">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <span class="font-bold text-sm">1XBET ငွေသွင်း/ငွေထုတ်</span>
+                </div>
+                <i class="fas fa-chevron-right text-slate-400 dark:text-gray-600 text-xs"></i>
+            </a>
+
+            <a href="https://t.me/OneXBetMyanmar2/3" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-blue-100 dark:bg-gradient-to-br dark:from-blue-400/20 dark:to-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-500 border border-blue-200 dark:border-blue-500/20">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <span class="font-bold text-sm">အကောင့်ဖွင့်နည်း ကြည့်မယ်</span>
+                </div>
+                <i class="fas fa-chevron-right text-slate-400 dark:text-gray-600 text-xs"></i>
+            </a>
+            
+            <a href="https://t.me/ZINXBET_support_bot" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl border border-blue-200 dark:border-blue-500/30 group bg-blue-50/50 dark:bg-[rgba(17,24,39,0.6)] hover:bg-blue-50 dark:hover:bg-blue-900/10">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-blue-100 dark:bg-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20">
+                        <i class="fas fa-comment-dots"></i>
+                    </div>
+                    <span class="font-bold text-sm text-blue-700 dark:text-blue-400">အက်မင်ကို မေးမြန်းမယ်</span>
+                </div>
+                <i class="fas fa-chevron-right text-blue-400 dark:text-blue-500/50 text-xs"></i>
+            </a>
+        </div>
+        
+        <!-- Sidebar Footer -->
+        <div class="p-5 border-t border-slate-200 dark:border-white/10 text-center bg-slate-50 dark:bg-black/40">
+            <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-3">Sponsored By</p>
+            <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="inline-flex items-center bg-[#1e52a5] text-white px-2.5 py-1.5 rounded-md text-[14px] font-black tracking-tighter border border-transparent dark:border-white/20 shadow-md shadow-blue-900/50 hover:scale-105 transition-transform">
+                1X<span class="text-[#59b2e0]">BET</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Header Section (W.E Sports Theme + 1XBET Badge + Dark Mode Toggle) -->
+    <header class="w-full max-w-2xl flex justify-between items-center p-3 sticky top-0 bg-white/95 dark:bg-[#050810]/95 backdrop-blur-lg z-40 border-b border-slate-200 dark:border-white/5 shadow-sm dark:shadow-md transition-colors">
+        <div class="flex items-center space-x-3 truncate pr-2">
+            <!-- Menu Button -->
+            <button onclick="toggleMenu()" class="w-10 h-10 bg-slate-100 dark:bg-white/5 rounded-xl flex items-center justify-center text-slate-700 dark:text-white hover:bg-slate-200 dark:hover:bg-white/10 transition border border-slate-200 dark:border-white/10 active:scale-95 shrink-0">
+                <i class="fas fa-bars text-lg"></i>
+            </button>
+            
+            <div class="flex items-center space-x-2.5">
+                <!-- W.E Sports Mascot Logo -->
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-yellow-400 overflow-hidden shadow-[0_0_8px_rgba(30,58,138,0.2)] dark:shadow-[0_0_8px_rgba(30,58,138,0.8)] shrink-0">
+                    <img src="https://i.ibb.co/Tx06dFv3/image.png" alt="Logo" class="w-full h-full object-cover" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=wesports&backgroundColor=ffffff'">
+                </div>
+                
+                <div class="flex flex-col justify-center">
+                    <div class="flex items-center space-x-1.5 flex-wrap md:flex-nowrap">
+                        <h1 class="text-[16px] sm:text-lg font-black tracking-tighter text-blue-900 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-blue-400 dark:to-yellow-400 leading-tight drop-shadow-sm whitespace-nowrap">W.E Sports</h1>
+                        <!-- CLICKABLE 1XBET BADGE -->
+                        <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="inline-flex items-center bg-[#1e52a5] text-white px-1.5 py-0.5 rounded-[4px] text-[8px] sm:text-[9px] font-black tracking-tighter border border-transparent dark:border-white/20 shadow-sm shrink-0 hover:scale-105 transition-transform">
+                            1X<span class="text-[#59b2e0]">BET</span>
+                        </a>
+                    </div>
+                    <p class="text-[8px] sm:text-[9px] text-slate-500 dark:text-gray-400 font-bold uppercase tracking-widest leading-tight mt-0.5">Live Match Hub</p>
+                </div>
             </div>
         </div>
-        <a href="https://t.me/WinExpress99" target="_blank" class="bg-blue-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-500 transition shadow-lg shadow-blue-900/40">
-            <i class="fab fa-telegram-plane text-white"></i>
-        </a>
+        
+        <!-- Right side actions -->
+        <div class="flex items-center space-x-2 shrink-0">
+            <!-- Dark Mode Toggle -->
+            <button onclick="toggleTheme()" class="w-9 h-9 rounded-full flex items-center justify-center text-slate-500 dark:text-yellow-400 hover:bg-slate-100 dark:hover:bg-white/10 transition active:scale-95">
+                <i id="theme-icon" class="fas fa-sun text-[16px]"></i>
+            </button>
+            <a href="https://t.me/WinExpress99" target="_blank" class="bg-gradient-to-br from-blue-600 to-blue-800 dark:from-blue-500 dark:to-blue-700 w-10 h-10 rounded-full flex items-center justify-center hover:opacity-90 transition shadow-[0_0_10px_rgba(37,99,235,0.3)] active:scale-95 border border-transparent dark:border-blue-400/50">
+                <i class="fab fa-telegram-plane text-white text-[18px]"></i>
+            </a>
+        </div>
     </header>
 
     <!-- Main Content Area -->
-    <main class="w-full max-w-md px-4 pb-[210px] space-y-6">
+    <main class="w-full max-w-2xl px-4 pb-8 space-y-6">
+
+        <!-- TOP PROMO BANNER (Instantly Visible) -->
+        <div class="rounded-2xl p-4 border border-yellow-500/30 bg-gradient-to-br from-slate-900 to-[#0a0f1d] shadow-[0_5px_25px_rgba(234,179,8,0.2)] mt-5 relative overflow-hidden text-white">
+            <div class="absolute -right-4 -top-4 opacity-[0.05] text-7xl text-yellow-500"><i class="fas fa-gift"></i></div>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between relative z-10 gap-3">
+                <div>
+                    <p class="text-[10px] font-bold text-yellow-500 uppercase tracking-widest mb-1 animate-pulse">
+                        <i class="fas fa-star mr-1"></i> 100% Deposit Bonus
+                    </p>
+                    <div class="text-2xl font-black italic uppercase tracking-tighter drop-shadow-md">
+                        ZINXBET
+                    </div>
+                </div>
+                <button onclick="copyTopPromo()" id="topCopyBtn" class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-black px-6 py-2.5 rounded-xl font-black text-xs active:scale-95 transition-all shadow-lg hover:from-yellow-400 hover:to-yellow-500 flex items-center justify-center btn-glow">
+                    <i class="fas fa-copy mr-2"></i> PROMO ယူမည်
+                </button>
+            </div>
+        </div>
         
-        <!-- Action Buttons -->
-        <div class="space-y-4 pt-6">
-            <div class="text-center space-y-2 mb-4">
-                <h2 class="text-3xl font-black italic uppercase leading-none tracking-tighter drop-shadow-md">
-                    ဒီနေ့ပွဲတွေကို <br> အတူတူအားပေးမယ်!
+        <!-- Action Buttons Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+            <div class="md:col-span-2 text-center space-y-2 mb-2">
+                <h2 class="text-2xl font-black italic uppercase leading-tight tracking-tighter drop-shadow-md text-slate-800 dark:text-gray-100">
+                    ဒီနေ့ပွဲတွေကို <br class="md:hidden"> အတူတူအားပေးမယ်!
                 </h2>
+                <p class="text-[11px] text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest italic drop-shadow-sm">
+                    Don't miss out... everyone's talking about today's matches!
+                </p>
             </div>
 
-            <a href="https://dlive.tv/WeSportLive" target="_blank" class="live-pulse w-full flex items-center justify-center py-5 rounded-3xl text-xl font-black italic text-white shadow-2xl transition">
-                <i class="fas fa-play-circle mr-3 text-2xl"></i> LIVE ကြည့်ရှုရန် နှိပ်ပါ
+            <a href="https://dlive.tv/WeSportLive" target="_blank" class="live-pulse w-full flex items-center justify-center py-4 rounded-3xl text-lg font-black italic text-white shadow-xl transition active:scale-95">
+                <i class="fas fa-play-circle mr-3 text-2xl"></i> LIVE ကြည့်ရှုရန်
             </a>
 
-            <a href="https://t.me/WESPORT1" target="_blank" class="telegram-pulse w-full flex items-center justify-center py-4 rounded-3xl text-lg font-black italic text-white shadow-2xl transition border border-blue-400/30">
-                <i class="fab fa-telegram mr-3 text-2xl"></i> WE SPORT ချန်နယ်သို့ Join ပါ
+            <a href="https://t.me/WESPORT1" target="_blank" class="telegram-pulse w-full flex items-center justify-center py-4 rounded-3xl text-lg font-black italic text-white shadow-xl transition border border-blue-400/30 active:scale-95">
+                <i class="fab fa-telegram mr-3 text-2xl"></i> Channel သို့ Join ပါ
             </a>
         </div>
 
-        <!-- AUTO UPDATING Matches Slider -->
+        <!-- AUTO UPDATING Matches Section -->
         <div class="space-y-3 pt-2">
+            <!-- LIVE & UPCOMING SECTION -->
             <div class="flex justify-between items-end px-1">
-                <h3 class="text-lg font-black italic flex items-center">
-                    <i class="fas fa-fire text-orange-500 mr-2"></i> ဒီနေ့ပွဲစဉ်ကြီးများ
+                <h3 class="text-lg font-black italic flex items-center text-slate-800 dark:text-white">
+                    <i class="fas fa-fire text-yellow-500 mr-2"></i> လာမည့် ပွဲစဉ်များနှင့် နိုင်ခြေ
                 </h3>
+                <button onclick="fetchMatches()" class="text-[10px] bg-slate-200 dark:bg-white/10 hover:bg-slate-300 dark:hover:bg-white/20 px-2 py-1 rounded border border-slate-300 dark:border-white/10 text-slate-700 dark:text-gray-300 font-bold active:scale-95 transition flex items-center">
+                    <i class="fas fa-sync-alt mr-1"></i> Refresh
+                </button>
             </div>
             
             <!-- Match Cards Container -->
-            <div id="matches-container" class="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-2 hide-scrollbar min-h-[160px] items-center">
-                <!-- Loading State -->
-                <div class="w-full flex flex-col items-center justify-center text-gray-400 space-y-3 py-6">
+            <div id="matches-container" class="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-2 hide-scrollbar min-h-[180px] items-center">
+                <div class="w-full flex flex-col items-center justify-center text-slate-500 dark:text-gray-400 space-y-3 py-6">
                     <div class="loader"></div>
-                    <span class="text-xs font-bold italic tracking-wide">ပွဲစဉ်များ ရှာဖွေနေပါသည်...</span>
+                    <span class="text-xs font-bold italic tracking-wide">ပွဲစဉ်များ အသစ်ရှာဖွေနေပါသည်...</span>
                 </div>
             </div>
 
-            <!-- Bet Now Button below matches -->
-            <div class="pt-2 px-1">
-                <a href="https://t.me/WinExpress99" target="_blank" class="w-full flex items-center justify-center py-3.5 rounded-2xl bg-gradient-to-r from-yellow-500 to-yellow-600 text-[#1a1a1a] font-black text-[15px] italic shadow-[0_4px_15px_rgba(234,179,8,0.25)] active:scale-95 transition-all border border-yellow-400/50 hover:from-yellow-400 hover:to-yellow-500">
+            <!-- Bet Now Button below main matches -->
+            <div class="pt-2 px-1 md:px-0">
+                <a href="https://t.me/WinExpress99" target="_blank" class="w-full flex items-center justify-center py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700 text-white font-black text-[15px] italic shadow-lg active:scale-95 transition-all border border-transparent dark:border-blue-400/30">
                     🔥 ဒီနေ့ပွဲတွေကို အခုပဲလောင်းမယ် <i class="fas fa-paper-plane ml-2"></i>
                 </a>
+            </div>
+
+            <!-- FINISHED MATCHES SECTION -->
+            <div id="finished-matches-section" class="hidden pt-5 space-y-2">
+                <div class="px-1 border-t border-slate-200 dark:border-white/10 pt-4">
+                    <h3 class="text-sm font-black italic text-slate-500 dark:text-gray-400 flex items-center">
+                        <i class="fas fa-history mr-2"></i> ပြီးခဲ့သော ပွဲစဉ်ရလဒ်များ
+                    </h3>
+                </div>
+                <div id="finished-matches-container" class="flex overflow-x-auto snap-x snap-mandatory gap-2 pb-2 hide-scrollbar items-center min-h-[100px]">
+                    <!-- Finished Matches Injected Here -->
+                </div>
             </div>
         </div>
 
         <!-- 5 Links Navigation -->
-        <div class="grid grid-cols-1 gap-3 pt-4">
-            <!-- Link 1 -->
-            <a href="https://t.me/ZINXBET_support_bot/register" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-4">
+            <a href="https://t.me/ZINXBET_support_bot/register" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-orange-400/20 to-orange-600/20 rounded-xl flex items-center justify-center text-orange-500 border border-orange-500/20">
+                    <div class="w-12 h-12 bg-orange-100 dark:bg-gradient-to-br dark:from-orange-400/20 dark:to-orange-600/20 rounded-xl flex items-center justify-center text-orange-600 dark:text-orange-500 border border-orange-200 dark:border-orange-500/20">
                         <i class="fas fa-rocket text-xl"></i>
                     </div>
                     <span class="font-bold text-base md:text-lg">1XBET အကောင့်ဖွင့်မယ်</span>
                 </div>
-                <i class="fas fa-chevron-right text-slate-600"></i>
+                <i class="fas fa-chevron-right text-slate-400 dark:text-slate-600"></i>
             </a>
 
-            <!-- Link 2 -->
-            <a href="https://reffpa.com/L?tag=d_5044128m_70865c_&site=5044128&ad=70865" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group">
+            <a href="https://reffpa.com/L?tag=d_5044128m_70865c_&site=5044128&ad=70865" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-green-400/20 to-green-600/20 rounded-xl flex items-center justify-center text-green-500 border border-green-500/20">
+                    <div class="w-12 h-12 bg-green-100 dark:bg-gradient-to-br dark:from-green-400/20 dark:to-green-600/20 rounded-xl flex items-center justify-center text-green-600 dark:text-green-500 border border-green-200 dark:border-green-500/20">
                         <i class="fas fa-download text-xl"></i>
                     </div>
                     <span class="font-bold text-base md:text-lg">Android App ဒေါင်းမယ်</span>
                 </div>
-                <i class="fas fa-chevron-right text-slate-600"></i>
+                <i class="fas fa-chevron-right text-slate-400 dark:text-slate-600"></i>
             </a>
 
-            <!-- Link 3 -->
-            <a href="https://t.me/WinExpress99" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group">
+            <a href="https://t.me/WinExpress99" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-yellow-400/20 to-yellow-600/20 rounded-xl flex items-center justify-center text-yellow-500 border border-yellow-500/20">
+                    <div class="w-12 h-12 bg-yellow-100 dark:bg-gradient-to-br dark:from-yellow-400/20 dark:to-yellow-600/20 rounded-xl flex items-center justify-center text-yellow-600 dark:text-yellow-500 border border-yellow-200 dark:border-yellow-500/20">
                         <i class="fas fa-wallet text-xl"></i>
                     </div>
                     <span class="font-bold text-base md:text-lg">1XBET ငွေသွင်း/ငွေထုတ်</span>
                 </div>
-                <i class="fas fa-chevron-right text-slate-600"></i>
+                <i class="fas fa-chevron-right text-slate-400 dark:text-slate-600"></i>
             </a>
 
-            <!-- Link 4 -->
-            <a href="https://t.me/OneXBetMyanmar2/3" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group">
+            <a href="https://t.me/OneXBetMyanmar2/3" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-400/20 to-blue-600/20 rounded-xl flex items-center justify-center text-blue-500 border border-blue-500/20">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-gradient-to-br dark:from-blue-400/20 dark:to-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-500 border border-blue-200 dark:border-blue-500/20">
                         <i class="fas fa-book-open text-xl"></i>
                     </div>
                     <span class="font-bold text-base md:text-lg">အကောင့်ဖွင့်နည်း ကြည့်မယ်</span>
                 </div>
-                <i class="fas fa-chevron-right text-slate-600"></i>
+                <i class="fas fa-chevron-right text-slate-400 dark:text-slate-600"></i>
             </a>
             
-            <!-- Link 5 -->
-            <a href="https://t.me/ZINXBET_support_bot" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl border-l-4 border-l-blue-500 group">
+            <a href="https://t.me/ZINXBET_support_bot" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl border border-blue-200 dark:border-blue-500/30 group md:col-span-2 bg-blue-50/50 dark:bg-[rgba(17,24,39,0.6)] hover:bg-blue-50 dark:hover:bg-blue-900/20">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-blue-600/20 rounded-xl flex items-center justify-center text-blue-400 border border-blue-500/20">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20">
                         <i class="fas fa-comment-dots text-xl"></i>
                     </div>
-                    <span class="font-bold text-base md:text-lg text-blue-400">အက်မင်ကို မေးမြန်းမယ်</span>
+                    <span class="font-bold text-base md:text-lg text-blue-700 dark:text-blue-400">အက်မင်ကို မေးမြန်းမယ်</span>
                 </div>
-                <i class="fas fa-chevron-right text-slate-600"></i>
+                <i class="fas fa-chevron-right text-blue-400 dark:text-blue-500/50"></i>
             </a>
         </div>
+
+        <!-- OFFICIAL PARTNERS SECTION -->
+        <div class="glass-card rounded-2xl py-4 px-2 overflow-hidden relative border border-slate-200 dark:border-white/10 shadow-sm dark:shadow-[0_4px_15px_rgba(0,0,0,0.3)] mt-4 bg-white/80 dark:bg-[rgba(17,24,39,0.6)]">
+            <div class="text-center mb-3">
+                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-gray-400">
+                    <i class="fas fa-handshake mr-1 text-blue-500 dark:text-blue-400"></i> 1XBET ၏ တရားဝင် မိတ်ဖက်များ
+                </span>
+            </div>
+            <div class="overflow-hidden w-full relative">
+                <div class="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white dark:from-[#0a0f1d] to-transparent z-10"></div>
+                <div class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white dark:from-[#0a0f1d] to-transparent z-10"></div>
+                
+                <div class="partners-marquee items-center opacity-90 hover:opacity-100 transition-opacity">
+                    <!-- Set 1 -->
+                    <div class="flex items-center space-x-12 px-6">
+                        <div class="flex flex-col items-center justify-center leading-none text-center">
+                            <span class="font-black text-[15px] tracking-widest bg-gradient-to-b from-orange-400 to-orange-600 bg-clip-text text-transparent">FIBA</span>
+                            <span class="text-[6px] text-slate-500 dark:text-gray-400 uppercase mt-0.5">We Are Basketball</span>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/150px-FC_Barcelona_%28crest%29.svg.png" alt="FCB" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
+                            <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">FC Barcelona</span>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f1/CAF_Logo.svg/150px-CAF_Logo.svg.png" alt="CAF" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
+                            <span class="text-[7px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider text-center leading-tight">Africa Cup<br>of Nations</span>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                            <div class="bg-white p-1 rounded-md mb-1 border border-slate-100 dark:border-transparent">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Serie_A_logo_2022.svg/150px-Serie_A_logo_2022.svg.png" alt="Serie A" class="h-6 object-contain" onerror="this.parentElement.style.display='none'">
+                            </div>
+                            <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 uppercase tracking-wider">Serie A</span>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/Paris_Saint-Germain_F.C..svg/150px-Paris_Saint-Germain_F.C..svg.png" alt="PSG" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
+                            <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">PSG</span>
+                        </div>
+                        <div class="flex flex-col items-center justify-center leading-none">
+                            <span class="font-black text-[13px] italic text-[#d4ff00] whitespace-nowrap tracking-tighter drop-shadow-sm">Volleyball</span>
+                            <span class="font-black text-[13px] italic text-slate-800 dark:text-white whitespace-nowrap tracking-tighter">World™</span>
+                        </div>
+                        <div class="flex flex-col items-center justify-center bg-blue-50 dark:bg-[#00d2d3]/10 px-2.5 py-1.5 rounded border border-blue-200 dark:border-[#00d2d3]/40 shadow-inner">
+                            <span class="font-black text-[12px] italic text-blue-600 dark:text-[#00d2d3] whitespace-nowrap tracking-tighter leading-none">BILLIE JEAN</span>
+                            <span class="font-black text-[12px] italic text-blue-600 dark:text-[#00d2d3] whitespace-nowrap tracking-tighter leading-none">KING CUP</span>
+                        </div>
+                    </div>
+
+                    <!-- Set 2 -->
+                    <div class="flex items-center space-x-12 px-6">
+                        <div class="flex flex-col items-center justify-center leading-none text-center">
+                            <span class="font-black text-[15px] tracking-widest bg-gradient-to-b from-orange-400 to-orange-600 bg-clip-text text-transparent">FIBA</span>
+                            <span class="text-[6px] text-slate-500 dark:text-gray-400 uppercase mt-0.5">We Are Basketball</span>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/150px-FC_Barcelona_%28crest%29.svg.png" alt="FCB" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
+                            <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">FC Barcelona</span>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f1/CAF_Logo.svg/150px-CAF_Logo.svg.png" alt="CAF" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
+                            <span class="text-[7px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider text-center leading-tight">Africa Cup<br>of Nations</span>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                            <div class="bg-white p-1 rounded-md mb-1 border border-slate-100 dark:border-transparent">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Serie_A_logo_2022.svg/150px-Serie_A_logo_2022.svg.png" alt="Serie A" class="h-6 object-contain" onerror="this.parentElement.style.display='none'">
+                            </div>
+                            <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 uppercase tracking-wider">Serie A</span>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/Paris_Saint-Germain_F.C..svg/150px-Paris_Saint-Germain_F.C..svg.png" alt="PSG" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
+                            <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">PSG</span>
+                        </div>
+                        <div class="flex flex-col items-center justify-center leading-none">
+                            <span class="font-black text-[13px] italic text-[#d4ff00] whitespace-nowrap tracking-tighter drop-shadow-sm">Volleyball</span>
+                            <span class="font-black text-[13px] italic text-slate-800 dark:text-white whitespace-nowrap tracking-tighter">World™</span>
+                        </div>
+                        <div class="flex flex-col items-center justify-center bg-blue-50 dark:bg-[#00d2d3]/10 px-2.5 py-1.5 rounded border border-blue-200 dark:border-[#00d2d3]/40 shadow-inner">
+                            <span class="font-black text-[12px] italic text-blue-600 dark:text-[#00d2d3] whitespace-nowrap tracking-tighter leading-none">BILLIE JEAN</span>
+                            <span class="font-black text-[12px] italic text-blue-600 dark:text-[#00d2d3] whitespace-nowrap tracking-tighter leading-none">KING CUP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INLINE GOLDEN BANNER -->
+        <section class="w-full rounded-3xl overflow-hidden shadow-xl dark:shadow-[0_10px_30px_rgba(179,135,40,0.2)] mt-8 border border-yellow-500/30 dark:border-yellow-500/20">
+            <!-- Top Tier -->
+            <div class="golden-gradient-top py-2 text-center flex flex-col items-center justify-center">
+                <div class="flex items-center text-[12px] font-black uppercase tracking-widest text-[#1a1a1a]">
+                    <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="inline-flex items-center bg-[#1e52a5] text-white px-1.5 py-0.5 rounded-sm text-[10px] font-black tracking-tighter mr-2 border border-white/20 shadow-sm shadow-blue-900/50 hover:scale-105 transition-transform">
+                        1X<span class="text-[#59b2e0]">BET</span>
+                    </a>
+                    🕵️‍♂️ 📲 ငွေသွင်း/ထုတ် - @WinExpress99
+                </div>
+            </div>
+            <!-- Bottom Tier -->
+            <div class="golden-gradient-bottom pt-4 pb-5 px-4 text-center flex flex-col items-center relative">
+                <div class="absolute top-2 left-4 text-[#1a1a1a]/40 text-xs animate-pulse"><i class="fas fa-star"></i></div>
+                <div class="absolute bottom-4 right-6 text-[#1a1a1a]/40 text-lg animate-pulse" style="animation-delay: 1s;"><i class="fas fa-star"></i></div>
+                
+                <div class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter leading-none mb-3 drop-shadow-sm animate-float">
+                    <span class="text-shine pr-2">🎁 Promo Code: ZINXBET</span>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-3 w-full max-w-[400px] mt-1 relative z-10">
+                    <a href="https://t.me/ZINXBET_support_bot/register" target="_blank" class="flex-1 bg-green-600 hover:bg-green-500 text-white px-4 py-3 rounded-full font-black text-sm transition-all flex items-center justify-center border border-green-400 shadow-[0_0_15px_rgba(22,163,74,0.4)] active:scale-95">
+                        <i class="fas fa-user-plus mr-2"></i> အကောင့်ဖွင့်မယ်
+                    </a>
+                    <button onclick="copyBottomPromo()" id="bottomCopyBtn" class="flex-1 bg-black text-white px-4 py-3 rounded-full font-black text-sm active:scale-95 transition-all flex items-center justify-center border border-yellow-500/50 hover:bg-gray-900 btn-glow">
+                        <i class="fas fa-copy text-yellow-500 mr-2"></i> PROMO ယူမည်
+                    </button>
+                </div>
+                
+                <p class="text-[11px] font-bold mt-3 opacity-90 italic tracking-wider text-[#1a1a1a]">100% Bonus အတွက် အခုပဲ ကော်ပီယူလိုက်ပါ</p>
+            </div>
+            
+            <!-- Marquee Crawler -->
+            <div class="marquee-wrapper border-t-0">
+                <div class="animate-marquee text-[12px] font-black text-yellow-400 tracking-wider py-0.5">
+                    🎉 ပထမဆုံးသွင်းငွေအတွက် <span class="text-white">၁၀၀% ငွေသွင်းဘောနပ်စ်</span> ရယူပါ! 🎁 ပရိုမိုကုဒ် ZINXBET ဖြင့် ယခုပဲ အကောင့်ဖွင့်လိုက်ပါ 🔥
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <!-- STICKY TWO-TIERED GOLDEN BANNER -->
-    <section class="fixed bottom-0 w-full max-w-md z-50">
-        <!-- Top Tier (Agent Info) -->
-        <div class="golden-gradient-top py-1.5 text-center flex flex-col items-center justify-center border-t-2 border-yellow-400/50 shadow-[0_-5px_20px_rgba(0,0,0,0.5)]">
-            <div class="flex items-center text-[11px] font-black uppercase tracking-widest text-[#1a1a1a]">
-                <!-- CSS styled 1XBET Logo -->
-                <span class="inline-flex items-center bg-[#1e52a5] text-white px-1.5 py-0.5 rounded-sm text-[10px] font-black tracking-tighter mr-2 border border-white/20 shadow-sm shadow-blue-900/50">
-                    1X<span class="text-[#59b2e0]">BET</span>
-                </span>
-                🕵️‍♂️ 📲 ငွေသွင်း/ထုတ် - @WinExpress99
-            </div>
-        </div>
-        <!-- Bottom Tier (Promo Code & CTA) -->
-        <div class="golden-gradient-bottom pt-3 pb-4 px-5 text-center flex flex-col items-center relative overflow-hidden">
-            <!-- Sparkles -->
-            <div class="absolute top-2 left-4 text-[#1a1a1a]/40 text-xs animate-pulse"><i class="fas fa-star"></i></div>
-            <div class="absolute bottom-4 right-6 text-[#1a1a1a]/40 text-lg animate-pulse" style="animation-delay: 1s;"><i class="fas fa-star"></i></div>
-            
-            <!-- Animated Promo Code Text -->
-            <div class="text-2xl font-black italic uppercase tracking-tighter leading-none mb-2 drop-shadow-sm animate-float">
-                <span class="text-shine pr-2">🎁 Promo Code: ZINXBET</span>
-            </div>
-            
-            <!-- Glowing Button -->
-            <button onclick="copyPromo()" id="copyBtn" class="bg-black text-white px-6 py-2.5 rounded-full font-black text-sm active:scale-95 transition-all flex items-center w-full justify-center max-w-[280px] border border-yellow-500/50 hover:bg-gray-900 btn-glow relative z-10">
-                <i class="fas fa-copy text-yellow-500 mr-2"></i> PROMO CODE ယူမည်
-            </button>
-            <p class="text-[10px] font-bold mt-1.5 opacity-90 italic tracking-wider text-[#1a1a1a]">100% Bonus အတွက် အခုပဲ ကော်ပီယူလိုက်ပါ</p>
-        </div>
-        
-        <!-- Marquee Crawler (100% Bonus) -->
-        <div class="marquee-wrapper">
-            <div class="animate-marquee text-[11px] font-black text-yellow-400 tracking-wider">
-                🎉 ပထမဆုံးသွင်းငွေအတွက် <span class="text-white">၁၀၀% ငွေသွင်းဘောနပ်စ်</span> ရယူပါ! 🎁 ပရိုမိုကုဒ် ZINXBET ဖြင့် ယခုပဲ အကောင့်ဖွင့်လိုက်ပါ 🔥
-            </div>
-        </div>
-    </section>
-
     <script>
-        // Promo Code Copy Function
-        function copyPromo() {
+        // --- Theme Toggle Logic ---
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            } else {
+                html.classList.add('dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+        }
+
+        // --- Sidebar Menu Logic ---
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('menu-overlay');
+            
+            if (sidebar.classList.contains('-translate-x-full')) {
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+                sidebar.classList.remove('-translate-x-full');
+                document.body.style.overflow = 'hidden';
+            } else {
+                overlay.classList.add('opacity-0');
+                sidebar.classList.add('-translate-x-full');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+                document.body.style.overflow = '';
+            }
+        }
+
+        // --- Promo Code Logic ---
+        function handleCopy(btnId) {
             const promo = "ZINXBET";
             const el = document.createElement('textarea');
             el.value = promo;
@@ -324,144 +604,284 @@
             document.execCommand('copy');
             document.body.removeChild(el);
             
-            const btn = document.getElementById('copyBtn');
+            const btn = document.getElementById(btnId);
             const originalHtml = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check-circle mr-2 text-green-400"></i> ကော်ပီယူပြီးပါပြီ!';
-            btn.classList.remove('btn-glow');
-            btn.style.borderColor = '#16a34a';
+            
+            if(btnId === 'topCopyBtn') {
+                btn.innerHTML = '<i class="fas fa-check-circle mr-2 text-green-700"></i> ကူးယူပြီးပါပြီ!';
+                btn.classList.remove('btn-glow');
+            } else {
+                btn.innerHTML = '<i class="fas fa-check-circle mr-2 text-green-400"></i> ကူးယူပြီးပါပြီ!';
+                btn.style.borderColor = '#16a34a';
+                btn.classList.remove('btn-glow');
+            }
             
             setTimeout(() => {
                 btn.innerHTML = originalHtml;
+                if(btnId === 'bottomCopyBtn') btn.style.borderColor = 'rgba(234, 179, 8, 0.5)';
                 btn.classList.add('btn-glow');
-                btn.style.borderColor = 'rgba(234, 179, 8, 0.5)';
             }, 2000);
         }
+        function copyTopPromo() { handleCopy('topCopyBtn'); }
+        function copyBottomPromo() { handleCopy('bottomCopyBtn'); }
 
-        // --- AUTO FETCH MATCHES FROM ESPN API ---
+        // --- Helper Function to Render Match Cards ---
+        function renderMatchCard(match, isCompact = false) {
+            const homeName = match.homeTeam.team.name;
+            const awayName = match.awayTeam.team.name;
+            
+            const fallbackPixel = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
+            const homeLogo = match.homeTeam.team.logo || fallbackPixel;
+            const awayLogo = match.awayTeam.team.logo || fallbackPixel;
+
+            const isUtd = homeName.includes('Manchester United') || awayName.includes('Manchester United');
+            
+            const utdBadge = isUtd ? (isCompact ? `<div class="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[8px] font-black px-2 py-0.5 rounded-full border border-red-400 z-10 shadow-sm">GGMU!</div>` : `<div class="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full border border-red-400 shadow-[0_0_10px_rgba(239,68,68,0.8)] animate-pulse z-10">GGMU!</div>`) : '';
+            
+            const cardBaseClass = isCompact ? 'finished-match-card' : 'match-card';
+            const utdClass = isUtd ? 'man-utd' : '';
+            const paddingClass = isCompact ? 'p-3' : 'p-4';
+            const cardClass = `${cardBaseClass} ${utdClass} snap-center rounded-2xl ${paddingClass} relative flex flex-col justify-between overflow-hidden`;
+            
+            const leagueColor = isUtd ? 'text-red-500 dark:text-red-400' : 'text-blue-600 dark:text-blue-400';
+
+            const dateOptions = { month: 'short', day: 'numeric' };
+            const timeOptions = { hour: '2-digit', minute:'2-digit' };
+            const formattedDate = match.date.toLocaleDateString('en-US', dateOptions);
+            const formattedTime = match.date.toLocaleTimeString('en-US', timeOptions);
+
+            let statusHtml = '';
+            let homeScoreHtml = '';
+            let awayScoreHtml = '';
+            let probabilityHtml = '';
+
+            const scoreTextSize = isCompact ? 'text-xl' : 'text-2xl';
+
+            if (match.status === 'post') {
+                statusHtml = `<span class="text-[10px] bg-red-100 dark:bg-red-900/60 text-red-600 dark:text-red-200 px-2 py-1 rounded-md font-bold border border-red-200 dark:border-red-500/30">FT</span>`;
+                homeScoreHtml = `<div class="${scoreTextSize} font-black ${parseInt(match.homeTeam.score) > parseInt(match.awayTeam.score) ? 'text-green-500 dark:text-green-400' : 'text-slate-400 dark:text-gray-400'}">${match.homeTeam.score}</div>`;
+                awayScoreHtml = `<div class="${scoreTextSize} font-black ${parseInt(match.awayTeam.score) > parseInt(match.homeTeam.score) ? 'text-green-500 dark:text-green-400' : 'text-slate-400 dark:text-gray-400'}">${match.awayTeam.score}</div>`;
+            } else if (match.status === 'in') {
+                statusHtml = `<span class="text-[10px] bg-red-600 text-white px-2 py-1 rounded-md font-bold animate-pulse border border-red-400"><i class="fas fa-circle text-[6px] mr-1"></i> LIVE ${match.displayClock}</span>`;
+                homeScoreHtml = `<div class="${scoreTextSize} font-black text-red-600 dark:text-white drop-shadow-sm dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">${match.homeTeam.score}</div>`;
+                awayScoreHtml = `<div class="${scoreTextSize} font-black text-red-600 dark:text-white drop-shadow-sm dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">${match.awayTeam.score}</div>`;
+            } else {
+                statusHtml = `<span class="text-[10px] bg-slate-100 dark:bg-black/60 px-2 py-1 rounded-md font-bold tracking-wide border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white"><i class="far fa-clock mr-1 text-yellow-500"></i> ${formattedDate} • ${formattedTime}</span>`;
+                homeScoreHtml = `<div class="text-sm font-black text-slate-400 dark:text-gray-500">-</div>`;
+                awayScoreHtml = `<div class="text-sm font-black text-slate-400 dark:text-gray-500">-</div>`;
+
+                if (!isCompact) {
+                    let hash = 0;
+                    const matchIdStr = String(match.id);
+                    for (let i = 0; i < matchIdStr.length; i++) hash = Math.imul(31, hash) + matchIdStr.charCodeAt(i) | 0;
+                    let rand1 = Math.abs(Math.sin(hash)) * 100;
+                    let rand2 = Math.abs(Math.cos(hash)) * 100;
+
+                    let homeP = 30 + Math.floor(rand1 % 40); 
+                    let awayP = 15 + Math.floor(rand2 % 35); 
+
+                    if (isUtd && homeName.includes('Man Utd')) { homeP += 25; awayP -= 10; }
+                    if (isUtd && awayName.includes('Man Utd')) { awayP += 25; homeP -= 10; }
+
+                    let drawP = Math.max(5, 100 - homeP - awayP);
+                    const total = homeP + awayP + drawP;
+                    homeP = Math.round((homeP/total)*100);
+                    awayP = Math.round((awayP/total)*100);
+                    drawP = 100 - homeP - awayP;
+
+                    const isHomeHigh = homeP > awayP && homeP > drawP;
+                    const isAwayHigh = awayP > homeP && awayP > drawP;
+
+                    probabilityHtml = `
+                        <div class="mt-4 border-t border-slate-200 dark:border-white/10 pt-3 w-full">
+                            <div class="text-[9px] text-center text-slate-500 dark:text-gray-400 uppercase tracking-widest mb-2 font-bold"><i class="fas fa-chart-pie text-blue-500 dark:text-blue-400 mr-1"></i> အနိုင်ရနိုင်ချေ (Win Probability)</div>
+                            <div class="flex justify-between text-[11px] font-black mb-1.5 px-1">
+                                <span class="${isHomeHigh ? 'text-green-600 dark:text-green-400 dark:drop-shadow-[0_0_5px_rgba(74,222,128,0.5)]' : 'text-slate-500 dark:text-gray-400'}">Home ${homeP}%</span>
+                                <span class="text-slate-400 dark:text-gray-500 font-bold">Draw ${drawP}%</span>
+                                <span class="${isAwayHigh ? 'text-green-600 dark:text-green-400 dark:drop-shadow-[0_0_5px_rgba(74,222,128,0.5)]' : 'text-slate-500 dark:text-gray-400'}">Away ${awayP}%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-slate-200 dark:bg-black/80 rounded-full flex overflow-hidden border border-slate-300 dark:border-white/10 shadow-inner">
+                                <div class="h-full ${isHomeHigh ? 'bg-green-500' : 'bg-blue-400 dark:bg-blue-500/80'} transition-all" style="width: ${homeP}%"></div>
+                                <div class="h-full bg-slate-300 dark:bg-gray-500/50 transition-all" style="width: ${drawP}%"></div>
+                                <div class="h-full ${isAwayHigh ? 'bg-green-500' : 'bg-red-400 dark:bg-red-500/80'} transition-all" style="width: ${awayP}%"></div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            const shortHomeName = homeName.replace('Manchester United', 'Man Utd').replace('Manchester City', 'Man City').substring(0, 15);
+            const shortAwayName = awayName.replace('Manchester United', 'Man Utd').replace('Manchester City', 'Man City').substring(0, 15);
+
+            const logoSize = isCompact ? 'w-8 h-8' : 'w-12 h-12';
+            const nameSize = isCompact ? 'text-[11px]' : 'text-[13px]';
+            const mbClass = isCompact ? 'mb-3' : 'mb-4';
+
+            return `
+                <div class="${cardClass}">
+                    ${utdBadge}
+                    <div>
+                        <div class="flex justify-between items-center ${mbClass}">
+                            <span class="text-[9px] font-bold ${leagueColor} uppercase tracking-wider bg-slate-100 dark:bg-white/5 px-2 py-1 rounded truncate max-w-[100px] border border-slate-200 dark:border-transparent"><i class="fas fa-trophy mr-1"></i> ${match.leagueName}</span>
+                            ${statusHtml}
+                        </div>
+                        
+                        <div class="flex justify-between items-center px-1">
+                            <div class="text-center flex-1 flex flex-col items-center">
+                                <div class="${logoSize} mb-1.5 bg-white dark:bg-white/5 rounded-full flex items-center justify-center p-1 shadow-sm dark:shadow-inner border border-slate-200 dark:border-white/10 relative">
+                                    <img src="${homeLogo}" class="w-full h-full object-contain drop-shadow-sm" alt="${shortHomeName}" onerror="this.src='${fallbackPixel}'">
+                                </div>
+                                <h4 class="font-black ${nameSize} leading-tight mb-1 text-slate-800 dark:text-slate-200 ${isUtd && shortHomeName.includes('Man Utd') ? '!text-red-600 dark:!text-red-500 drop-shadow-sm' : ''}">${shortHomeName}</h4>
+                                ${homeScoreHtml}
+                            </div>
+                            
+                            <div class="mx-2 text-[9px] font-black text-slate-400 dark:text-gray-500 italic bg-slate-100 dark:bg-white/5 px-1.5 py-0.5 rounded-full mb-3">VS</div>
+                            
+                            <div class="text-center flex-1 flex flex-col items-center">
+                                <div class="${logoSize} mb-1.5 bg-white dark:bg-white/5 rounded-full flex items-center justify-center p-1 shadow-sm dark:shadow-inner border border-slate-200 dark:border-white/10 relative">
+                                    <img src="${awayLogo}" class="w-full h-full object-contain drop-shadow-sm" alt="${shortAwayName}" onerror="this.src='${fallbackPixel}'">
+                                </div>
+                                <h4 class="font-black ${nameSize} leading-tight mb-1 text-slate-800 dark:text-slate-200 ${isUtd && shortAwayName.includes('Man Utd') ? '!text-red-600 dark:!text-red-500 drop-shadow-sm' : ''}">${shortAwayName}</h4>
+                                ${awayScoreHtml}
+                            </div>
+                        </div>
+                    </div>
+                    ${probabilityHtml}
+                </div>
+            `;
+        }
+
+        // --- FETCH MATCHES WITH TIME-FIRST SORTING (LEAGUE AS TIE-BREAKER) ---
         async function fetchMatches() {
             const container = document.getElementById('matches-container');
-            const leagues = ['eng.1', 'esp.1', 'ita.1', 'uefa.champions', 'ger.1', 'fra.1'];
-            let allMatches = [];
+            const finishedSection = document.getElementById('finished-matches-section');
+            const finishedContainer = document.getElementById('finished-matches-container');
+            
+            container.innerHTML = `
+                <div class="w-full flex flex-col items-center justify-center text-slate-500 dark:text-gray-400 space-y-3 py-6">
+                    <div class="loader"></div>
+                    <span class="text-xs font-bold italic tracking-wide">ပွဲစဉ်များ အသစ်ရှာဖွေနေပါသည်...</span>
+                </div>
+            `;
+            finishedSection.classList.add('hidden');
+            
+            const leagues = [
+                'eng.1', 'uefa.champions', 'uefa.europa', 'ita.1', 'esp.1', 'ger.1', 'fra.1', 'eng.fa',
+                'eng.2', 'eng.3', 'eng.4', 'eng.league_cup',
+                'esp.2', 'ita.2', 'ger.2', 'fra.2',
+                'ned.1', 'por.1', 'tur.1', 'bel.1',
+                'ksa.1', 'usa.1', 'jpn.1', 'kor.1',
+                'afc.champions', 'fifa.friendly', 'uefa.nations', 'uefa.europa.conf'
+            ];
+
+            const getRank = (id) => {
+                const tiers = {
+                    'eng.1': 1, 'uefa.champions': 1,
+                    'esp.1': 2, 'ita.1': 2, 'ger.1': 2, 'uefa.europa': 2,
+                    'fra.1': 3, 'eng.fa': 3, 'eng.league_cup': 3,
+                };
+                return tiers[id] || 4; 
+            };
 
             try {
+                const timestamp = new Date().getTime();
                 const fetchPromises = leagues.map(league => 
-                    fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${league}/scoreboard`)
-                    .then(res => res.json())
+                    fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${league}/scoreboard?_=${timestamp}`, { cache: "no-store" })
+                    .then(res => res.ok ? res.json().then(data => ({ data: data, leagueId: league })) : null)
                     .catch(() => null)
                 );
 
                 const results = await Promise.all(fetchPromises);
                 
-                results.forEach(data => {
-                    if(data && data.events) {
+                const now = new Date();
+                const yesterday = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+                const nextWeek = new Date(now.getTime() + (7 * 24 * 60 * 60 * 1000));
+                
+                let liveMatches = [];
+                let upcomingMatches = [];
+                let finishedMatches = [];
+                
+                results.forEach(resultObj => {
+                    if(resultObj && resultObj.data && resultObj.data.events) {
+                        const data = resultObj.data;
+                        const currentLeagueId = resultObj.leagueId;
+
                         data.events.forEach(event => {
-                            allMatches.push({
+                            const matchDate = new Date(event.date);
+                            const statusState = event.competitions[0].status.type.state;
+                            
+                            const matchObj = {
                                 id: event.id,
-                                leagueName: data.leagues[0].abbreviation,
+                                leagueId: currentLeagueId,
+                                leagueName: data.leagues[0].abbreviation || data.leagues[0].name,
                                 homeTeam: event.competitions[0].competitors.find(c => c.homeAway === 'home'),
                                 awayTeam: event.competitions[0].competitors.find(c => c.homeAway === 'away'),
-                                status: event.competitions[0].status.type.state, 
+                                status: statusState, 
                                 timeDetail: event.competitions[0].status.type.shortDetail,
                                 displayClock: event.competitions[0].status.displayClock || event.competitions[0].status.type.shortDetail,
-                                date: new Date(event.date)
-                            });
+                                date: matchDate
+                            };
+
+                            if (statusState === 'in') {
+                                liveMatches.push(matchObj);
+                            } else if (statusState === 'pre' && matchDate < nextWeek) {
+                                upcomingMatches.push(matchObj);
+                            } else if (statusState === 'post' && matchDate >= yesterday) {
+                                finishedMatches.push(matchObj);
+                            }
                         });
                     }
                 });
 
-                allMatches.sort((a, b) => a.date - b.date);
+                // --- NEW TIME-FIRST SORTING LOGIC ---
+                
+                // Live & Upcoming: Sort by Date primarily. If exact same time, sort by League Rank.
+                const sortFutureTimeFirst = (a, b) => {
+                    const timeDiff = a.date - b.date;
+                    if (timeDiff !== 0) return timeDiff; // 1. Time (Chronological)
+                    return getRank(a.leagueId) - getRank(b.leagueId); // 2. League Priority (if time is tied)
+                };
+                
+                liveMatches.sort(sortFutureTimeFirst);
+                upcomingMatches.sort(sortFutureTimeFirst);
+                
+                // Finished Matches: Sort by Date primarily (Most recent first). If exact same time, sort by League Rank.
+                finishedMatches.sort((a, b) => {
+                    const timeDiff = b.date - a.date;
+                    if (timeDiff !== 0) return timeDiff; // 1. Time (Reverse Chronological)
+                    return getRank(a.leagueId) - getRank(b.leagueId); // 2. League Priority (if time is tied)
+                }); 
+
+                const activeMatches = [...liveMatches, ...upcomingMatches];
 
                 container.innerHTML = ''; 
-
-                if (allMatches.length === 0) {
+                if (activeMatches.length === 0) {
                     container.innerHTML = `
-                        <div class="w-full text-center py-6 text-gray-400 italic text-sm font-bold">
-                            လက်ရှိတွင် ပွဲစဉ်ကြီးများ မရှိသေးပါဘူး။
+                        <div class="w-full text-center py-6 text-slate-500 dark:text-gray-400 italic text-sm font-bold bg-slate-100 dark:bg-white/5 rounded-2xl border border-slate-200 dark:border-white/5 shadow-inner">
+                            <i class="fas fa-calendar-alt mb-2 text-xl text-slate-400 dark:text-gray-500"></i><br>
+                            လာမည့်ရက်များအတွင်း ပွဲစဉ်များ မရှိသေးပါဘူး။
                         </div>
                     `;
-                    return;
+                } else {
+                    activeMatches.forEach(match => {
+                        container.innerHTML += renderMatchCard(match, false);
+                    });
                 }
 
-                allMatches.forEach(match => {
-                    const homeName = match.homeTeam.team.name;
-                    const awayName = match.awayTeam.team.name;
-                    // Extracting Logos from API (Using a fallback empty shield icon if logo is missing)
-                    const fallbackLogo = 'https://cdn-icons-png.flaticon.com/512/3593/3593455.png';
-                    const homeLogo = match.homeTeam.team.logo || fallbackLogo;
-                    const awayLogo = match.awayTeam.team.logo || fallbackLogo;
-
-                    const isUtd = homeName.includes('Manchester United') || awayName.includes('Manchester United');
-                    
-                    const utdBadge = isUtd ? `<div class="absolute -top-2 -right-2 bg-red-600 text-[10px] font-black px-2.5 py-0.5 rounded-full border border-red-400 shadow-[0_0_10px_rgba(239,68,68,0.8)] animate-pulse z-10">GGMU!</div>` : '';
-                    const cardClass = isUtd ? 'match-card man-utd snap-center rounded-2xl p-4 relative' : 'match-card snap-center rounded-2xl p-4 relative';
-                    const leagueColor = isUtd ? 'text-red-400' : 'text-blue-400';
-
-                    const dateOptions = { month: 'short', day: 'numeric' };
-                    const timeOptions = { hour: '2-digit', minute:'2-digit' };
-                    const formattedDate = match.date.toLocaleDateString('en-US', dateOptions);
-                    const formattedTime = match.date.toLocaleTimeString('en-US', timeOptions);
-
-                    let statusHtml = '';
-                    let homeScoreHtml = '';
-                    let awayScoreHtml = '';
-
-                    if (match.status === 'post') {
-                        statusHtml = `<span class="text-[11px] bg-red-900/60 text-red-200 px-2 py-1 rounded-md font-bold border border-red-500/30">ပွဲပြီး (FT)</span>`;
-                        homeScoreHtml = `<div class="text-2xl font-black ${parseInt(match.homeTeam.score) > parseInt(match.awayTeam.score) ? 'text-green-400' : 'text-gray-400'}">${match.homeTeam.score}</div>`;
-                        awayScoreHtml = `<div class="text-2xl font-black ${parseInt(match.awayTeam.score) > parseInt(match.homeTeam.score) ? 'text-green-400' : 'text-gray-400'}">${match.awayTeam.score}</div>`;
-                    } else if (match.status === 'in') {
-                        statusHtml = `<span class="text-[11px] bg-red-600 text-white px-2 py-1 rounded-md font-bold animate-pulse border border-red-400"><i class="fas fa-circle text-[8px] mr-1"></i> LIVE ${match.displayClock}</span>`;
-                        homeScoreHtml = `<div class="text-2xl font-black text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">${match.homeTeam.score}</div>`;
-                        awayScoreHtml = `<div class="text-2xl font-black text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">${match.awayTeam.score}</div>`;
-                    } else {
-                        statusHtml = `<span class="text-[11px] bg-black/60 px-2.5 py-1 rounded-md font-bold tracking-wide border border-white/10"><i class="far fa-clock mr-1 text-yellow-500"></i> ${formattedDate} • ${formattedTime}</span>`;
-                        homeScoreHtml = `<div class="text-sm font-black text-gray-500">-</div>`;
-                        awayScoreHtml = `<div class="text-sm font-black text-gray-500">-</div>`;
-                    }
-
-                    // Clean names for display
-                    const shortHomeName = homeName.replace('Manchester United', 'Man Utd').replace('Manchester City', 'Man City').substring(0, 15);
-                    const shortAwayName = awayName.replace('Manchester United', 'Man Utd').replace('Manchester City', 'Man City').substring(0, 15);
-
-                    const cardHTML = `
-                        <div class="${cardClass}">
-                            ${utdBadge}
-                            <div class="flex justify-between items-center mb-5">
-                                <span class="text-[10px] font-bold ${leagueColor} uppercase tracking-wider bg-white/5 px-2 py-1 rounded"><i class="fas fa-trophy mr-1"></i> ${match.leagueName}</span>
-                                ${statusHtml}
-                            </div>
-                            
-                            <div class="flex justify-between items-center px-1">
-                                <!-- Home Team with Logo -->
-                                <div class="text-center flex-1 flex flex-col items-center">
-                                    <div class="w-12 h-12 mb-2 bg-white/10 rounded-full flex items-center justify-center p-1.5 shadow-inner border border-white/10 relative">
-                                        <img src="${homeLogo}" class="w-full h-full object-contain drop-shadow-md" alt="${shortHomeName}" onerror="this.src='${fallbackLogo}'">
-                                    </div>
-                                    <h4 class="font-black text-[13px] leading-tight mb-2 ${isUtd && shortHomeName.includes('Man Utd') ? 'text-red-500 drop-shadow-md' : 'text-slate-200'}">${shortHomeName}</h4>
-                                    ${homeScoreHtml}
-                                </div>
-                                
-                                <div class="mx-2 text-[10px] font-black text-gray-500 italic bg-white/5 px-2 py-1 rounded-full mb-4">VS</div>
-                                
-                                <!-- Away Team with Logo -->
-                                <div class="text-center flex-1 flex flex-col items-center">
-                                    <div class="w-12 h-12 mb-2 bg-white/10 rounded-full flex items-center justify-center p-1.5 shadow-inner border border-white/10 relative">
-                                        <img src="${awayLogo}" class="w-full h-full object-contain drop-shadow-md" alt="${shortAwayName}" onerror="this.src='${fallbackLogo}'">
-                                    </div>
-                                    <h4 class="font-black text-[13px] leading-tight mb-2 ${isUtd && shortAwayName.includes('Man Utd') ? 'text-red-500 drop-shadow-md' : 'text-slate-200'}">${shortAwayName}</h4>
-                                    ${awayScoreHtml}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    container.innerHTML += cardHTML;
-                });
+                finishedContainer.innerHTML = '';
+                if (finishedMatches.length > 0) {
+                    finishedMatches.forEach(match => {
+                        finishedContainer.innerHTML += renderMatchCard(match, true);
+                    });
+                    finishedSection.classList.remove('hidden');
+                }
 
             } catch (error) {
                 console.error("Match fetch error:", error);
                 container.innerHTML = `
-                    <div class="w-full text-center py-6 text-red-400 italic text-sm font-bold">
-                        <i class="fas fa-exclamation-circle mr-1"></i> ပွဲစဉ်များ ရယူ၍မရပါ။ ခဏနေမှ ထပ်စမ်းကြည့်ပါ။
+                    <div class="w-full text-center py-6 text-red-600 dark:text-red-400 italic text-sm font-bold bg-red-50 dark:bg-red-900/20 rounded-2xl border border-red-200 dark:border-red-500/20">
+                        <i class="fas fa-exclamation-circle mr-1 mb-2 text-2xl"></i><br>
+                        ပွဲစဉ်များ ရယူ၍မရပါ။ <button onclick="fetchMatches()" class="underline ml-1 font-black">ထပ်စမ်းကြည့်ပါ</button>
                     </div>
                 `;
             }

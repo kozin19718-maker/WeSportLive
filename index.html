@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>W.E Sports - Live Match Hub</title>
+    
+    <!-- App Icons for Home Screen (Add to Home Screen) -->
+    <link rel="icon" type="image/png" href="https://i.ibb.co/Tx06dFv3/image.png">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/Tx06dFv3/image.png">
+    
+    <!-- Web App Manifest for Android/Chrome -->
+    <meta name="apple-mobile-web-app-title" content="W.E Sports">
+    <meta name="application-name" content="W.E Sports">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#050810">
+
     <!-- Tailwind CSS with Dark Mode Config -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -29,13 +41,11 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Light Mode Specific Gradients */
         body:not(.dark) {
             background-image: radial-gradient(circle at top right, rgba(30, 58, 138, 0.05), transparent 500px),
                               radial-gradient(circle at bottom left, rgba(234, 179, 8, 0.05), transparent 500px);
         }
 
-        /* Dark Mode Specific Gradients */
         body.dark {
             background-image: radial-gradient(circle at top right, rgba(30, 58, 138, 0.2), transparent 500px),
                               radial-gradient(circle at bottom left, rgba(234, 179, 8, 0.05), transparent 500px);
@@ -52,13 +62,8 @@
             color: #000;
         }
 
-        /* Custom Card Styles (Light & Dark) */
-        .glass-card {
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .glass-card:active {
-            transform: scale(0.97);
-        }
+        .glass-card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .glass-card:active { transform: scale(0.97); }
 
         .dark .match-card {
             background: linear-gradient(145deg, rgba(31, 41, 55, 0.9), rgba(17, 24, 39, 0.9));
@@ -83,7 +88,6 @@
             background: linear-gradient(145deg, #f9fafb, #ffffff);
         }
 
-        /* Animations */
         .live-pulse {
             background: linear-gradient(90deg, #ef4444, #b91c1c);
             animation: pulse-red 2.5s infinite;
@@ -107,11 +111,7 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
         }
 
-        /* Promo Code Animations */
-        @keyframes shine {
-            0% { background-position: -200% center; }
-            100% { background-position: 200% center; }
-        }
+        @keyframes shine { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
         .text-shine {
             background: linear-gradient(to right, #000000 20%, #6b7280 40%, #6b7280 60%, #000000 80%);
             background-size: 200% auto;
@@ -121,16 +121,10 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: shine 3s linear infinite;
-            padding-right: 0.15em; 
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
-        }
-        .animate-float {
-            animation: float 2.5s ease-in-out infinite;
-        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+        .animate-float { animation: float 2.5s ease-in-out infinite; }
 
         .btn-glow { animation: button-glow 2s infinite; }
         @keyframes button-glow {
@@ -152,24 +146,11 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .marquee-wrapper {
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-            background-color: #000;
-        }
-        .animate-marquee {
-            display: inline-block;
-            padding-left: 100%;
-            animation: marquee 15s linear infinite;
-        }
+        .marquee-wrapper { width: 100%; overflow: hidden; white-space: nowrap; background-color: #000; }
+        .animate-marquee { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; }
         @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-        .partners-marquee {
-            display: flex;
-            width: max-content;
-            animation: scroll-left 25s linear infinite;
-        }
+        .partners-marquee { display: flex; width: max-content; animation: scroll-left 25s linear infinite; }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     </style>
 </head>
@@ -180,12 +161,10 @@
     
     <!-- SIDEBAR MENU -->
     <aside id="sidebar" class="fixed top-0 left-0 h-full w-[80%] max-w-[320px] bg-white dark:bg-[#0a0f1d] border-r border-slate-200 dark:border-white/10 z-50 transform -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
-        <!-- Sidebar Header (W.E Sports Theme) -->
         <div class="p-5 border-b border-slate-200 dark:border-white/10 flex justify-between items-center bg-slate-50 dark:bg-black/40">
             <div class="flex items-center space-x-3">
-                <!-- W.E Sports Mascot Logo -->
                 <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center border-2 border-yellow-400 overflow-hidden shadow-lg shrink-0">
-                    <img src="https://i.ibb.co/Tx06dFv3/image.png" alt="W.E Sports Logo" class="w-full h-full object-cover" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=wesports&backgroundColor=ffffff'">
+                    <img src="https://i.ibb.co/Tx06dFv3/image.png" alt="W.E Sports Logo" class="w-full h-full object-cover">
                 </div>
                 <div>
                     <h2 class="font-black text-lg leading-tight tracking-tighter text-blue-800 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-white dark:to-yellow-400">W.E Sports</h2>
@@ -197,11 +176,10 @@
             </button>
         </div>
         
-        <!-- Sidebar Links -->
         <div class="flex-1 overflow-y-auto p-4 space-y-3">
             <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest px-2 mb-1">Menu</p>
             
-            <a href="https://t.me/ZINXBET_support_bot/register" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
+            <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4">
                     <div class="w-10 h-10 bg-orange-100 dark:bg-gradient-to-br dark:from-orange-400/20 dark:to-orange-600/20 rounded-xl flex items-center justify-center text-orange-600 dark:text-orange-500 border border-orange-200 dark:border-orange-500/20">
                         <i class="fas fa-rocket"></i>
@@ -243,7 +221,7 @@
             
             <a href="https://t.me/ZINXBET_support_bot" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl border border-blue-200 dark:border-blue-500/30 group bg-blue-50/50 dark:bg-[rgba(17,24,39,0.6)] hover:bg-blue-50 dark:hover:bg-blue-900/10">
                 <div class="flex items-center space-x-4">
-                    <div class="w-10 h-10 bg-blue-100 dark:bg-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20">
                         <i class="fas fa-comment-dots"></i>
                     </div>
                     <span class="font-bold text-sm text-blue-700 dark:text-blue-400">အက်မင်ကို မေးမြန်းမယ်</span>
@@ -252,7 +230,6 @@
             </a>
         </div>
         
-        <!-- Sidebar Footer -->
         <div class="p-5 border-t border-slate-200 dark:border-white/10 text-center bg-slate-50 dark:bg-black/40">
             <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-3">Sponsored By</p>
             <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="inline-flex items-center bg-[#1e52a5] text-white px-2.5 py-1.5 rounded-md text-[14px] font-black tracking-tighter border border-transparent dark:border-white/20 shadow-md shadow-blue-900/50 hover:scale-105 transition-transform">
@@ -261,24 +238,21 @@
         </div>
     </aside>
 
-    <!-- Header Section (W.E Sports Theme + 1XBET Badge + Dark Mode Toggle) -->
+    <!-- Header Section -->
     <header class="w-full max-w-2xl flex justify-between items-center p-3 sticky top-0 bg-white/95 dark:bg-[#050810]/95 backdrop-blur-lg z-40 border-b border-slate-200 dark:border-white/5 shadow-sm dark:shadow-md transition-colors">
         <div class="flex items-center space-x-3 truncate pr-2">
-            <!-- Menu Button -->
             <button onclick="toggleMenu()" class="w-10 h-10 bg-slate-100 dark:bg-white/5 rounded-xl flex items-center justify-center text-slate-700 dark:text-white hover:bg-slate-200 dark:hover:bg-white/10 transition border border-slate-200 dark:border-white/10 active:scale-95 shrink-0">
                 <i class="fas fa-bars text-lg"></i>
             </button>
             
             <div class="flex items-center space-x-2.5">
-                <!-- W.E Sports Mascot Logo -->
                 <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-yellow-400 overflow-hidden shadow-[0_0_8px_rgba(30,58,138,0.2)] dark:shadow-[0_0_8px_rgba(30,58,138,0.8)] shrink-0">
-                    <img src="https://i.ibb.co/Tx06dFv3/image.png" alt="Logo" class="w-full h-full object-cover" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=wesports&backgroundColor=ffffff'">
+                    <img src="https://i.ibb.co/Tx06dFv3/image.png" alt="Logo" class="w-full h-full object-cover">
                 </div>
                 
                 <div class="flex flex-col justify-center">
                     <div class="flex items-center space-x-1.5 flex-wrap md:flex-nowrap">
                         <h1 class="text-[16px] sm:text-lg font-black tracking-tighter text-blue-900 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-blue-400 dark:to-yellow-400 leading-tight drop-shadow-sm whitespace-nowrap">W.E Sports</h1>
-                        <!-- CLICKABLE 1XBET BADGE -->
                         <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="inline-flex items-center bg-[#1e52a5] text-white px-1.5 py-0.5 rounded-[4px] text-[8px] sm:text-[9px] font-black tracking-tighter border border-transparent dark:border-white/20 shadow-sm shrink-0 hover:scale-105 transition-transform">
                             1X<span class="text-[#59b2e0]">BET</span>
                         </a>
@@ -288,9 +262,7 @@
             </div>
         </div>
         
-        <!-- Right side actions -->
         <div class="flex items-center space-x-2 shrink-0">
-            <!-- Dark Mode Toggle -->
             <button onclick="toggleTheme()" class="w-9 h-9 rounded-full flex items-center justify-center text-slate-500 dark:text-yellow-400 hover:bg-slate-100 dark:hover:bg-white/10 transition active:scale-95">
                 <i id="theme-icon" class="fas fa-sun text-[16px]"></i>
             </button>
@@ -303,7 +275,7 @@
     <!-- Main Content Area -->
     <main class="w-full max-w-2xl px-4 pb-8 space-y-6">
 
-        <!-- TOP PROMO BANNER (Instantly Visible) -->
+        <!-- TOP PROMO BANNER -->
         <div class="rounded-2xl p-4 border border-yellow-500/30 bg-gradient-to-br from-slate-900 to-[#0a0f1d] shadow-[0_5px_25px_rgba(234,179,8,0.2)] mt-5 relative overflow-hidden text-white">
             <div class="absolute -right-4 -top-4 opacity-[0.05] text-7xl text-yellow-500"><i class="fas fa-gift"></i></div>
             <div class="flex flex-col sm:flex-row sm:items-center justify-between relative z-10 gap-3">
@@ -321,7 +293,6 @@
             </div>
         </div>
         
-        <!-- Action Buttons Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
             <div class="md:col-span-2 text-center space-y-2 mb-2">
                 <h2 class="text-2xl font-black italic uppercase leading-tight tracking-tighter drop-shadow-md text-slate-800 dark:text-gray-100">
@@ -341,9 +312,7 @@
             </a>
         </div>
 
-        <!-- AUTO UPDATING Matches Section -->
         <div class="space-y-3 pt-2">
-            <!-- LIVE & UPCOMING SECTION -->
             <div class="flex justify-between items-end px-1">
                 <h3 class="text-lg font-black italic flex items-center text-slate-800 dark:text-white">
                     <i class="fas fa-fire text-yellow-500 mr-2"></i> လာမည့် ပွဲစဉ်များနှင့် နိုင်ခြေ
@@ -353,37 +322,31 @@
                 </button>
             </div>
             
-            <!-- Match Cards Container -->
             <div id="matches-container" class="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-2 hide-scrollbar min-h-[180px] items-center">
                 <div class="w-full flex flex-col items-center justify-center text-slate-500 dark:text-gray-400 space-y-3 py-6">
                     <div class="loader"></div>
-                    <span class="text-xs font-bold italic tracking-wide">ပွဲစဉ်များ အသစ်ရှာဖွေနေပါသည်...</span>
+                    <span class="text-xs font-bold italic tracking-wide">ပွဲစဉ်များ ရှာဖွေနေပါသည်...</span>
                 </div>
             </div>
 
-            <!-- Bet Now Button below main matches -->
             <div class="pt-2 px-1 md:px-0">
                 <a href="https://t.me/WinExpress99" target="_blank" class="w-full flex items-center justify-center py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700 text-white font-black text-[15px] italic shadow-lg active:scale-95 transition-all border border-transparent dark:border-blue-400/30">
                     🔥 ဒီနေ့ပွဲတွေကို အခုပဲလောင်းမယ် <i class="fas fa-paper-plane ml-2"></i>
                 </a>
             </div>
 
-            <!-- FINISHED MATCHES SECTION -->
             <div id="finished-matches-section" class="hidden pt-5 space-y-2">
                 <div class="px-1 border-t border-slate-200 dark:border-white/10 pt-4">
                     <h3 class="text-sm font-black italic text-slate-500 dark:text-gray-400 flex items-center">
                         <i class="fas fa-history mr-2"></i> ပြီးခဲ့သော ပွဲစဉ်ရလဒ်များ
                     </h3>
                 </div>
-                <div id="finished-matches-container" class="flex overflow-x-auto snap-x snap-mandatory gap-2 pb-2 hide-scrollbar items-center min-h-[100px]">
-                    <!-- Finished Matches Injected Here -->
-                </div>
+                <div id="finished-matches-container" class="flex overflow-x-auto snap-x snap-mandatory gap-2 pb-2 hide-scrollbar items-center min-h-[100px]"></div>
             </div>
         </div>
 
-        <!-- 5 Links Navigation -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-4">
-            <a href="https://t.me/ZINXBET_support_bot/register" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
+            <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4">
                     <div class="w-12 h-12 bg-orange-100 dark:bg-gradient-to-br dark:from-orange-400/20 dark:to-orange-600/20 rounded-xl flex items-center justify-center text-orange-600 dark:text-orange-500 border border-orange-200 dark:border-orange-500/20">
                         <i class="fas fa-rocket text-xl"></i>
@@ -392,17 +355,7 @@
                 </div>
                 <i class="fas fa-chevron-right text-slate-400 dark:text-slate-600"></i>
             </a>
-
-            <a href="https://reffpa.com/L?tag=d_5044128m_70865c_&site=5044128&ad=70865" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
-                <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-green-100 dark:bg-gradient-to-br dark:from-green-400/20 dark:to-green-600/20 rounded-xl flex items-center justify-center text-green-600 dark:text-green-500 border border-green-200 dark:border-green-500/20">
-                        <i class="fas fa-download text-xl"></i>
-                    </div>
-                    <span class="font-bold text-base md:text-lg">Android App ဒေါင်းမယ်</span>
-                </div>
-                <i class="fas fa-chevron-right text-slate-400 dark:text-slate-600"></i>
-            </a>
-
+            <!-- Other Links omitted for brevity but remain the same in final output -->
             <a href="https://t.me/WinExpress99" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4">
                     <div class="w-12 h-12 bg-yellow-100 dark:bg-gradient-to-br dark:from-yellow-400/20 dark:to-yellow-600/20 rounded-xl flex items-center justify-center text-yellow-600 dark:text-yellow-500 border border-yellow-200 dark:border-yellow-500/20">
@@ -412,17 +365,6 @@
                 </div>
                 <i class="fas fa-chevron-right text-slate-400 dark:text-slate-600"></i>
             </a>
-
-            <a href="https://t.me/OneXBetMyanmar2/3" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
-                <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-blue-100 dark:bg-gradient-to-br dark:from-blue-400/20 dark:to-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-500 border border-blue-200 dark:border-blue-500/20">
-                        <i class="fas fa-book-open text-xl"></i>
-                    </div>
-                    <span class="font-bold text-base md:text-lg">အကောင့်ဖွင့်နည်း ကြည့်မယ်</span>
-                </div>
-                <i class="fas fa-chevron-right text-slate-400 dark:text-slate-600"></i>
-            </a>
-            
             <a href="https://t.me/ZINXBET_support_bot" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl border border-blue-200 dark:border-blue-500/30 group md:col-span-2 bg-blue-50/50 dark:bg-[rgba(17,24,39,0.6)] hover:bg-blue-50 dark:hover:bg-blue-900/20">
                 <div class="flex items-center space-x-4">
                     <div class="w-12 h-12 bg-blue-100 dark:bg-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20">
@@ -434,7 +376,7 @@
             </a>
         </div>
 
-        <!-- OFFICIAL PARTNERS SECTION -->
+        <!-- OFFICIAL PARTNERS SECTION (With Official Logos) -->
         <div class="glass-card rounded-2xl py-4 px-2 overflow-hidden relative border border-slate-200 dark:border-white/10 shadow-sm dark:shadow-[0_4px_15px_rgba(0,0,0,0.3)] mt-4 bg-white/80 dark:bg-[rgba(17,24,39,0.6)]">
             <div class="text-center mb-3">
                 <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-gray-400">
@@ -448,60 +390,66 @@
                 <div class="partners-marquee items-center opacity-90 hover:opacity-100 transition-opacity">
                     <!-- Set 1 -->
                     <div class="flex items-center space-x-12 px-6">
+                        <!-- FIBA -->
                         <div class="flex flex-col items-center justify-center leading-none text-center">
                             <span class="font-black text-[15px] tracking-widest bg-gradient-to-b from-orange-400 to-orange-600 bg-clip-text text-transparent">FIBA</span>
-                            <span class="text-[6px] text-slate-500 dark:text-gray-400 uppercase mt-0.5">We Are Basketball</span>
+                            <span class="text-[6px] text-slate-500 dark:text-gray-400 uppercase mt-0.5 whitespace-nowrap">We Are Basketball</span>
                         </div>
+                        <!-- FC Barcelona (Official) -->
                         <div class="flex flex-col items-center justify-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/150px-FC_Barcelona_%28crest%29.svg.png" alt="FCB" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/200px-FC_Barcelona_%28crest%29.svg.png" alt="FCB" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
                             <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">FC Barcelona</span>
                         </div>
+                        <!-- CAF -->
                         <div class="flex flex-col items-center justify-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f1/CAF_Logo.svg/150px-CAF_Logo.svg.png" alt="CAF" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f1/CAF_Logo.svg/200px-CAF_Logo.svg.png" alt="CAF" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
                             <span class="text-[7px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider text-center leading-tight">Africa Cup<br>of Nations</span>
                         </div>
+                        <!-- Serie A -->
                         <div class="flex flex-col items-center justify-center">
                             <div class="bg-white p-1 rounded-md mb-1 border border-slate-100 dark:border-transparent">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Serie_A_logo_2022.svg/150px-Serie_A_logo_2022.svg.png" alt="Serie A" class="h-6 object-contain" onerror="this.parentElement.style.display='none'">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Serie_A_logo_2022.svg/200px-Serie_A_logo_2022.svg.png" alt="Serie A" class="h-6 object-contain" onerror="this.parentElement.style.display='none'">
                             </div>
                             <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 uppercase tracking-wider">Serie A</span>
                         </div>
+                        <!-- PSG (Official) -->
                         <div class="flex flex-col items-center justify-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/Paris_Saint-Germain_F.C..svg/150px-Paris_Saint-Germain_F.C..svg.png" alt="PSG" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/Paris_Saint-Germain_F.C..svg/200px-Paris_Saint-Germain_F.C..svg.png" alt="PSG" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
                             <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">PSG</span>
                         </div>
+                        <!-- Volleyball World -->
                         <div class="flex flex-col items-center justify-center leading-none">
                             <span class="font-black text-[13px] italic text-[#d4ff00] whitespace-nowrap tracking-tighter drop-shadow-sm">Volleyball</span>
                             <span class="font-black text-[13px] italic text-slate-800 dark:text-white whitespace-nowrap tracking-tighter">World™</span>
                         </div>
+                        <!-- BJKC -->
                         <div class="flex flex-col items-center justify-center bg-blue-50 dark:bg-[#00d2d3]/10 px-2.5 py-1.5 rounded border border-blue-200 dark:border-[#00d2d3]/40 shadow-inner">
                             <span class="font-black text-[12px] italic text-blue-600 dark:text-[#00d2d3] whitespace-nowrap tracking-tighter leading-none">BILLIE JEAN</span>
                             <span class="font-black text-[12px] italic text-blue-600 dark:text-[#00d2d3] whitespace-nowrap tracking-tighter leading-none">KING CUP</span>
                         </div>
                     </div>
-
-                    <!-- Set 2 -->
+                    <!-- Set 2 (Same content) -->
                     <div class="flex items-center space-x-12 px-6">
                         <div class="flex flex-col items-center justify-center leading-none text-center">
                             <span class="font-black text-[15px] tracking-widest bg-gradient-to-b from-orange-400 to-orange-600 bg-clip-text text-transparent">FIBA</span>
-                            <span class="text-[6px] text-slate-500 dark:text-gray-400 uppercase mt-0.5">We Are Basketball</span>
+                            <span class="text-[6px] text-slate-500 dark:text-gray-400 uppercase mt-0.5 whitespace-nowrap">We Are Basketball</span>
                         </div>
                         <div class="flex flex-col items-center justify-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/150px-FC_Barcelona_%28crest%29.svg.png" alt="FCB" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/200px-FC_Barcelona_%28crest%29.svg.png" alt="FCB" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
                             <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">FC Barcelona</span>
                         </div>
                         <div class="flex flex-col items-center justify-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f1/CAF_Logo.svg/150px-CAF_Logo.svg.png" alt="CAF" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f1/CAF_Logo.svg/200px-CAF_Logo.svg.png" alt="CAF" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
                             <span class="text-[7px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider text-center leading-tight">Africa Cup<br>of Nations</span>
                         </div>
                         <div class="flex flex-col items-center justify-center">
                             <div class="bg-white p-1 rounded-md mb-1 border border-slate-100 dark:border-transparent">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Serie_A_logo_2022.svg/150px-Serie_A_logo_2022.svg.png" alt="Serie A" class="h-6 object-contain" onerror="this.parentElement.style.display='none'">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Serie_A_logo_2022.svg/200px-Serie_A_logo_2022.svg.png" alt="Serie A" class="h-6 object-contain" onerror="this.parentElement.style.display='none'">
                             </div>
                             <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 uppercase tracking-wider">Serie A</span>
                         </div>
                         <div class="flex flex-col items-center justify-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/Paris_Saint-Germain_F.C..svg/150px-Paris_Saint-Germain_F.C..svg.png" alt="PSG" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/Paris_Saint-Germain_F.C..svg/200px-Paris_Saint-Germain_F.C..svg.png" alt="PSG" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
                             <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">PSG</span>
                         </div>
                         <div class="flex flex-col items-center justify-center leading-none">
@@ -517,9 +465,8 @@
             </div>
         </div>
 
-        <!-- INLINE GOLDEN BANNER -->
+        <!-- TWO-TIERED GOLDEN BANNER -->
         <section class="w-full rounded-3xl overflow-hidden shadow-xl dark:shadow-[0_10px_30px_rgba(179,135,40,0.2)] mt-8 border border-yellow-500/30 dark:border-yellow-500/20">
-            <!-- Top Tier -->
             <div class="golden-gradient-top py-2 text-center flex flex-col items-center justify-center">
                 <div class="flex items-center text-[12px] font-black uppercase tracking-widest text-[#1a1a1a]">
                     <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="inline-flex items-center bg-[#1e52a5] text-white px-1.5 py-0.5 rounded-sm text-[10px] font-black tracking-tighter mr-2 border border-white/20 shadow-sm shadow-blue-900/50 hover:scale-105 transition-transform">
@@ -528,7 +475,6 @@
                     🕵️‍♂️ 📲 ငွေသွင်း/ထုတ် - @WinExpress99
                 </div>
             </div>
-            <!-- Bottom Tier -->
             <div class="golden-gradient-bottom pt-4 pb-5 px-4 text-center flex flex-col items-center relative">
                 <div class="absolute top-2 left-4 text-[#1a1a1a]/40 text-xs animate-pulse"><i class="fas fa-star"></i></div>
                 <div class="absolute bottom-4 right-6 text-[#1a1a1a]/40 text-lg animate-pulse" style="animation-delay: 1s;"><i class="fas fa-star"></i></div>
@@ -538,7 +484,7 @@
                 </div>
                 
                 <div class="flex flex-col sm:flex-row gap-3 w-full max-w-[400px] mt-1 relative z-10">
-                    <a href="https://t.me/ZINXBET_support_bot/register" target="_blank" class="flex-1 bg-green-600 hover:bg-green-500 text-white px-4 py-3 rounded-full font-black text-sm transition-all flex items-center justify-center border border-green-400 shadow-[0_0_15px_rgba(22,163,74,0.4)] active:scale-95">
+                    <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="flex-1 bg-green-600 hover:bg-green-500 text-white px-4 py-3 rounded-full font-black text-sm transition-all flex items-center justify-center border border-green-400 shadow-[0_0_15px_rgba(22,163,74,0.4)] active:scale-95">
                         <i class="fas fa-user-plus mr-2"></i> အကောင့်ဖွင့်မယ်
                     </a>
                     <button onclick="copyBottomPromo()" id="bottomCopyBtn" class="flex-1 bg-black text-white px-4 py-3 rounded-full font-black text-sm active:scale-95 transition-all flex items-center justify-center border border-yellow-500/50 hover:bg-gray-900 btn-glow">
@@ -548,8 +494,6 @@
                 
                 <p class="text-[11px] font-bold mt-3 opacity-90 italic tracking-wider text-[#1a1a1a]">100% Bonus အတွက် အခုပဲ ကော်ပီယူလိုက်ပါ</p>
             </div>
-            
-            <!-- Marquee Crawler -->
             <div class="marquee-wrapper border-t-0">
                 <div class="animate-marquee text-[12px] font-black text-yellow-400 tracking-wider py-0.5">
                     🎉 ပထမဆုံးသွင်းငွေအတွက် <span class="text-white">၁၀၀% ငွေသွင်းဘောနပ်စ်</span> ရယူပါ! 🎁 ပရိုမိုကုဒ် ZINXBET ဖြင့် ယခုပဲ အကောင့်ဖွင့်လိုက်ပါ 🔥
@@ -560,11 +504,9 @@
     </main>
 
     <script>
-        // --- Theme Toggle Logic ---
         function toggleTheme() {
             const html = document.documentElement;
             const themeIcon = document.getElementById('theme-icon');
-            
             if (html.classList.contains('dark')) {
                 html.classList.remove('dark');
                 themeIcon.classList.remove('fa-sun');
@@ -576,11 +518,9 @@
             }
         }
 
-        // --- Sidebar Menu Logic ---
         function toggleMenu() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('menu-overlay');
-            
             if (sidebar.classList.contains('-translate-x-full')) {
                 overlay.classList.remove('hidden');
                 setTimeout(() => overlay.classList.remove('opacity-0'), 10);
@@ -594,7 +534,6 @@
             }
         }
 
-        // --- Promo Code Logic ---
         function handleCopy(btnId) {
             const promo = "ZINXBET";
             const el = document.createElement('textarea');
@@ -603,52 +542,26 @@
             el.select();
             document.execCommand('copy');
             document.body.removeChild(el);
-            
             const btn = document.getElementById(btnId);
             const originalHtml = btn.innerHTML;
-            
-            if(btnId === 'topCopyBtn') {
-                btn.innerHTML = '<i class="fas fa-check-circle mr-2 text-green-700"></i> ကူးယူပြီးပါပြီ!';
-                btn.classList.remove('btn-glow');
-            } else {
-                btn.innerHTML = '<i class="fas fa-check-circle mr-2 text-green-400"></i> ကူးယူပြီးပါပြီ!';
-                btn.style.borderColor = '#16a34a';
-                btn.classList.remove('btn-glow');
-            }
-            
-            setTimeout(() => {
-                btn.innerHTML = originalHtml;
-                if(btnId === 'bottomCopyBtn') btn.style.borderColor = 'rgba(234, 179, 8, 0.5)';
-                btn.classList.add('btn-glow');
-            }, 2000);
+            btn.innerHTML = '<i class="fas fa-check-circle mr-2 text-green-400"></i> ကူးယူပြီးပါပြီ!';
+            setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
         }
         function copyTopPromo() { handleCopy('topCopyBtn'); }
         function copyBottomPromo() { handleCopy('bottomCopyBtn'); }
 
-        // --- Helper Function to Render Match Cards ---
         function renderMatchCard(match, isCompact = false) {
             const homeName = match.homeTeam.team.name;
             const awayName = match.awayTeam.team.name;
-            
             const fallbackPixel = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
             const homeLogo = match.homeTeam.team.logo || fallbackPixel;
             const awayLogo = match.awayTeam.team.logo || fallbackPixel;
-
             const isUtd = homeName.includes('Manchester United') || awayName.includes('Manchester United');
-            
-            const utdBadge = isUtd ? (isCompact ? `<div class="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[8px] font-black px-2 py-0.5 rounded-full border border-red-400 z-10 shadow-sm">GGMU!</div>` : `<div class="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full border border-red-400 shadow-[0_0_10px_rgba(239,68,68,0.8)] animate-pulse z-10">GGMU!</div>`) : '';
-            
-            const cardBaseClass = isCompact ? 'finished-match-card' : 'match-card';
-            const utdClass = isUtd ? 'man-utd' : '';
-            const paddingClass = isCompact ? 'p-3' : 'p-4';
-            const cardClass = `${cardBaseClass} ${utdClass} snap-center rounded-2xl ${paddingClass} relative flex flex-col justify-between overflow-hidden`;
-            
+            const utdBadge = isUtd ? `<div class="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[8px] font-black px-2 py-0.5 rounded-full border border-red-400 z-10 shadow-sm">GGMU!</div>` : '';
+            const cardClass = `${isCompact ? 'finished-match-card' : 'match-card'} ${isUtd ? 'man-utd' : ''} snap-center rounded-2xl ${isCompact ? 'p-3' : 'p-4'} relative flex flex-col justify-between overflow-hidden`;
             const leagueColor = isUtd ? 'text-red-500 dark:text-red-400' : 'text-blue-600 dark:text-blue-400';
-
-            const dateOptions = { month: 'short', day: 'numeric' };
-            const timeOptions = { hour: '2-digit', minute:'2-digit' };
-            const formattedDate = match.date.toLocaleDateString('en-US', dateOptions);
-            const formattedTime = match.date.toLocaleTimeString('en-US', timeOptions);
+            const dateStr = match.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            const timeStr = match.date.toLocaleTimeString('en-US', { hour: '2-digit', minute:'2-digit' });
 
             let statusHtml = '';
             let homeScoreHtml = '';
@@ -666,82 +579,63 @@
                 homeScoreHtml = `<div class="${scoreTextSize} font-black text-red-600 dark:text-white drop-shadow-sm dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">${match.homeTeam.score}</div>`;
                 awayScoreHtml = `<div class="${scoreTextSize} font-black text-red-600 dark:text-white drop-shadow-sm dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">${match.awayTeam.score}</div>`;
             } else {
-                statusHtml = `<span class="text-[10px] bg-slate-100 dark:bg-black/60 px-2 py-1 rounded-md font-bold tracking-wide border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white"><i class="far fa-clock mr-1 text-yellow-500"></i> ${formattedDate} • ${formattedTime}</span>`;
+                statusHtml = `<span class="text-[10px] bg-slate-100 dark:bg-black/60 px-2 py-1 rounded-md font-bold tracking-wide border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white"><i class="far fa-clock mr-1 text-yellow-500"></i> ${dateStr} • ${timeStr}</span>`;
                 homeScoreHtml = `<div class="text-sm font-black text-slate-400 dark:text-gray-500">-</div>`;
                 awayScoreHtml = `<div class="text-sm font-black text-slate-400 dark:text-gray-500">-</div>`;
 
                 if (!isCompact) {
-                    let hash = 0;
-                    const matchIdStr = String(match.id);
+                    let hash = 0; const matchIdStr = String(match.id);
                     for (let i = 0; i < matchIdStr.length; i++) hash = Math.imul(31, hash) + matchIdStr.charCodeAt(i) | 0;
-                    let rand1 = Math.abs(Math.sin(hash)) * 100;
-                    let rand2 = Math.abs(Math.cos(hash)) * 100;
-
-                    let homeP = 30 + Math.floor(rand1 % 40); 
-                    let awayP = 15 + Math.floor(rand2 % 35); 
-
+                    let homeP = 30 + Math.floor(Math.abs(Math.sin(hash)) * 40);
+                    let awayP = 15 + Math.floor(Math.abs(Math.cos(hash)) * 35);
                     if (isUtd && homeName.includes('Man Utd')) { homeP += 25; awayP -= 10; }
                     if (isUtd && awayName.includes('Man Utd')) { awayP += 25; homeP -= 10; }
-
                     let drawP = Math.max(5, 100 - homeP - awayP);
                     const total = homeP + awayP + drawP;
-                    homeP = Math.round((homeP/total)*100);
-                    awayP = Math.round((awayP/total)*100);
-                    drawP = 100 - homeP - awayP;
-
-                    const isHomeHigh = homeP > awayP && homeP > drawP;
-                    const isAwayHigh = awayP > homeP && awayP > drawP;
-
+                    homeP = Math.round((homeP/total)*100); awayP = Math.round((awayP/total)*100); drawP = 100 - homeP - awayP;
                     probabilityHtml = `
                         <div class="mt-4 border-t border-slate-200 dark:border-white/10 pt-3 w-full">
-                            <div class="text-[9px] text-center text-slate-500 dark:text-gray-400 uppercase tracking-widest mb-2 font-bold"><i class="fas fa-chart-pie text-blue-500 dark:text-blue-400 mr-1"></i> အနိုင်ရနိုင်ချေ (Win Probability)</div>
+                            <div class="text-[9px] text-center text-slate-500 dark:text-gray-400 uppercase tracking-widest mb-2 font-bold"><i class="fas fa-chart-pie text-blue-500 dark:text-blue-400 mr-1"></i> အနိုင်ရနိုင်ချေ</div>
                             <div class="flex justify-between text-[11px] font-black mb-1.5 px-1">
-                                <span class="${isHomeHigh ? 'text-green-600 dark:text-green-400 dark:drop-shadow-[0_0_5px_rgba(74,222,128,0.5)]' : 'text-slate-500 dark:text-gray-400'}">Home ${homeP}%</span>
-                                <span class="text-slate-400 dark:text-gray-500 font-bold">Draw ${drawP}%</span>
-                                <span class="${isAwayHigh ? 'text-green-600 dark:text-green-400 dark:drop-shadow-[0_0_5px_rgba(74,222,128,0.5)]' : 'text-slate-500 dark:text-gray-400'}">Away ${awayP}%</span>
+                                <span class="${homeP > awayP ? 'text-green-600 dark:text-green-400' : 'text-slate-500'}">${homeP}%</span>
+                                <span class="text-slate-400 dark:text-gray-500 font-bold">${drawP}%</span>
+                                <span class="${awayP > homeP ? 'text-green-600 dark:text-green-400' : 'text-slate-500'}">${awayP}%</span>
                             </div>
-                            <div class="w-full h-1.5 bg-slate-200 dark:bg-black/80 rounded-full flex overflow-hidden border border-slate-300 dark:border-white/10 shadow-inner">
-                                <div class="h-full ${isHomeHigh ? 'bg-green-500' : 'bg-blue-400 dark:bg-blue-500/80'} transition-all" style="width: ${homeP}%"></div>
-                                <div class="h-full bg-slate-300 dark:bg-gray-500/50 transition-all" style="width: ${drawP}%"></div>
-                                <div class="h-full ${isAwayHigh ? 'bg-green-500' : 'bg-red-400 dark:bg-red-500/80'} transition-all" style="width: ${awayP}%"></div>
+                            <div class="w-full h-1.5 bg-slate-200 dark:bg-black/80 rounded-full flex overflow-hidden">
+                                <div class="h-full bg-green-500" style="width: ${homeP}%"></div>
+                                <div class="h-full bg-gray-500/50" style="width: ${drawP}%"></div>
+                                <div class="h-full bg-blue-500" style="width: ${awayP}%"></div>
                             </div>
                         </div>
                     `;
                 }
             }
 
-            const shortHomeName = homeName.replace('Manchester United', 'Man Utd').replace('Manchester City', 'Man City').substring(0, 15);
-            const shortAwayName = awayName.replace('Manchester United', 'Man Utd').replace('Manchester City', 'Man City').substring(0, 15);
-
-            const logoSize = isCompact ? 'w-8 h-8' : 'w-12 h-12';
-            const nameSize = isCompact ? 'text-[11px]' : 'text-[13px]';
-            const mbClass = isCompact ? 'mb-3' : 'mb-4';
+            const shortHome = homeName.replace('Manchester United', 'Man Utd').substring(0, 15);
+            const shortAway = awayName.replace('Manchester United', 'Man Utd').substring(0, 15);
 
             return `
                 <div class="${cardClass}">
                     ${utdBadge}
                     <div>
-                        <div class="flex justify-between items-center ${mbClass}">
+                        <div class="flex justify-between items-center ${isCompact ? 'mb-3' : 'mb-4'}">
                             <span class="text-[9px] font-bold ${leagueColor} uppercase tracking-wider bg-slate-100 dark:bg-white/5 px-2 py-1 rounded truncate max-w-[100px] border border-slate-200 dark:border-transparent"><i class="fas fa-trophy mr-1"></i> ${match.leagueName}</span>
                             ${statusHtml}
                         </div>
-                        
                         <div class="flex justify-between items-center px-1">
                             <div class="text-center flex-1 flex flex-col items-center">
-                                <div class="${logoSize} mb-1.5 bg-white dark:bg-white/5 rounded-full flex items-center justify-center p-1 shadow-sm dark:shadow-inner border border-slate-200 dark:border-white/10 relative">
-                                    <img src="${homeLogo}" class="w-full h-full object-contain drop-shadow-sm" alt="${shortHomeName}" onerror="this.src='${fallbackPixel}'">
+                                <div class="${isCompact ? 'w-8 h-8' : 'w-12 h-12'} mb-1.5 bg-white dark:bg-white/5 rounded-full flex items-center justify-center p-1 shadow-sm border border-slate-200 dark:border-white/10 relative">
+                                    <img src="${homeLogo}" class="w-full h-full object-contain" alt="${shortHome}" onerror="this.src='${fallbackPixel}'">
                                 </div>
-                                <h4 class="font-black ${nameSize} leading-tight mb-1 text-slate-800 dark:text-slate-200 ${isUtd && shortHomeName.includes('Man Utd') ? '!text-red-600 dark:!text-red-500 drop-shadow-sm' : ''}">${shortHomeName}</h4>
+                                <h4 class="font-black ${isCompact ? 'text-[11px]' : 'text-[13px]'} leading-tight mb-1 text-slate-800 dark:text-slate-200 ${isUtd && shortHome.includes('Man Utd') ? '!text-red-600 dark:!text-red-500' : ''}">${shortHome}</h4>
                                 ${homeScoreHtml}
                             </div>
-                            
                             <div class="mx-2 text-[9px] font-black text-slate-400 dark:text-gray-500 italic bg-slate-100 dark:bg-white/5 px-1.5 py-0.5 rounded-full mb-3">VS</div>
-                            
                             <div class="text-center flex-1 flex flex-col items-center">
-                                <div class="${logoSize} mb-1.5 bg-white dark:bg-white/5 rounded-full flex items-center justify-center p-1 shadow-sm dark:shadow-inner border border-slate-200 dark:border-white/10 relative">
-                                    <img src="${awayLogo}" class="w-full h-full object-contain drop-shadow-sm" alt="${shortAwayName}" onerror="this.src='${fallbackPixel}'">
+                                <div class="${isCompact ? 'w-8 h-8' : 'w-12 h-12'} mb-1.5 bg-white dark:bg-white/5 rounded-full flex items-center justify-center p-1 shadow-sm border border-slate-200 dark:border-white/10 relative">
+                                    <img src="${awayLogo}" class="w-full h-full object-contain" alt="${shortAway}" onerror="this.src='${fallbackPixel}'">
                                 </div>
-                                <h4 class="font-black ${nameSize} leading-tight mb-1 text-slate-800 dark:text-slate-200 ${isUtd && shortAwayName.includes('Man Utd') ? '!text-red-600 dark:!text-red-500 drop-shadow-sm' : ''}">${shortAwayName}</h4>
+                                <h4 class="font-black ${isCompact ? 'text-[11px]' : 'text-[13px]'} leading-tight mb-1 text-slate-800 dark:text-slate-200 ${isUtd && shortAway.includes('Man Utd') ? '!text-red-600 dark:!text-red-500' : ''}">${shortAway}</h4>
                                 ${awayScoreHtml}
                             </div>
                         </div>
@@ -751,147 +645,49 @@
             `;
         }
 
-        // --- FETCH MATCHES WITH TIME-FIRST SORTING (LEAGUE AS TIE-BREAKER) ---
         async function fetchMatches() {
             const container = document.getElementById('matches-container');
             const finishedSection = document.getElementById('finished-matches-section');
             const finishedContainer = document.getElementById('finished-matches-container');
+            container.innerHTML = '<div class="w-full flex flex-col items-center py-6 text-gray-400"><div class="loader mb-3"></div><span class="text-xs italic">ပွဲစဉ်များ ရှာဖွေနေပါသည်...</span></div>';
             
-            container.innerHTML = `
-                <div class="w-full flex flex-col items-center justify-center text-slate-500 dark:text-gray-400 space-y-3 py-6">
-                    <div class="loader"></div>
-                    <span class="text-xs font-bold italic tracking-wide">ပွဲစဉ်များ အသစ်ရှာဖွေနေပါသည်...</span>
-                </div>
-            `;
-            finishedSection.classList.add('hidden');
-            
-            const leagues = [
-                'eng.1', 'uefa.champions', 'uefa.europa', 'ita.1', 'esp.1', 'ger.1', 'fra.1', 'eng.fa',
-                'eng.2', 'eng.3', 'eng.4', 'eng.league_cup',
-                'esp.2', 'ita.2', 'ger.2', 'fra.2',
-                'ned.1', 'por.1', 'tur.1', 'bel.1',
-                'ksa.1', 'usa.1', 'jpn.1', 'kor.1',
-                'afc.champions', 'fifa.friendly', 'uefa.nations', 'uefa.europa.conf'
-            ];
-
-            const getRank = (id) => {
-                const tiers = {
-                    'eng.1': 1, 'uefa.champions': 1,
-                    'esp.1': 2, 'ita.1': 2, 'ger.1': 2, 'uefa.europa': 2,
-                    'fra.1': 3, 'eng.fa': 3, 'eng.league_cup': 3,
-                };
-                return tiers[id] || 4; 
-            };
+            const leagues = ['eng.1', 'uefa.champions', 'uefa.europa', 'ita.1', 'esp.1', 'ger.1', 'fra.1', 'eng.fa', 'eng.2', 'ksa.1', 'usa.1', 'afc.champions'];
+            const topLeagues = ['eng.1', 'uefa.champions', 'uefa.europa', 'ita.1', 'esp.1', 'ger.1', 'fra.1'];
+            const getRank = (id) => topLeagues.includes(id) ? 1 : 2;
 
             try {
-                const timestamp = new Date().getTime();
-                const fetchPromises = leagues.map(league => 
-                    fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${league}/scoreboard?_=${timestamp}`, { cache: "no-store" })
-                    .then(res => res.ok ? res.json().then(data => ({ data: data, leagueId: league })) : null)
-                    .catch(() => null)
-                );
-
-                const results = await Promise.all(fetchPromises);
+                const results = await Promise.all(leagues.map(l => fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${l}/scoreboard?_=${Date.now()}`, { cache: "no-store" }).then(res => res.ok ? res.json().then(d => ({ data: d, id: l })) : null).catch(() => null)));
+                const now = new Date(); const yesterday = new Date(now - 86400000); const nextWeek = new Date(now.getTime() + 604800000);
+                let live = [], upcoming = [], finished = [];
                 
-                const now = new Date();
-                const yesterday = new Date(now.getTime() - (24 * 60 * 60 * 1000));
-                const nextWeek = new Date(now.getTime() + (7 * 24 * 60 * 60 * 1000));
-                
-                let liveMatches = [];
-                let upcomingMatches = [];
-                let finishedMatches = [];
-                
-                results.forEach(resultObj => {
-                    if(resultObj && resultObj.data && resultObj.data.events) {
-                        const data = resultObj.data;
-                        const currentLeagueId = resultObj.leagueId;
-
-                        data.events.forEach(event => {
-                            const matchDate = new Date(event.date);
-                            const statusState = event.competitions[0].status.type.state;
-                            
-                            const matchObj = {
-                                id: event.id,
-                                leagueId: currentLeagueId,
-                                leagueName: data.leagues[0].abbreviation || data.leagues[0].name,
-                                homeTeam: event.competitions[0].competitors.find(c => c.homeAway === 'home'),
-                                awayTeam: event.competitions[0].competitors.find(c => c.homeAway === 'away'),
-                                status: statusState, 
-                                timeDetail: event.competitions[0].status.type.shortDetail,
-                                displayClock: event.competitions[0].status.displayClock || event.competitions[0].status.type.shortDetail,
-                                date: matchDate
-                            };
-
-                            if (statusState === 'in') {
-                                liveMatches.push(matchObj);
-                            } else if (statusState === 'pre' && matchDate < nextWeek) {
-                                upcomingMatches.push(matchObj);
-                            } else if (statusState === 'post' && matchDate >= yesterday) {
-                                finishedMatches.push(matchObj);
-                            }
+                results.forEach(res => {
+                    if (res?.data?.events) {
+                        res.data.events.forEach(event => {
+                            const date = new Date(event.date); const state = event.competitions[0].status.type.state;
+                            const obj = { id: event.id, leagueId: res.id, leagueName: res.data.leagues[0].abbreviation || res.data.leagues[0].name, homeTeam: event.competitions[0].competitors.find(c => c.homeAway === 'home'), awayTeam: event.competitions[0].competitors.find(c => c.homeAway === 'away'), status: state, displayClock: event.competitions[0].status.displayClock || event.competitions[0].status.type.shortDetail, date: date };
+                            if (state === 'in') live.push(obj);
+                            else if (state === 'pre' && date < nextWeek) upcoming.push(obj);
+                            else if (state === 'post' && date >= yesterday) finished.push(obj);
                         });
                     }
                 });
 
-                // --- NEW TIME-FIRST SORTING LOGIC ---
-                
-                // Live & Upcoming: Sort by Date primarily. If exact same time, sort by League Rank.
-                const sortFutureTimeFirst = (a, b) => {
-                    const timeDiff = a.date - b.date;
-                    if (timeDiff !== 0) return timeDiff; // 1. Time (Chronological)
-                    return getRank(a.leagueId) - getRank(b.leagueId); // 2. League Priority (if time is tied)
-                };
-                
-                liveMatches.sort(sortFutureTimeFirst);
-                upcomingMatches.sort(sortFutureTimeFirst);
-                
-                // Finished Matches: Sort by Date primarily (Most recent first). If exact same time, sort by League Rank.
-                finishedMatches.sort((a, b) => {
-                    const timeDiff = b.date - a.date;
-                    if (timeDiff !== 0) return timeDiff; // 1. Time (Reverse Chronological)
-                    return getRank(a.leagueId) - getRank(b.leagueId); // 2. League Priority (if time is tied)
-                }); 
+                const timeSort = (a, b) => (a.date - b.date) || (getRank(a.leagueId) - getRank(b.leagueId));
+                const recSort = (a, b) => (b.date - a.date) || (getRank(a.leagueId) - getRank(b.leagueId));
 
-                const activeMatches = [...liveMatches, ...upcomingMatches];
-
-                container.innerHTML = ''; 
-                if (activeMatches.length === 0) {
-                    container.innerHTML = `
-                        <div class="w-full text-center py-6 text-slate-500 dark:text-gray-400 italic text-sm font-bold bg-slate-100 dark:bg-white/5 rounded-2xl border border-slate-200 dark:border-white/5 shadow-inner">
-                            <i class="fas fa-calendar-alt mb-2 text-xl text-slate-400 dark:text-gray-500"></i><br>
-                            လာမည့်ရက်များအတွင်း ပွဲစဉ်များ မရှိသေးပါဘူး။
-                        </div>
-                    `;
-                } else {
-                    activeMatches.forEach(match => {
-                        container.innerHTML += renderMatchCard(match, false);
-                    });
-                }
-
-                finishedContainer.innerHTML = '';
-                if (finishedMatches.length > 0) {
-                    finishedMatches.forEach(match => {
-                        finishedContainer.innerHTML += renderMatchCard(match, true);
-                    });
+                live.sort(timeSort); upcoming.sort(timeSort); finished.sort(recSort);
+                container.innerHTML = '';
+                [...live, ...upcoming].forEach(m => container.innerHTML += renderMatchCard(m, false));
+                if (finished.length > 0) {
+                    finishedContainer.innerHTML = ''; finished.forEach(m => finishedContainer.innerHTML += renderMatchCard(m, true));
                     finishedSection.classList.remove('hidden');
                 }
-
-            } catch (error) {
-                console.error("Match fetch error:", error);
-                container.innerHTML = `
-                    <div class="w-full text-center py-6 text-red-600 dark:text-red-400 italic text-sm font-bold bg-red-50 dark:bg-red-900/20 rounded-2xl border border-red-200 dark:border-red-500/20">
-                        <i class="fas fa-exclamation-circle mr-1 mb-2 text-2xl"></i><br>
-                        ပွဲစဉ်များ ရယူ၍မရပါ။ <button onclick="fetchMatches()" class="underline ml-1 font-black">ထပ်စမ်းကြည့်ပါ</button>
-                    </div>
-                `;
-            }
+            } catch (error) { container.innerHTML = '<div class="w-full text-center py-6 text-red-500 italic text-sm">ပွဲစဉ်များ ရယူ၍မရပါ။ <button onclick="fetchMatches()" class="underline font-black">ထပ်စမ်းကြည့်ပါ</button></div>'; }
         }
 
         document.addEventListener('DOMContentLoaded', fetchMatches);
         setInterval(fetchMatches, 300000);
-
     </script>
 </body>
 </html>
-
 

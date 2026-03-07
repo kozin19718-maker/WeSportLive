@@ -425,7 +425,7 @@
                             <span class="font-black text-[15px] tracking-widest bg-gradient-to-b from-orange-400 to-orange-600 bg-clip-text text-transparent">FIBA</span>
                             <span class="text-[6px] text-slate-500 dark:text-gray-400 uppercase mt-0.5 whitespace-nowrap">We Are Basketball</span>
                         </div>
-                        <!-- FC Barcelona (Official) -->
+                        <!-- FC Barcelona -->
                         <div class="flex flex-col items-center justify-center">
                             <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/200px-FC_Barcelona_%28crest%29.svg.png" alt="FCB" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
                             <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">FC Barcelona</span>
@@ -442,7 +442,7 @@
                             </div>
                             <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 uppercase tracking-wider">Serie A</span>
                         </div>
-                        <!-- PSG (Official) -->
+                        <!-- PSG -->
                         <div class="flex flex-col items-center justify-center">
                             <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/Paris_Saint-Germain_F.C..svg/200px-Paris_Saint-Germain_F.C..svg.png" alt="PSG" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
                             <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">PSG</span>
@@ -458,7 +458,7 @@
                             <span class="font-black text-[12px] italic text-blue-600 dark:text-[#00d2d3] whitespace-nowrap tracking-tighter leading-none">KING CUP</span>
                         </div>
                     </div>
-                    <!-- Set 2 (Same content) -->
+                    <!-- Set 2 -->
                     <div class="flex items-center space-x-12 px-6">
                         <div class="flex flex-col items-center justify-center leading-none text-center">
                             <span class="font-black text-[15px] tracking-widest bg-gradient-to-b from-orange-400 to-orange-600 bg-clip-text text-transparent">FIBA</span>
@@ -616,33 +616,58 @@
                 if (!isCompact) {
                     let hash = 0; const matchIdStr = String(match.id);
                     for (let i = 0; i < matchIdStr.length; i++) hash = Math.imul(31, hash) + matchIdStr.charCodeAt(i) | 0;
+                    
                     let homeP = 30 + Math.floor(Math.abs(Math.sin(hash)) * 40);
                     let awayP = 15 + Math.floor(Math.abs(Math.cos(hash)) * 35);
-                    if (isUtd && homeName.includes('Man Utd')) { homeP += 25; awayP -= 10; }
-                    if (isUtd && awayName.includes('Man Utd')) { awayP += 25; homeP -= 10; }
+                    
+                    // --- ADVANCED WIN PROBABILITY ALGORITHM ---
+                    // Boost Top Teams to look like heavy favorites
+                    const topTeams = ['Arsenal', 'Liverpool', 'Manchester City', 'Man City', 'Barcelona', 'Real Madrid', 'Paris Saint-Germain', 'Bayern Munich', 'Juventus', 'Inter Milan', 'AC Milan', 'Chelsea', 'Tottenham', 'Bayer Leverkusen', 'Borussia Dortmund', 'Aston Villa'];
+                    
+                    let isHomeTop = topTeams.some(t => homeName.includes(t));
+                    let isAwayTop = topTeams.some(t => awayName.includes(t));
+
+                    if (isHomeTop) { homeP += 30; awayP -= 15; }
+                    if (isAwayTop) { awayP += 30; homeP -= 15; }
+
+                    // Ultimate GGMU Boost (Leader Persona)
+                    if (isUtd && homeName.includes('Man Utd')) { homeP += 35; awayP -= 20; }
+                    if (isUtd && awayName.includes('Man Utd')) { awayP += 35; homeP -= 20; }
+
+                    // Prevent negative probabilities before normalization
+                    homeP = Math.max(5, homeP);
+                    awayP = Math.max(5, awayP);
+
+                    // Normalize to 100%
                     let drawP = Math.max(5, 100 - homeP - awayP);
                     const total = homeP + awayP + drawP;
-                    homeP = Math.round((homeP/total)*100); awayP = Math.round((awayP/total)*100); drawP = 100 - homeP - awayP;
+                    homeP = Math.round((homeP/total)*100); 
+                    awayP = Math.round((awayP/total)*100); 
+                    drawP = 100 - homeP - awayP;
+
+                    const isHomeHigh = homeP > awayP && homeP > drawP;
+                    const isAwayHigh = awayP > homeP && awayP > drawP;
+
                     probabilityHtml = `
                         <div class="mt-4 border-t border-slate-200 dark:border-white/10 pt-3 w-full">
                             <div class="text-[9px] text-center text-slate-500 dark:text-gray-400 uppercase tracking-widest mb-2 font-bold"><i class="fas fa-chart-pie text-blue-500 dark:text-blue-400 mr-1"></i> အနိုင်ရနိုင်ချေ</div>
                             <div class="flex justify-between text-[11px] font-black mb-1.5 px-1">
-                                <span class="${homeP > awayP ? 'text-green-600 dark:text-green-400' : 'text-slate-500'}">${homeP}%</span>
-                                <span class="text-slate-400 dark:text-gray-500 font-bold">${drawP}%</span>
-                                <span class="${awayP > homeP ? 'text-green-600 dark:text-green-400' : 'text-slate-500'}">${awayP}%</span>
+                                <span class="${isHomeHigh ? 'text-green-600 dark:text-green-400' : 'text-slate-500 dark:text-gray-400'}">Home ${homeP}%</span>
+                                <span class="text-slate-400 dark:text-gray-500 font-bold">Draw ${drawP}%</span>
+                                <span class="${isAwayHigh ? 'text-green-600 dark:text-green-400' : 'text-slate-500 dark:text-gray-400'}">Away ${awayP}%</span>
                             </div>
                             <div class="w-full h-1.5 bg-slate-200 dark:bg-black/80 rounded-full flex overflow-hidden">
-                                <div class="h-full bg-green-500" style="width: ${homeP}%"></div>
-                                <div class="h-full bg-gray-500/50" style="width: ${drawP}%"></div>
-                                <div class="h-full bg-blue-500" style="width: ${awayP}%"></div>
+                                <div class="h-full ${isHomeHigh ? 'bg-green-500' : 'bg-blue-400 dark:bg-blue-500'}" style="width: ${homeP}%"></div>
+                                <div class="h-full bg-gray-400 dark:bg-gray-500/50" style="width: ${drawP}%"></div>
+                                <div class="h-full ${isAwayHigh ? 'bg-green-500' : 'bg-red-400 dark:bg-red-500'}" style="width: ${awayP}%"></div>
                             </div>
                         </div>
                     `;
                 }
             }
 
-            const shortHome = homeName.replace('Manchester United', 'Man Utd').substring(0, 15);
-            const shortAway = awayName.replace('Manchester United', 'Man Utd').substring(0, 15);
+            const shortHome = homeName.replace('Manchester United', 'Man Utd').replace('Manchester City', 'Man City').substring(0, 15);
+            const shortAway = awayName.replace('Manchester United', 'Man Utd').replace('Manchester City', 'Man City').substring(0, 15);
 
             return `
                 <div class="${cardClass}">
@@ -679,15 +704,30 @@
             const container = document.getElementById('matches-container');
             const finishedSection = document.getElementById('finished-matches-section');
             const finishedContainer = document.getElementById('finished-matches-container');
-            container.innerHTML = '<div class="w-full flex flex-col items-center py-6 text-gray-400"><div class="loader mb-3"></div><span class="text-xs italic">ပွဲစဉ်များ ရှာဖွေနေပါသည်...</span></div>';
+            container.innerHTML = '<div class="w-full flex flex-col items-center py-6 text-slate-500 dark:text-gray-400"><div class="loader mb-3"></div><span class="text-xs font-bold italic tracking-wide">ပွဲစဉ်များ ရှာဖွေနေပါသည်...</span></div>';
+            finishedSection.classList.add('hidden');
             
             const leagues = ['eng.1', 'uefa.champions', 'uefa.europa', 'ita.1', 'esp.1', 'ger.1', 'fra.1', 'eng.fa', 'eng.2', 'ksa.1', 'usa.1', 'afc.champions'];
             const topLeagues = ['eng.1', 'uefa.champions', 'uefa.europa', 'ita.1', 'esp.1', 'ger.1', 'fra.1'];
             const getRank = (id) => topLeagues.includes(id) ? 1 : 2;
 
             try {
-                const results = await Promise.all(leagues.map(l => fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${l}/scoreboard?_=${Date.now()}`, { cache: "no-store" }).then(res => res.ok ? res.json().then(d => ({ data: d, id: l })) : null).catch(() => null)));
-                const now = new Date(); const yesterday = new Date(now - 86400000); const nextWeek = new Date(now.getTime() + 604800000);
+                // --- ပြင်ဆင်ချက်: ပြီးခဲ့သော ၃ ရက်စာ ရလဒ်များပါ ရယူရန် Date သတ်မှတ်ခြင်း ---
+                const now = new Date(); 
+                const pastLimit = new Date(now.getTime() - (3 * 24 * 60 * 60 * 1000)); // လွန်ခဲ့သော ၃ ရက်
+                const nextWeek = new Date(now.getTime() + (7 * 24 * 60 * 60 * 1000));  // လာမည့် ၇ ရက်
+                
+                const formatDate = (d) => {
+                    const yyyy = d.getFullYear();
+                    const mm = String(d.getMonth() + 1).padStart(2, '0');
+                    const dd = String(d.getDate()).padStart(2, '0');
+                    return `${yyyy}${mm}${dd}`;
+                };
+                const dateQuery = `${formatDate(pastLimit)}-${formatDate(nextWeek)}`; // API အတွက် Date Range
+
+                // URL တွင် ?dates=${dateQuery} ထည့်သွင်းထားသည်
+                const results = await Promise.all(leagues.map(l => fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${l}/scoreboard?dates=${dateQuery}&_=${Date.now()}`, { cache: "no-store" }).then(res => res.ok ? res.json().then(d => ({ data: d, id: l })) : null).catch(() => null)));
+                
                 let live = [], upcoming = [], finished = [];
                 
                 results.forEach(res => {
@@ -697,7 +737,7 @@
                             const obj = { id: event.id, leagueId: res.id, leagueName: res.data.leagues[0].abbreviation || res.data.leagues[0].name, homeTeam: event.competitions[0].competitors.find(c => c.homeAway === 'home'), awayTeam: event.competitions[0].competitors.find(c => c.homeAway === 'away'), status: state, displayClock: event.competitions[0].status.displayClock || event.competitions[0].status.type.shortDetail, date: date };
                             if (state === 'in') live.push(obj);
                             else if (state === 'pre' && date < nextWeek) upcoming.push(obj);
-                            else if (state === 'post' && date >= yesterday) finished.push(obj);
+                            else if (state === 'post' && date >= pastLimit) finished.push(obj); // ၃ ရက်စာ စစ်ထုတ်ခြင်း
                         });
                     }
                 });
@@ -707,12 +747,25 @@
 
                 live.sort(timeSort); upcoming.sort(timeSort); finished.sort(recSort);
                 container.innerHTML = '';
-                [...live, ...upcoming].forEach(m => container.innerHTML += renderMatchCard(m, false));
+                
+                if (live.length === 0 && upcoming.length === 0) {
+                    container.innerHTML = `
+                        <div class="w-full text-center py-6 text-slate-500 dark:text-gray-400 italic text-sm font-bold bg-slate-100 dark:bg-white/5 rounded-2xl border border-slate-200 dark:border-white/5 shadow-inner">
+                            <i class="fas fa-calendar-alt mb-2 text-xl text-slate-400 dark:text-gray-500"></i><br>
+                            လာမည့်ရက်များအတွင်း ပွဲစဉ်များ မရှိသေးပါဘူး။
+                        </div>
+                    `;
+                } else {
+                    [...live, ...upcoming].forEach(m => container.innerHTML += renderMatchCard(m, false));
+                }
+
                 if (finished.length > 0) {
                     finishedContainer.innerHTML = ''; finished.forEach(m => finishedContainer.innerHTML += renderMatchCard(m, true));
                     finishedSection.classList.remove('hidden');
                 }
-            } catch (error) { container.innerHTML = '<div class="w-full text-center py-6 text-red-500 italic text-sm">ပွဲစဉ်များ ရယူ၍မရပါ။ <button onclick="fetchMatches()" class="underline font-black">ထပ်စမ်းကြည့်ပါ</button></div>'; }
+            } catch (error) { 
+                container.innerHTML = '<div class="w-full text-center py-6 text-red-600 dark:text-red-400 italic text-sm font-bold bg-red-50 dark:bg-red-900/20 rounded-2xl border border-red-200 dark:border-red-500/20"><i class="fas fa-exclamation-circle mr-1 mb-2 text-2xl"></i><br>ပွဲစဉ်များ ရယူ၍မရပါ။ <button onclick="fetchMatches()" class="underline ml-1 font-black">ထပ်စမ်းကြည့်ပါ</button></div>'; 
+            }
         }
 
         document.addEventListener('DOMContentLoaded', fetchMatches);

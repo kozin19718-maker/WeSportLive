@@ -644,6 +644,17 @@
                                 ${awayScoreHtml}
                             </div>
                         </div>
+                        ${(match.homeGoals?.length > 0 || match.awayGoals?.length > 0) ? `
+                        <div class="flex justify-between px-1 mt-2 text-[9.5px] text-slate-500 dark:text-gray-400 leading-tight">
+                            <div class="text-center flex-1">
+                                ${match.homeGoals.map(g => `<div class="truncate"><i class="fas fa-futbol text-[8px] text-slate-300 dark:text-slate-600 mr-1"></i>${g}</div>`).join('')}
+                            </div>
+                            <div class="mx-2 w-[20px]"></div>
+                            <div class="text-center flex-1">
+                                ${match.awayGoals.map(g => `<div class="truncate">${g}<i class="fas fa-futbol text-[8px] text-slate-300 dark:text-slate-600 ml-1"></i></div>`).join('')}
+                            </div>
+                        </div>
+                        ` : ''}
                     </div>
                     ${probabilityHtml}
                 </div>`;
@@ -676,7 +687,44 @@
                     if (res?.data?.events) {
                         res.data.events.forEach(event => {
                             const date = new Date(event.date); const state = event.competitions[0].status.type.state;
-                            const obj = { id: event.id, leagueId: res.id, leagueName: res.data.leagues[0].abbreviation || res.data.leagues[0].name, homeTeam: event.competitions[0].competitors.find(c => c.homeAway === 'home'), awayTeam: event.competitions[0].competitors.find(c => c.homeAway === 'away'), status: state, displayClock: event.competitions[0].status.displayClock || event.competitions[0].status.type.shortDetail, date: date };
+                            
+                            const homeTeam = event.competitions[0].competitors.find(c => c.homeAway === 'home');
+                            const awayTeam = event.competitions[0].competitors.find(c => c.homeAway === 'away');
+                            
+                            let homeGoals = [];
+                            let awayGoals = [];
+                            
+                            if (event.competitions[0].details) {
+                                event.competitions[0].details.forEach(detail => {
+                                    if (detail.scoringPlay) {
+                                        const timeStr = detail.clock?.displayValue ? detail.clock.displayValue : '';
+                                        const time = timeStr.includes("'") ? timeStr : timeStr + "'";
+                                        let player = 'Unknown';
+                                        
+                                        if (detail.athletesInvolved && detail.athletesInvolved.length > 0) {
+                                            player = detail.athletesInvolved[0].shortName || detail.athletesInvolved[0].displayName;
+                                        } else if (detail.participants && detail.participants.length > 0) {
+                                            player = detail.participants[0].athlete?.shortName || detail.participants[0].athlete?.displayName;
+                                        }
+                                        
+                                        const isOwnGoal = detail.type?.text?.toLowerCase().includes('own');
+                                        const isPenalty = detail.type?.text?.toLowerCase().includes('penalty');
+                                        
+                                        let goalText = `${player} ${time}`;
+                                        if (isOwnGoal) goalText += ' (OG)';
+                                        if (isPenalty) goalText += ' (P)';
+                                        
+                                        if (detail.team?.id === homeTeam.team.id) {
+                                            homeGoals.push(goalText);
+                                        } else if (detail.team?.id === awayTeam.team.id) {
+                                            awayGoals.push(goalText);
+                                        }
+                                    }
+                                });
+                            }
+
+                            const obj = { id: event.id, leagueId: res.id, leagueName: res.data.leagues[0].abbreviation || res.data.leagues[0].name, homeTeam: homeTeam, awayTeam: awayTeam, status: state, displayClock: event.competitions[0].status.displayClock || event.competitions[0].status.type.shortDetail, date: date, homeGoals: homeGoals, awayGoals: awayGoals };
+                            
                             if (state === 'in') live.push(obj);
                             else if (state === 'pre' && date < nextWeek) upcoming.push(obj);
                             else if (state === 'post' && date >= pastLimit) finished.push(obj);

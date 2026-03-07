@@ -5,170 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>W.E Sports - Live Match Hub</title>
     
-    <!-- 🍎 App Icons for iOS Safari (Apple Touch Icons) - Added Cache Buster ?v=we1 -->
     <link rel="apple-touch-icon" href="https://i.ibb.co/Tx06dFv3/image.png?v=we1">
     <link rel="apple-touch-icon" sizes="152x152" href="https://i.ibb.co/Tx06dFv3/image.png?v=we1">
     <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/Tx06dFv3/image.png?v=we1">
     <link rel="apple-touch-icon" sizes="167x167" href="https://i.ibb.co/Tx06dFv3/image.png?v=we1">
 
-    <!-- 🤖 App Icons for Android Chrome & Standard Favicon -->
     <link rel="shortcut icon" href="https://i.ibb.co/Tx06dFv3/image.png?v=we1" type="image/png">
     <link rel="icon" type="image/png" sizes="192x192" href="https://i.ibb.co/Tx06dFv3/image.png?v=we1">
     <link rel="icon" type="image/png" sizes="512x512" href="https://i.ibb.co/Tx06dFv3/image.png?v=we1">
 
-    <!-- 📱 Web App Manifest for Chrome PWA Installation -->
     <link rel="manifest" href='data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22W.E%20Sports%22%2C%22short_name%22%3A%22W.E%20Sports%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23050810%22%2C%22theme_color%22%3A%22%23050810%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fi.ibb.co%2FTx06dFv3%2Fimage.png%3Fv%3Dwe1%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22https%3A%2F%2Fi.ibb.co%2FTx06dFv3%2Fimage.png%3Fv%3Dwe1%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D'>
     
-    <!-- Web App Settings -->
     <meta name="apple-mobile-web-app-title" content="W.E Sports">
     <meta name="application-name" content="W.E Sports">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#050810">
 
-    <!-- Tailwind CSS with Dark Mode Config -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        darkbg: '#050810',
-                        lightbg: '#f8fafc',
-                    }
-                }
-            }
-        }
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { darkbg: '#050810', lightbg: '#f8fafc', } } } }
     </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Pyidaungsu:wght@400;700&display=swap');
-        
-        body {
-            font-family: 'Pyidaungsu', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        body:not(.dark) {
-            background-image: radial-gradient(circle at top right, rgba(30, 58, 138, 0.05), transparent 500px),
-                              radial-gradient(circle at bottom left, rgba(234, 179, 8, 0.05), transparent 500px);
-        }
-
-        body.dark {
-            background-image: radial-gradient(circle at top right, rgba(30, 58, 138, 0.2), transparent 500px),
-                              radial-gradient(circle at bottom left, rgba(234, 179, 8, 0.05), transparent 500px);
-        }
-
-        .golden-gradient-top {
-            background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728);
-            color: #1a1a1a;
-        }
-
-        .golden-gradient-bottom {
-            background: linear-gradient(180deg, #fcf6ba, #bf953f);
-            color: #000;
-        }
-
+        body { font-family: 'Pyidaungsu', sans-serif; -webkit-tap-highlight-color: transparent; transition: background-color 0.3s, color 0.3s; }
+        body:not(.dark) { background-image: radial-gradient(circle at top right, rgba(30, 58, 138, 0.05), transparent 500px), radial-gradient(circle at bottom left, rgba(234, 179, 8, 0.05), transparent 500px); }
+        body.dark { background-image: radial-gradient(circle at top right, rgba(30, 58, 138, 0.2), transparent 500px), radial-gradient(circle at bottom left, rgba(234, 179, 8, 0.05), transparent 500px); }
+        .golden-gradient-top { background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728); color: #1a1a1a; }
+        .golden-gradient-bottom { background: linear-gradient(180deg, #fcf6ba, #bf953f); color: #000; }
         .glass-card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
         .glass-card:active { transform: scale(0.97); }
-
-        .dark .match-card {
-            background: linear-gradient(145deg, rgba(31, 41, 55, 0.9), rgba(17, 24, 39, 0.9));
-        }
-        .match-card {
-            min-width: 300px;
-            background: linear-gradient(145deg, #ffffff, #f3f4f6);
-        }
-
-        .dark .match-card.man-utd {
-            background: linear-gradient(145deg, rgba(69, 10, 10, 0.9), rgba(17, 24, 39, 0.9));
-        }
-        .match-card.man-utd {
-            background: linear-gradient(145deg, #fef2f2, #ffffff);
-        }
-
-        .dark .finished-match-card {
-            background: linear-gradient(145deg, rgba(31, 41, 55, 0.5), rgba(17, 24, 39, 0.7));
-        }
-        .finished-match-card {
-            min-width: 250px;
-            background: linear-gradient(145deg, #f9fafb, #ffffff);
-        }
-
-        .live-pulse {
-            background: linear-gradient(90deg, #ef4444, #b91c1c);
-            animation: pulse-red 2.5s infinite;
-        }
-
-        .telegram-pulse {
-            background: linear-gradient(90deg, #1e3a8a, #2563eb); 
-            animation: pulse-blue 2.5s infinite;
-            animation-delay: 1.25s;
-        }
-
-        @keyframes pulse-red {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
-            70% { transform: scale(1.02); box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-        }
-
-        @keyframes pulse-blue {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.6); }
-            70% { transform: scale(1.02); box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
-        }
-
+        .dark .match-card { background: linear-gradient(145deg, rgba(31, 41, 55, 0.9), rgba(17, 24, 39, 0.9)); }
+        .match-card { min-width: 300px; background: linear-gradient(145deg, #ffffff, #f3f4f6); }
+        .dark .match-card.man-utd { background: linear-gradient(145deg, rgba(69, 10, 10, 0.9), rgba(17, 24, 39, 0.9)); }
+        .match-card.man-utd { background: linear-gradient(145deg, #fef2f2, #ffffff); }
+        .dark .finished-match-card { background: linear-gradient(145deg, rgba(31, 41, 55, 0.5), rgba(17, 24, 39, 0.7)); }
+        .finished-match-card { min-width: 250px; background: linear-gradient(145deg, #f9fafb, #ffffff); }
+        .live-pulse { background: linear-gradient(90deg, #ef4444, #b91c1c); animation: pulse-red 2.5s infinite; }
+        .telegram-pulse { background: linear-gradient(90deg, #1e3a8a, #2563eb); animation: pulse-blue 2.5s infinite; animation-delay: 1.25s; }
+        @keyframes pulse-red { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); } 70% { transform: scale(1.02); box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
+        @keyframes pulse-blue { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.6); } 70% { transform: scale(1.02); box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); } }
         @keyframes shine { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
-        .text-shine {
-            background: linear-gradient(to right, #000000 20%, #6b7280 40%, #6b7280 60%, #000000 80%);
-            background-size: 200% auto;
-            color: #000;
-            background-clip: text;
-            text-fill-color: transparent;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 3s linear infinite;
-        }
-
+        .text-shine { background: linear-gradient(to right, #000000 20%, #6b7280 40%, #6b7280 60%, #000000 80%); background-size: 200% auto; color: #000; background-clip: text; text-fill-color: transparent; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 3s linear infinite; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
         .animate-float { animation: float 2.5s ease-in-out infinite; }
-
         .btn-glow { animation: button-glow 2s infinite; }
-        @keyframes button-glow {
-            0% { box-shadow: 0 0 5px rgba(234, 179, 8, 0.2); }
-            50% { box-shadow: 0 0 15px rgba(234, 179, 8, 0.6); }
-            100% { box-shadow: 0 0 5px rgba(234, 179, 8, 0.2); }
-        }
-
+        @keyframes button-glow { 0% { box-shadow: 0 0 5px rgba(234, 179, 8, 0.2); } 50% { box-shadow: 0 0 15px rgba(234, 179, 8, 0.6); } 100% { box-shadow: 0 0 5px rgba(234, 179, 8, 0.2); } }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        .loader {
-            border: 3px solid rgba(156, 163, 175, 0.2);
-            border-top: 3px solid #3b82f6; 
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
-        }
+        .loader { border: 3px solid rgba(156, 163, 175, 0.2); border-top: 3px solid #3b82f6; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
         .marquee-wrapper { width: 100%; overflow: hidden; white-space: nowrap; background-color: #000; }
         .animate-marquee { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; }
         @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
-
         .partners-marquee { display: flex; width: max-content; animation: scroll-left 25s linear infinite; }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        
+        /* Video Player Transition */
+        #live-player-container { transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out; overflow: hidden; max-height: 0; opacity: 0; }
+        #live-player-container.active { max-height: 500px; opacity: 1; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center bg-lightbg dark:bg-darkbg text-slate-800 dark:text-white">
 
-    <!-- OVERLAY FOR SIDEBAR MENU -->
     <div id="menu-overlay" class="fixed inset-0 bg-black/60 dark:bg-black/80 z-50 hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="toggleMenu()"></div>
     
-    <!-- SIDEBAR MENU -->
     <aside id="sidebar" class="fixed top-0 left-0 h-full w-[80%] max-w-[320px] bg-white dark:bg-[#0a0f1d] border-r border-slate-200 dark:border-white/10 z-50 transform -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
         <div class="p-5 border-b border-slate-200 dark:border-white/10 flex justify-between items-center bg-slate-50 dark:bg-black/40">
             <div class="flex items-center space-x-3">
@@ -187,58 +89,42 @@
         
         <div class="flex-1 overflow-y-auto p-4 space-y-3">
             <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest px-2 mb-1">Menu</p>
-            
             <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4">
-                    <div class="w-10 h-10 bg-orange-100 dark:bg-gradient-to-br dark:from-orange-400/20 dark:to-orange-600/20 rounded-xl flex items-center justify-center text-orange-600 dark:text-orange-500 border border-orange-200 dark:border-orange-500/20">
-                        <i class="fas fa-rocket"></i>
-                    </div>
+                    <div class="w-10 h-10 bg-orange-100 dark:bg-gradient-to-br dark:from-orange-400/20 dark:to-orange-600/20 rounded-xl flex items-center justify-center text-orange-600 dark:text-orange-500 border border-orange-200 dark:border-orange-500/20"><i class="fas fa-rocket"></i></div>
                     <span class="font-bold text-sm">1XBET အကောင့်ဖွင့်မယ်</span>
                 </div>
                 <i class="fas fa-chevron-right text-slate-400 dark:text-gray-600 text-xs"></i>
             </a>
-
             <a href="https://reffpa.com/L?tag=d_5044128m_70865c_&site=5044128&ad=70865" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4">
-                    <div class="w-10 h-10 bg-green-100 dark:bg-gradient-to-br dark:from-green-400/20 dark:to-green-600/20 rounded-xl flex items-center justify-center text-green-600 dark:text-green-500 border border-green-200 dark:border-green-500/20">
-                        <i class="fas fa-download"></i>
-                    </div>
+                    <div class="w-10 h-10 bg-green-100 dark:bg-gradient-to-br dark:from-green-400/20 dark:to-green-600/20 rounded-xl flex items-center justify-center text-green-600 dark:text-green-500 border border-green-200 dark:border-green-500/20"><i class="fas fa-download"></i></div>
                     <span class="font-bold text-sm">Android App ဒေါင်းမယ်</span>
                 </div>
                 <i class="fas fa-chevron-right text-slate-400 dark:text-gray-600 text-xs"></i>
             </a>
-
             <a href="https://t.me/WinExpress99" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4">
-                    <div class="w-10 h-10 bg-yellow-100 dark:bg-gradient-to-br dark:from-yellow-400/20 dark:to-yellow-600/20 rounded-xl flex items-center justify-center text-yellow-600 dark:text-yellow-500 border border-yellow-200 dark:border-yellow-500/20">
-                        <i class="fas fa-wallet"></i>
-                    </div>
+                    <div class="w-10 h-10 bg-yellow-100 dark:bg-gradient-to-br dark:from-yellow-400/20 dark:to-yellow-600/20 rounded-xl flex items-center justify-center text-yellow-600 dark:text-yellow-500 border border-yellow-200 dark:border-yellow-500/20"><i class="fas fa-wallet"></i></div>
                     <span class="font-bold text-sm">1XBET ငွေသွင်း/ငွေထုတ်</span>
                 </div>
                 <i class="fas fa-chevron-right text-slate-400 dark:text-gray-600 text-xs"></i>
             </a>
-
             <a href="https://t.me/OneXBetMyanmar2/3" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4">
-                    <div class="w-10 h-10 bg-blue-100 dark:bg-gradient-to-br dark:from-blue-400/20 dark:to-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-500 border border-blue-200 dark:border-blue-500/20">
-                        <i class="fas fa-book-open"></i>
-                    </div>
+                    <div class="w-10 h-10 bg-blue-100 dark:bg-gradient-to-br dark:from-blue-400/20 dark:to-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-500 border border-blue-200 dark:border-blue-500/20"><i class="fas fa-book-open"></i></div>
                     <span class="font-bold text-sm">အကောင့်ဖွင့်နည်း ကြည့်မယ်</span>
                 </div>
                 <i class="fas fa-chevron-right text-slate-400 dark:text-gray-600 text-xs"></i>
             </a>
-            
             <a href="https://t.me/ZINXBET_support_bot" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl border border-blue-200 dark:border-blue-500/30 group bg-blue-50/50 dark:bg-[rgba(17,24,39,0.6)] hover:bg-blue-50 dark:hover:bg-blue-900/10">
                 <div class="flex items-center space-x-4">
-                    <div class="w-10 h-10 bg-blue-100 dark:bg-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20">
-                        <i class="fas fa-comment-dots"></i>
-                    </div>
+                    <div class="w-10 h-10 bg-blue-100 dark:bg-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20"><i class="fas fa-comment-dots"></i></div>
                     <span class="font-bold text-sm text-blue-700 dark:text-blue-400">အက်မင်ကို မေးမြန်းမယ်</span>
                 </div>
                 <i class="fas fa-chevron-right text-blue-400 dark:text-blue-500/50 text-xs"></i>
             </a>
         </div>
-        
         <div class="p-5 border-t border-slate-200 dark:border-white/10 text-center bg-slate-50 dark:bg-black/40">
             <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-3">Sponsored By</p>
             <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="inline-flex items-center bg-[#1e52a5] text-white px-2.5 py-1.5 rounded-md text-[14px] font-black tracking-tighter border border-transparent dark:border-white/20 shadow-md shadow-blue-900/50 hover:scale-105 transition-transform">
@@ -247,30 +133,24 @@
         </div>
     </aside>
 
-    <!-- Header Section -->
     <header class="w-full max-w-2xl flex justify-between items-center p-3 sticky top-0 bg-white/95 dark:bg-[#050810]/95 backdrop-blur-lg z-40 border-b border-slate-200 dark:border-white/5 shadow-sm dark:shadow-md transition-colors">
         <div class="flex items-center space-x-3 truncate pr-2">
             <button onclick="toggleMenu()" class="w-10 h-10 bg-slate-100 dark:bg-white/5 rounded-xl flex items-center justify-center text-slate-700 dark:text-white hover:bg-slate-200 dark:hover:bg-white/10 transition border border-slate-200 dark:border-white/10 active:scale-95 shrink-0">
                 <i class="fas fa-bars text-lg"></i>
             </button>
-            
             <div class="flex items-center space-x-2.5">
                 <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-yellow-400 overflow-hidden shadow-[0_0_8px_rgba(30,58,138,0.2)] dark:shadow-[0_0_8px_rgba(30,58,138,0.8)] shrink-0">
                     <img src="https://i.ibb.co/Tx06dFv3/image.png" alt="Logo" class="w-full h-full object-cover">
                 </div>
-                
                 <div class="flex flex-col justify-center">
                     <div class="flex items-center space-x-1.5 flex-wrap md:flex-nowrap">
                         <h1 class="text-[16px] sm:text-lg font-black tracking-tighter text-blue-900 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-blue-400 dark:to-yellow-400 leading-tight drop-shadow-sm whitespace-nowrap">W.E Sports</h1>
-                        <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="inline-flex items-center bg-[#1e52a5] text-white px-1.5 py-0.5 rounded-[4px] text-[8px] sm:text-[9px] font-black tracking-tighter border border-transparent dark:border-white/20 shadow-sm shrink-0 hover:scale-105 transition-transform">
-                            1X<span class="text-[#59b2e0]">BET</span>
-                        </a>
+                        <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="inline-flex items-center bg-[#1e52a5] text-white px-1.5 py-0.5 rounded-[4px] text-[8px] sm:text-[9px] font-black tracking-tighter border border-transparent dark:border-white/20 shadow-sm shrink-0 hover:scale-105 transition-transform">1X<span class="text-[#59b2e0]">BET</span></a>
                     </div>
                     <p class="text-[8px] sm:text-[9px] text-slate-500 dark:text-gray-400 font-bold uppercase tracking-widest leading-tight mt-0.5">Live Match Hub</p>
                 </div>
             </div>
         </div>
-        
         <div class="flex items-center space-x-2 shrink-0">
             <button onclick="toggleTheme()" class="w-9 h-9 rounded-full flex items-center justify-center text-slate-500 dark:text-yellow-400 hover:bg-slate-100 dark:hover:bg-white/10 transition active:scale-95">
                 <i id="theme-icon" class="fas fa-sun text-[16px]"></i>
@@ -281,20 +161,14 @@
         </div>
     </header>
 
-    <!-- Main Content Area -->
     <main class="w-full max-w-2xl px-4 pb-8 space-y-6">
 
-        <!-- TOP PROMO BANNER -->
         <div class="rounded-2xl p-4 border border-yellow-500/30 bg-gradient-to-br from-slate-900 to-[#0a0f1d] shadow-[0_5px_25px_rgba(234,179,8,0.2)] mt-5 relative overflow-hidden text-white">
             <div class="absolute -right-4 -top-4 opacity-[0.05] text-7xl text-yellow-500"><i class="fas fa-gift"></i></div>
             <div class="flex flex-col sm:flex-row sm:items-center justify-between relative z-10 gap-3">
                 <div>
-                    <p class="text-[10px] font-bold text-yellow-500 uppercase tracking-widest mb-1 animate-pulse">
-                        <i class="fas fa-star mr-1"></i> 100% Deposit Bonus
-                    </p>
-                    <div class="text-2xl font-black italic uppercase tracking-tighter drop-shadow-md">
-                        ZINXBET
-                    </div>
+                    <p class="text-[10px] font-bold text-yellow-500 uppercase tracking-widest mb-1 animate-pulse"><i class="fas fa-star mr-1"></i> 100% Deposit Bonus</p>
+                    <div class="text-2xl font-black italic uppercase tracking-tighter drop-shadow-md">ZINXBET</div>
                 </div>
                 <button onclick="copyTopPromo()" id="topCopyBtn" class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-black px-6 py-2.5 rounded-xl font-black text-xs active:scale-95 transition-all shadow-lg hover:from-yellow-400 hover:to-yellow-500 flex items-center justify-center btn-glow">
                     <i class="fas fa-copy mr-2"></i> PROMO ယူမည်
@@ -312,13 +186,37 @@
                 </p>
             </div>
 
-            <a href="https://dlive.tv/WeSportLive" target="_blank" class="live-pulse w-full flex items-center justify-center py-4 rounded-3xl text-lg font-black italic text-white shadow-xl transition active:scale-95">
-                <i class="fas fa-play-circle mr-3 text-2xl"></i> LIVE ကြည့်ရှုရန်
-            </a>
+            <!-- IN-APP LIVE TV BUTTON -->
+            <button onclick="toggleLivePlayer()" class="live-pulse w-full flex items-center justify-center py-4 rounded-3xl text-lg font-black italic text-white shadow-xl transition active:scale-95 border-none outline-none cursor-pointer">
+                <i class="fas fa-tv mr-3 text-2xl"></i> App တွင် တိုက်ရိုက်ကြည့်ရန်
+            </button>
 
             <a href="https://t.me/WESPORT1" target="_blank" class="telegram-pulse w-full flex items-center justify-center py-4 rounded-3xl text-lg font-black italic text-white shadow-xl transition border border-blue-400/30 active:scale-95">
                 <i class="fab fa-telegram mr-3 text-2xl"></i> Channel သို့ Join ပါ
             </a>
+        </div>
+
+        <!-- DLIVE TV PLAYER SECTION -->
+        <div id="live-player-container" class="w-full">
+            <div class="glass-card rounded-2xl p-2 border border-red-500/30 bg-slate-900 shadow-[0_0_20px_rgba(239,68,68,0.15)] relative">
+                <div class="flex justify-between items-center px-3 py-2 border-b border-white/10 mb-2">
+                    <span class="text-xs font-black text-red-500 animate-pulse tracking-widest uppercase"><i class="fas fa-circle text-[8px] mr-1"></i> DLive Stream</span>
+                    <button onclick="toggleLivePlayer()" class="text-gray-400 hover:text-white transition bg-white/10 rounded-full w-6 h-6 flex items-center justify-center"><i class="fas fa-times"></i></button>
+                </div>
+                
+                <!-- DLive Official Embed iframe -->
+                <div class="w-full aspect-video rounded-xl overflow-hidden bg-black relative shadow-inner">
+                    <iframe 
+                        id="match-frame"
+                        src="https://dlive.tv/embed/stream/WeSportLive" 
+                        class="w-full h-full absolute top-0 left-0" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <p class="text-center text-[10px] text-gray-500 mt-2 italic">📌 Live မလာသေးပါက အမည်းရောင်ဖြစ်နေတတ်ပါသည်။</p>
+            </div>
         </div>
 
         <div class="space-y-3 pt-2">
@@ -357,183 +255,106 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-4">
             <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-orange-100 dark:bg-gradient-to-br dark:from-orange-400/20 dark:to-orange-600/20 rounded-xl flex items-center justify-center text-orange-600 dark:text-orange-500 border border-orange-200 dark:border-orange-500/20">
-                        <i class="fas fa-rocket text-xl"></i>
-                    </div>
+                    <div class="w-12 h-12 bg-orange-100 dark:bg-gradient-to-br dark:from-orange-400/20 dark:to-orange-600/20 rounded-xl flex items-center justify-center text-orange-600 dark:text-orange-500 border border-orange-200 dark:border-orange-500/20"><i class="fas fa-rocket text-xl"></i></div>
                     <span class="font-bold text-base md:text-lg">1XBET အကောင့်ဖွင့်မယ်</span>
                 </div>
                 <i class="fas fa-chevron-right text-slate-400 dark:text-slate-600"></i>
             </a>
-
             <a href="https://reffpa.com/L?tag=d_5044128m_70865c_&site=5044128&ad=70865" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-green-100 dark:bg-gradient-to-br dark:from-green-400/20 dark:to-green-600/20 rounded-xl flex items-center justify-center text-green-600 dark:text-green-500 border border-green-200 dark:border-green-500/20">
-                        <i class="fas fa-download text-xl"></i>
-                    </div>
+                    <div class="w-12 h-12 bg-green-100 dark:bg-gradient-to-br dark:from-green-400/20 dark:to-green-600/20 rounded-xl flex items-center justify-center text-green-600 dark:text-green-500 border border-green-200 dark:border-green-500/20"><i class="fas fa-download text-xl"></i></div>
                     <span class="font-bold text-base md:text-lg">Android App ဒေါင်းမယ်</span>
                 </div>
                 <i class="fas fa-chevron-right text-slate-400 dark:text-slate-600"></i>
             </a>
-
             <a href="https://t.me/WinExpress99" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-yellow-100 dark:bg-gradient-to-br dark:from-yellow-400/20 dark:to-yellow-600/20 rounded-xl flex items-center justify-center text-yellow-600 dark:text-yellow-500 border border-yellow-200 dark:border-yellow-500/20">
-                        <i class="fas fa-wallet text-xl"></i>
-                    </div>
+                    <div class="w-12 h-12 bg-yellow-100 dark:bg-gradient-to-br dark:from-yellow-400/20 dark:to-yellow-600/20 rounded-xl flex items-center justify-center text-yellow-600 dark:text-yellow-500 border border-yellow-200 dark:border-yellow-500/20"><i class="fas fa-wallet text-xl"></i></div>
                     <span class="font-bold text-base md:text-lg">1XBET ငွေသွင်း/ငွေထုတ်</span>
                 </div>
                 <i class="fas fa-chevron-right text-slate-400 dark:text-slate-600"></i>
             </a>
-
             <a href="https://t.me/OneXBetMyanmar2/3" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-blue-100 dark:bg-gradient-to-br dark:from-blue-400/20 dark:to-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-500 border border-blue-200 dark:border-blue-500/20">
-                        <i class="fas fa-book-open text-xl"></i>
-                    </div>
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-gradient-to-br dark:from-blue-400/20 dark:to-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-500 border border-blue-200 dark:border-blue-500/20"><i class="fas fa-book-open text-xl"></i></div>
                     <span class="font-bold text-base md:text-lg">အကောင့်ဖွင့်နည်း ကြည့်မယ်</span>
                 </div>
                 <i class="fas fa-chevron-right text-slate-400 dark:text-slate-600"></i>
             </a>
-            
             <a href="https://t.me/ZINXBET_support_bot" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl border border-blue-200 dark:border-blue-500/30 group md:col-span-2 bg-blue-50/50 dark:bg-[rgba(17,24,39,0.6)] hover:bg-blue-50 dark:hover:bg-blue-900/20">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20">
-                        <i class="fas fa-comment-dots text-xl"></i>
-                    </div>
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20"><i class="fas fa-comment-dots text-xl"></i></div>
                     <span class="font-bold text-base md:text-lg text-blue-700 dark:text-blue-400">အက်မင်ကို မေးမြန်းမယ်</span>
                 </div>
                 <i class="fas fa-chevron-right text-blue-400 dark:text-blue-500/50"></i>
             </a>
         </div>
 
-        <!-- OFFICIAL PARTNERS SECTION (With Official Logos) -->
         <div class="glass-card rounded-2xl py-4 px-2 overflow-hidden relative border border-slate-200 dark:border-white/10 shadow-sm dark:shadow-[0_4px_15px_rgba(0,0,0,0.3)] mt-4 bg-white/80 dark:bg-[rgba(17,24,39,0.6)]">
-            <div class="text-center mb-3">
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-gray-400">
-                    <i class="fas fa-handshake mr-1 text-blue-500 dark:text-blue-400"></i> 1XBET ၏ တရားဝင် မိတ်ဖက်များ
-                </span>
-            </div>
+            <div class="text-center mb-3"><span class="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-gray-400"><i class="fas fa-handshake mr-1 text-blue-500 dark:text-blue-400"></i> 1XBET ၏ တရားဝင် မိတ်ဖက်များ</span></div>
             <div class="overflow-hidden w-full relative">
                 <div class="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white dark:from-[#0a0f1d] to-transparent z-10"></div>
                 <div class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white dark:from-[#0a0f1d] to-transparent z-10"></div>
-                
                 <div class="partners-marquee items-center opacity-90 hover:opacity-100 transition-opacity">
                     <!-- Set 1 -->
                     <div class="flex items-center space-x-12 px-6">
-                        <!-- FIBA -->
-                        <div class="flex flex-col items-center justify-center leading-none text-center">
-                            <span class="font-black text-[15px] tracking-widest bg-gradient-to-b from-orange-400 to-orange-600 bg-clip-text text-transparent">FIBA</span>
-                            <span class="text-[6px] text-slate-500 dark:text-gray-400 uppercase mt-0.5 whitespace-nowrap">We Are Basketball</span>
-                        </div>
-                        <!-- FC Barcelona -->
-                        <div class="flex flex-col items-center justify-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/200px-FC_Barcelona_%28crest%29.svg.png" alt="FCB" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
-                            <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">FC Barcelona</span>
-                        </div>
-                        <!-- CAF -->
-                        <div class="flex flex-col items-center justify-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f1/CAF_Logo.svg/200px-CAF_Logo.svg.png" alt="CAF" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
-                            <span class="text-[7px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider text-center leading-tight">Africa Cup<br>of Nations</span>
-                        </div>
-                        <!-- Serie A -->
-                        <div class="flex flex-col items-center justify-center">
-                            <div class="bg-white p-1 rounded-md mb-1 border border-slate-100 dark:border-transparent">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Serie_A_logo_2022.svg/200px-Serie_A_logo_2022.svg.png" alt="Serie A" class="h-6 object-contain" onerror="this.parentElement.style.display='none'">
-                            </div>
-                            <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 uppercase tracking-wider">Serie A</span>
-                        </div>
-                        <!-- PSG -->
-                        <div class="flex flex-col items-center justify-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/Paris_Saint-Germain_F.C..svg/200px-Paris_Saint-Germain_F.C..svg.png" alt="PSG" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
-                            <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">PSG</span>
-                        </div>
-                        <!-- Volleyball World -->
-                        <div class="flex flex-col items-center justify-center leading-none">
-                            <span class="font-black text-[13px] italic text-[#d4ff00] whitespace-nowrap tracking-tighter drop-shadow-sm">Volleyball</span>
-                            <span class="font-black text-[13px] italic text-slate-800 dark:text-white whitespace-nowrap tracking-tighter">World™</span>
-                        </div>
-                        <!-- BJKC -->
-                        <div class="flex flex-col items-center justify-center bg-blue-50 dark:bg-[#00d2d3]/10 px-2.5 py-1.5 rounded border border-blue-200 dark:border-[#00d2d3]/40 shadow-inner">
-                            <span class="font-black text-[12px] italic text-blue-600 dark:text-[#00d2d3] whitespace-nowrap tracking-tighter leading-none">BILLIE JEAN</span>
-                            <span class="font-black text-[12px] italic text-blue-600 dark:text-[#00d2d3] whitespace-nowrap tracking-tighter leading-none">KING CUP</span>
-                        </div>
+                        <div class="flex flex-col items-center justify-center leading-none text-center"><span class="font-black text-[15px] tracking-widest bg-gradient-to-b from-orange-400 to-orange-600 bg-clip-text text-transparent">FIBA</span><span class="text-[6px] text-slate-500 dark:text-gray-400 uppercase mt-0.5 whitespace-nowrap">We Are Basketball</span></div>
+                        <div class="flex flex-col items-center justify-center"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/200px-FC_Barcelona_%28crest%29.svg.png" alt="FCB" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'"><span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">FC Barcelona</span></div>
+                        <div class="flex flex-col items-center justify-center"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f1/CAF_Logo.svg/200px-CAF_Logo.svg.png" alt="CAF" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'"><span class="text-[7px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider text-center leading-tight">Africa Cup<br>of Nations</span></div>
+                        <div class="flex flex-col items-center justify-center"><div class="bg-white p-1 rounded-md mb-1 border border-slate-100 dark:border-transparent"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Serie_A_logo_2022.svg/200px-Serie_A_logo_2022.svg.png" alt="Serie A" class="h-6 object-contain" onerror="this.parentElement.style.display='none'"></div><span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 uppercase tracking-wider">Serie A</span></div>
+                        <div class="flex flex-col items-center justify-center"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/Paris_Saint-Germain_F.C..svg/200px-Paris_Saint-Germain_F.C..svg.png" alt="PSG" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'"><span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">PSG</span></div>
+                        <div class="flex flex-col items-center justify-center leading-none"><span class="font-black text-[13px] italic text-[#d4ff00] whitespace-nowrap tracking-tighter drop-shadow-sm">Volleyball</span><span class="font-black text-[13px] italic text-slate-800 dark:text-white whitespace-nowrap tracking-tighter">World™</span></div>
+                        <div class="flex flex-col items-center justify-center bg-blue-50 dark:bg-[#00d2d3]/10 px-2.5 py-1.5 rounded border border-blue-200 dark:border-[#00d2d3]/40 shadow-inner"><span class="font-black text-[12px] italic text-blue-600 dark:text-[#00d2d3] whitespace-nowrap tracking-tighter leading-none">BILLIE JEAN</span><span class="font-black text-[12px] italic text-blue-600 dark:text-[#00d2d3] whitespace-nowrap tracking-tighter leading-none">KING CUP</span></div>
                     </div>
                     <!-- Set 2 -->
                     <div class="flex items-center space-x-12 px-6">
-                        <div class="flex flex-col items-center justify-center leading-none text-center">
-                            <span class="font-black text-[15px] tracking-widest bg-gradient-to-b from-orange-400 to-orange-600 bg-clip-text text-transparent">FIBA</span>
-                            <span class="text-[6px] text-slate-500 dark:text-gray-400 uppercase mt-0.5 whitespace-nowrap">We Are Basketball</span>
-                        </div>
-                        <div class="flex flex-col items-center justify-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/200px-FC_Barcelona_%28crest%29.svg.png" alt="FCB" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
-                            <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">FC Barcelona</span>
-                        </div>
-                        <div class="flex flex-col items-center justify-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f1/CAF_Logo.svg/200px-CAF_Logo.svg.png" alt="CAF" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
-                            <span class="text-[7px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider text-center leading-tight">Africa Cup<br>of Nations</span>
-                        </div>
-                        <div class="flex flex-col items-center justify-center">
-                            <div class="bg-white p-1 rounded-md mb-1 border border-slate-100 dark:border-transparent">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Serie_A_logo_2022.svg/200px-Serie_A_logo_2022.svg.png" alt="Serie A" class="h-6 object-contain" onerror="this.parentElement.style.display='none'">
-                            </div>
-                            <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 uppercase tracking-wider">Serie A</span>
-                        </div>
-                        <div class="flex flex-col items-center justify-center">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/Paris_Saint-Germain_F.C..svg/200px-Paris_Saint-Germain_F.C..svg.png" alt="PSG" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'">
-                            <span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">PSG</span>
-                        </div>
-                        <div class="flex flex-col items-center justify-center leading-none">
-                            <span class="font-black text-[13px] italic text-[#d4ff00] whitespace-nowrap tracking-tighter drop-shadow-sm">Volleyball</span>
-                            <span class="font-black text-[13px] italic text-slate-800 dark:text-white whitespace-nowrap tracking-tighter">World™</span>
-                        </div>
-                        <div class="flex flex-col items-center justify-center bg-blue-50 dark:bg-[#00d2d3]/10 px-2.5 py-1.5 rounded border border-blue-200 dark:border-[#00d2d3]/40 shadow-inner">
-                            <span class="font-black text-[12px] italic text-blue-600 dark:text-[#00d2d3] whitespace-nowrap tracking-tighter leading-none">BILLIE JEAN</span>
-                            <span class="font-black text-[12px] italic text-blue-600 dark:text-[#00d2d3] whitespace-nowrap tracking-tighter leading-none">KING CUP</span>
-                        </div>
+                        <div class="flex flex-col items-center justify-center leading-none text-center"><span class="font-black text-[15px] tracking-widest bg-gradient-to-b from-orange-400 to-orange-600 bg-clip-text text-transparent">FIBA</span><span class="text-[6px] text-slate-500 dark:text-gray-400 uppercase mt-0.5 whitespace-nowrap">We Are Basketball</span></div>
+                        <div class="flex flex-col items-center justify-center"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/200px-FC_Barcelona_%28crest%29.svg.png" alt="FCB" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'"><span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">FC Barcelona</span></div>
+                        <div class="flex flex-col items-center justify-center"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f1/CAF_Logo.svg/200px-CAF_Logo.svg.png" alt="CAF" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'"><span class="text-[7px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider text-center leading-tight">Africa Cup<br>of Nations</span></div>
+                        <div class="flex flex-col items-center justify-center"><div class="bg-white p-1 rounded-md mb-1 border border-slate-100 dark:border-transparent"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Serie_A_logo_2022.svg/200px-Serie_A_logo_2022.svg.png" alt="Serie A" class="h-6 object-contain" onerror="this.parentElement.style.display='none'"></div><span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 uppercase tracking-wider">Serie A</span></div>
+                        <div class="flex flex-col items-center justify-center"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/Paris_Saint-Germain_F.C..svg/200px-Paris_Saint-Germain_F.C..svg.png" alt="PSG" class="h-10 object-contain drop-shadow-md" onerror="this.style.display='none'"><span class="text-[8px] font-bold text-slate-600 dark:text-gray-300 mt-1 uppercase tracking-wider">PSG</span></div>
+                        <div class="flex flex-col items-center justify-center leading-none"><span class="font-black text-[13px] italic text-[#d4ff00] whitespace-nowrap tracking-tighter drop-shadow-sm">Volleyball</span><span class="font-black text-[13px] italic text-slate-800 dark:text-white whitespace-nowrap tracking-tighter">World™</span></div>
+                        <div class="flex flex-col items-center justify-center bg-blue-50 dark:bg-[#00d2d3]/10 px-2.5 py-1.5 rounded border border-blue-200 dark:border-[#00d2d3]/40 shadow-inner"><span class="font-black text-[12px] italic text-blue-600 dark:text-[#00d2d3] whitespace-nowrap tracking-tighter leading-none">BILLIE JEAN</span><span class="font-black text-[12px] italic text-blue-600 dark:text-[#00d2d3] whitespace-nowrap tracking-tighter leading-none">KING CUP</span></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- TWO-TIERED GOLDEN BANNER -->
         <section class="w-full rounded-3xl overflow-hidden shadow-xl dark:shadow-[0_10px_30px_rgba(179,135,40,0.2)] mt-8 border border-yellow-500/30 dark:border-yellow-500/20">
             <div class="golden-gradient-top py-2 text-center flex flex-col items-center justify-center">
                 <div class="flex items-center text-[12px] font-black uppercase tracking-widest text-[#1a1a1a]">
-                    <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="inline-flex items-center bg-[#1e52a5] text-white px-1.5 py-0.5 rounded-sm text-[10px] font-black tracking-tighter mr-2 border border-white/20 shadow-sm shadow-blue-900/50 hover:scale-105 transition-transform">
-                        1X<span class="text-[#59b2e0]">BET</span>
-                    </a>
+                    <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="inline-flex items-center bg-[#1e52a5] text-white px-1.5 py-0.5 rounded-sm text-[10px] font-black tracking-tighter mr-2 border border-white/20 shadow-sm shadow-blue-900/50 hover:scale-105 transition-transform">1X<span class="text-[#59b2e0]">BET</span></a>
                     🕵️‍♂️ 📲 ငွေသွင်း/ထုတ် - @WinExpress99
                 </div>
             </div>
             <div class="golden-gradient-bottom pt-4 pb-5 px-4 text-center flex flex-col items-center relative">
                 <div class="absolute top-2 left-4 text-[#1a1a1a]/40 text-xs animate-pulse"><i class="fas fa-star"></i></div>
                 <div class="absolute bottom-4 right-6 text-[#1a1a1a]/40 text-lg animate-pulse" style="animation-delay: 1s;"><i class="fas fa-star"></i></div>
-                
-                <div class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter leading-none mb-3 drop-shadow-sm animate-float">
-                    <span class="text-shine pr-2">🎁 Promo Code: ZINXBET</span>
-                </div>
-                
+                <div class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter leading-none mb-3 drop-shadow-sm animate-float"><span class="text-shine pr-2">🎁 Promo Code: ZINXBET</span></div>
                 <div class="flex flex-col sm:flex-row gap-3 w-full max-w-[400px] mt-1 relative z-10">
-                    <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="flex-1 bg-green-600 hover:bg-green-500 text-white px-4 py-3 rounded-full font-black text-sm transition-all flex items-center justify-center border border-green-400 shadow-[0_0_15px_rgba(22,163,74,0.4)] active:scale-95">
-                        <i class="fas fa-user-plus mr-2"></i> အကောင့်ဖွင့်မယ်
-                    </a>
-                    <button onclick="copyBottomPromo()" id="bottomCopyBtn" class="flex-1 bg-black text-white px-4 py-3 rounded-full font-black text-sm active:scale-95 transition-all flex items-center justify-center border border-yellow-500/50 hover:bg-gray-900 btn-glow">
-                        <i class="fas fa-copy text-yellow-500 mr-2"></i> PROMO ယူမည်
-                    </button>
+                    <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="flex-1 bg-green-600 hover:bg-green-500 text-white px-4 py-3 rounded-full font-black text-sm transition-all flex items-center justify-center border border-green-400 shadow-[0_0_15px_rgba(22,163,74,0.4)] active:scale-95"><i class="fas fa-user-plus mr-2"></i> အကောင့်ဖွင့်မယ်</a>
+                    <button onclick="copyBottomPromo()" id="bottomCopyBtn" class="flex-1 bg-black text-white px-4 py-3 rounded-full font-black text-sm active:scale-95 transition-all flex items-center justify-center border border-yellow-500/50 hover:bg-gray-900 btn-glow"><i class="fas fa-copy text-yellow-500 mr-2"></i> PROMO ယူမည်</button>
                 </div>
-                
                 <p class="text-[11px] font-bold mt-3 opacity-90 italic tracking-wider text-[#1a1a1a]">100% Bonus အတွက် အခုပဲ ကော်ပီယူလိုက်ပါ</p>
             </div>
             <div class="marquee-wrapper border-t-0">
-                <div class="animate-marquee text-[12px] font-black text-yellow-400 tracking-wider py-0.5">
-                    🎉 ပထမဆုံးသွင်းငွေအတွက် <span class="text-white">၁၀၀% ငွေသွင်းဘောနပ်စ်</span> ရယူပါ! 🎁 ပရိုမိုကုဒ် ZINXBET ဖြင့် ယခုပဲ အကောင့်ဖွင့်လိုက်ပါ 🔥
-                </div>
+                <div class="animate-marquee text-[12px] font-black text-yellow-400 tracking-wider py-0.5">🎉 ပထမဆုံးသွင်းငွေအတွက် <span class="text-white">၁၀၀% ငွေသွင်းဘောနပ်စ်</span> ရယူပါ! 🎁 ပရိုမိုကုဒ် ZINXBET ဖြင့် ယခုပဲ အကောင့်ဖွင့်လိုက်ပါ 🔥</div>
             </div>
         </section>
 
     </main>
 
     <script>
+        function toggleLivePlayer() {
+            const playerContainer = document.getElementById('live-player-container');
+            if (playerContainer.classList.contains('active')) {
+                playerContainer.classList.remove('active');
+            } else {
+                playerContainer.classList.add('active');
+                playerContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
         function toggleTheme() {
             const html = document.documentElement;
             const themeIcon = document.getElementById('theme-icon');
@@ -574,8 +395,19 @@
             document.body.removeChild(el);
             const btn = document.getElementById(btnId);
             const originalHtml = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check-circle mr-2 text-green-400"></i> ကူးယူပြီးပါပြီ!';
-            setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
+            if(btnId === 'topCopyBtn') {
+                btn.innerHTML = '<i class="fas fa-check-circle mr-2 text-green-700"></i> ကူးယူပြီးပါပြီ!';
+                btn.classList.remove('btn-glow');
+            } else {
+                btn.innerHTML = '<i class="fas fa-check-circle mr-2 text-green-400"></i> ကူးယူပြီးပါပြီ!';
+                btn.style.borderColor = '#16a34a';
+                btn.classList.remove('btn-glow');
+            }
+            setTimeout(() => {
+                btn.innerHTML = originalHtml;
+                if(btnId === 'bottomCopyBtn') btn.style.borderColor = 'rgba(234, 179, 8, 0.5)';
+                btn.classList.add('btn-glow');
+            }, 2000);
         }
         function copyTopPromo() { handleCopy('topCopyBtn'); }
         function copyBottomPromo() { handleCopy('bottomCopyBtn'); }
@@ -620,30 +452,19 @@
                     let homeP = 30 + Math.floor(Math.abs(Math.sin(hash)) * 40);
                     let awayP = 15 + Math.floor(Math.abs(Math.cos(hash)) * 35);
                     
-                    // --- ADVANCED WIN PROBABILITY ALGORITHM ---
-                    // Boost Top Teams to look like heavy favorites
                     const topTeams = ['Arsenal', 'Liverpool', 'Manchester City', 'Man City', 'Barcelona', 'Real Madrid', 'Paris Saint-Germain', 'Bayern Munich', 'Juventus', 'Inter Milan', 'AC Milan', 'Chelsea', 'Tottenham', 'Bayer Leverkusen', 'Borussia Dortmund', 'Aston Villa'];
-                    
                     let isHomeTop = topTeams.some(t => homeName.includes(t));
                     let isAwayTop = topTeams.some(t => awayName.includes(t));
 
                     if (isHomeTop) { homeP += 30; awayP -= 15; }
                     if (isAwayTop) { awayP += 30; homeP -= 15; }
-
-                    // Ultimate GGMU Boost (Leader Persona)
                     if (isUtd && homeName.includes('Man Utd')) { homeP += 35; awayP -= 20; }
                     if (isUtd && awayName.includes('Man Utd')) { awayP += 35; homeP -= 20; }
 
-                    // Prevent negative probabilities before normalization
-                    homeP = Math.max(5, homeP);
-                    awayP = Math.max(5, awayP);
-
-                    // Normalize to 100%
+                    homeP = Math.max(5, homeP); awayP = Math.max(5, awayP);
                     let drawP = Math.max(5, 100 - homeP - awayP);
                     const total = homeP + awayP + drawP;
-                    homeP = Math.round((homeP/total)*100); 
-                    awayP = Math.round((awayP/total)*100); 
-                    drawP = 100 - homeP - awayP;
+                    homeP = Math.round((homeP/total)*100); awayP = Math.round((awayP/total)*100); drawP = 100 - homeP - awayP;
 
                     const isHomeHigh = homeP > awayP && homeP > drawP;
                     const isAwayHigh = awayP > homeP && awayP > drawP;
@@ -712,10 +533,9 @@
             const getRank = (id) => topLeagues.includes(id) ? 1 : 2;
 
             try {
-                // --- ပြင်ဆင်ချက်: ပြီးခဲ့သော ၃ ရက်စာ ရလဒ်များပါ ရယူရန် Date သတ်မှတ်ခြင်း ---
                 const now = new Date(); 
-                const pastLimit = new Date(now.getTime() - (3 * 24 * 60 * 60 * 1000)); // လွန်ခဲ့သော ၃ ရက်
-                const nextWeek = new Date(now.getTime() + (7 * 24 * 60 * 60 * 1000));  // လာမည့် ၇ ရက်
+                const pastLimit = new Date(now.getTime() - (3 * 24 * 60 * 60 * 1000));
+                const nextWeek = new Date(now.getTime() + (7 * 24 * 60 * 60 * 1000));
                 
                 const formatDate = (d) => {
                     const yyyy = d.getFullYear();
@@ -723,9 +543,8 @@
                     const dd = String(d.getDate()).padStart(2, '0');
                     return `${yyyy}${mm}${dd}`;
                 };
-                const dateQuery = `${formatDate(pastLimit)}-${formatDate(nextWeek)}`; // API အတွက် Date Range
+                const dateQuery = `${formatDate(pastLimit)}-${formatDate(nextWeek)}`;
 
-                // URL တွင် ?dates=${dateQuery} ထည့်သွင်းထားသည်
                 const results = await Promise.all(leagues.map(l => fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${l}/scoreboard?dates=${dateQuery}&_=${Date.now()}`, { cache: "no-store" }).then(res => res.ok ? res.json().then(d => ({ data: d, id: l })) : null).catch(() => null)));
                 
                 let live = [], upcoming = [], finished = [];
@@ -737,18 +556,31 @@
                             const obj = { id: event.id, leagueId: res.id, leagueName: res.data.leagues[0].abbreviation || res.data.leagues[0].name, homeTeam: event.competitions[0].competitors.find(c => c.homeAway === 'home'), awayTeam: event.competitions[0].competitors.find(c => c.homeAway === 'away'), status: state, displayClock: event.competitions[0].status.displayClock || event.competitions[0].status.type.shortDetail, date: date };
                             if (state === 'in') live.push(obj);
                             else if (state === 'pre' && date < nextWeek) upcoming.push(obj);
-                            else if (state === 'post' && date >= pastLimit) finished.push(obj); // ၃ ရက်စာ စစ်ထုတ်ခြင်း
+                            else if (state === 'post' && date >= pastLimit) finished.push(obj); 
                         });
                     }
                 });
 
-                const timeSort = (a, b) => (a.date - b.date) || (getRank(a.leagueId) - getRank(b.leagueId));
-                const recSort = (a, b) => (b.date - a.date) || (getRank(a.leagueId) - getRank(b.leagueId));
+                const sortFutureTimeFirst = (a, b) => {
+                    const timeDiff = a.date - b.date;
+                    if (timeDiff !== 0) return timeDiff; 
+                    return getRank(a.leagueId) - getRank(b.leagueId); 
+                };
+                
+                live.sort(sortFutureTimeFirst);
+                upcoming.sort(sortFutureTimeFirst);
+                
+                finished.sort((a, b) => {
+                    const timeDiff = b.date - a.date;
+                    if (timeDiff !== 0) return timeDiff; 
+                    return getRank(a.leagueId) - getRank(b.leagueId); 
+                }); 
 
-                live.sort(timeSort); upcoming.sort(timeSort); finished.sort(recSort);
+                const activeMatches = [...live, ...upcoming];
+
                 container.innerHTML = '';
                 
-                if (live.length === 0 && upcoming.length === 0) {
+                if (activeMatches.length === 0) {
                     container.innerHTML = `
                         <div class="w-full text-center py-6 text-slate-500 dark:text-gray-400 italic text-sm font-bold bg-slate-100 dark:bg-white/5 rounded-2xl border border-slate-200 dark:border-white/5 shadow-inner">
                             <i class="fas fa-calendar-alt mb-2 text-xl text-slate-400 dark:text-gray-500"></i><br>
@@ -756,7 +588,7 @@
                         </div>
                     `;
                 } else {
-                    [...live, ...upcoming].forEach(m => container.innerHTML += renderMatchCard(m, false));
+                    activeMatches.forEach(m => container.innerHTML += renderMatchCard(m, false));
                 }
 
                 if (finished.length > 0) {

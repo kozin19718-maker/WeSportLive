@@ -62,9 +62,9 @@
         .partners-marquee { display: flex; width: max-content; animation: scroll-left 25s linear infinite; }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         
-        /* Video Player Transition */
-        #live-player-container { transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out; overflow: hidden; max-height: 0; opacity: 0; }
-        #live-player-container.active { max-height: 500px; opacity: 1; }
+        /* Better Video Player Transition */
+        #live-player-wrapper { transition: all 0.4s ease-in-out; max-height: 0; opacity: 0; overflow: hidden; }
+        #live-player-wrapper.active { max-height: 600px; opacity: 1; margin-top: 0.75rem; margin-bottom: 0.5rem; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center bg-lightbg dark:bg-darkbg text-slate-800 dark:text-white">
@@ -188,7 +188,7 @@
 
             <!-- IN-APP LIVE TV BUTTON -->
             <button onclick="toggleLivePlayer()" class="live-pulse w-full flex items-center justify-center py-4 rounded-3xl text-lg font-black italic text-white shadow-xl transition active:scale-95 border-none outline-none cursor-pointer">
-                <i class="fas fa-tv mr-3 text-2xl"></i> App တွင် တိုက်ရိုက်ကြည့်ရန်
+                <i class="fas fa-tv mr-3 text-2xl"></i> App ထဲတွင် တိုက်ရိုက်ကြည့်မည်
             </button>
 
             <a href="https://t.me/WESPORT1" target="_blank" class="telegram-pulse w-full flex items-center justify-center py-4 rounded-3xl text-lg font-black italic text-white shadow-xl transition border border-blue-400/30 active:scale-95">
@@ -196,26 +196,18 @@
             </a>
         </div>
 
-        <!-- DLIVE TV PLAYER SECTION -->
-        <div id="live-player-container" class="w-full">
-            <div class="glass-card rounded-2xl p-2 border border-red-500/30 bg-slate-900 shadow-[0_0_20px_rgba(239,68,68,0.15)] relative">
+        <!-- NEW: DYNAMIC LIVE PLAYER WRAPPER -->
+        <div id="live-player-wrapper" class="w-full px-1">
+            <div class="glass-card rounded-2xl p-2 border border-red-500/30 bg-slate-900 shadow-[0_0_20px_rgba(239,68,68,0.2)] relative">
                 <div class="flex justify-between items-center px-3 py-2 border-b border-white/10 mb-2">
-                    <span class="text-xs font-black text-red-500 animate-pulse tracking-widest uppercase"><i class="fas fa-circle text-[8px] mr-1"></i> DLive Stream</span>
-                    <button onclick="toggleLivePlayer()" class="text-gray-400 hover:text-white transition bg-white/10 rounded-full w-6 h-6 flex items-center justify-center"><i class="fas fa-times"></i></button>
+                    <span class="text-xs font-black text-red-500 animate-pulse tracking-widest uppercase"><i class="fas fa-circle text-[8px] mr-1"></i> Live TV</span>
+                    <button onclick="toggleLivePlayer()" class="text-gray-400 hover:text-white transition bg-white/10 rounded-full w-6 h-6 flex items-center justify-center hover:bg-white/20 active:scale-95"><i class="fas fa-times"></i></button>
                 </div>
                 
-                <!-- DLive Official Embed iframe -->
-                <div class="w-full aspect-video rounded-xl overflow-hidden bg-black relative shadow-inner">
-                    <iframe 
-                        id="match-frame"
-                        src="https://dlive.tv/embed/stream/WeSportLive" 
-                        class="w-full h-full absolute top-0 left-0" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
+                <div id="player-content" class="w-full aspect-video rounded-xl overflow-hidden bg-black relative shadow-inner flex items-center justify-center">
+                    <!-- Iframe is injected here by JavaScript -->
                 </div>
-                <p class="text-center text-[10px] text-gray-500 mt-2 italic">📌 Live မလာသေးပါက အမည်းရောင်ဖြစ်နေတတ်ပါသည်။</p>
+                <p class="text-center text-[10px] text-gray-400 mt-2 italic px-2">📌 ပုံမပေါ်ပါက သို့မဟုတ် အသံမကြားရပါက TV အောက်ထောင့်ရှိ "အပြင်မှာကြည့်မည်" ကိုနှိပ်ပါ။</p>
             </div>
         </div>
 
@@ -345,13 +337,33 @@
     </main>
 
     <script>
+        // --- DYNAMIC LIVE TV PLAYER ---
         function toggleLivePlayer() {
-            const playerContainer = document.getElementById('live-player-container');
-            if (playerContainer.classList.contains('active')) {
-                playerContainer.classList.remove('active');
+            const playerWrapper = document.getElementById('live-player-wrapper');
+            const playerContent = document.getElementById('player-content');
+            
+            if (playerWrapper.classList.contains('active')) {
+                playerWrapper.classList.remove('active');
+                // Remove iframe to stop playing background audio & save user data
+                setTimeout(() => { playerContent.innerHTML = ''; }, 400);
             } else {
-                playerContainer.classList.add('active');
-                playerContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                playerWrapper.classList.add('active');
+                // Inject iframe only when opened (Username is lowercase: wesportlive)
+                playerContent.innerHTML = `
+                    <iframe 
+                        id="match-frame"
+                        src="https://dlive.tv/embed/stream/wesportlive" 
+                        class="w-full h-full absolute top-0 left-0" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                    <!-- Fallback Button in case iframe is blocked by Safari/Chrome Privacy settings -->
+                    <a href="https://dlive.tv/WeSportLive" target="_blank" class="absolute bottom-2 right-2 bg-yellow-500 text-black text-[10px] font-black px-3 py-1.5 rounded border border-yellow-600 shadow-xl hover:scale-105 transition flex items-center z-20">
+                        <i class="fas fa-external-link-alt mr-1"></i> အပြင်မှာကြည့်မည်
+                    </a>
+                `;
+                setTimeout(() => { playerWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
             }
         }
 

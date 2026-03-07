@@ -105,11 +105,38 @@
         .game-card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .game-card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
 
-        /* Adjusted scroll padding for new header height */
         html { scroll-padding-top: 135px; }
+
+        /* Red card indicator style */
+        .red-card-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 12px;
+            background-color: #ef4444;
+            border-radius: 1px;
+            margin-left: 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            vertical-align: text-bottom;
+        }
+
+        /* Skeleton Loading Styles */
+        .skeleton-card {
+            min-width: 300px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.5), rgba(243,244,246,0.5));
+            border: 1px solid rgba(226,232,240,0.5);
+        }
+        .dark .skeleton-card {
+            background: linear-gradient(145deg, rgba(31,41,55,0.5), rgba(17,24,39,0.5));
+            border: 1px solid rgba(255,255,255,0.05);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center bg-lightbg dark:bg-darkbg text-slate-800 dark:text-white relative">
+
+    <!-- GOAL TOAST NOTIFICATION -->
+    <div id="goal-toast" class="fixed top-24 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-full shadow-[0_10px_25px_rgba(34,197,94,0.5)] z-[100] flex items-center transition-all duration-500 opacity-0 translate-y-[-20px] pointer-events-none font-black text-sm border border-green-400">
+        <i class="fas fa-futbol animate-bounce mr-2 text-xl"></i> ⚽ ဂိုးဝင်သွားပါပြီ!
+    </div>
 
     <!-- OVERLAY FOR SIDEBAR MENU -->
     <div id="menu-overlay" class="fixed inset-0 bg-black/60 dark:bg-black/80 z-50 hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="toggleMenu()"></div>
@@ -134,7 +161,7 @@
         <div class="flex-1 overflow-y-auto p-4 space-y-3">
             <p class="text-[11px] text-slate-500 font-bold uppercase tracking-widest px-2 mb-1">အမြန် ဝန်ဆောင်မှုများ</p>
             
-            <!-- NEW PROMO CODE BUTTON IN SIDEBAR -->
+            <!-- PROMO CODE BUTTON IN SIDEBAR -->
             <button onclick="copyPromo('ZINXBET', this)" class="glass-card w-full flex items-center justify-between p-4 rounded-2xl group border border-yellow-500/30 bg-gradient-to-r from-yellow-50/80 to-yellow-100/80 dark:from-yellow-500/10 dark:to-yellow-600/10 hover:bg-yellow-100 dark:hover:bg-yellow-900/20 active:scale-95 transition-all shadow-sm">
                 <div class="flex items-center space-x-3 text-left">
                     <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-xl flex items-center justify-center text-white shadow-md btn-glow shrink-0">
@@ -176,7 +203,7 @@
     <!-- Header Section -->
     <header class="w-full max-w-2xl sticky top-0 bg-white/95 dark:bg-[#050810]/95 backdrop-blur-lg z-40 border-b border-slate-200 dark:border-white/5 shadow-sm dark:shadow-md transition-colors flex flex-col">
         
-        <!-- UPDATED SCROLLING MARQUEE -->
+        <!-- SCROLLING MARQUEE -->
         <div class="w-full overflow-hidden bg-gradient-to-r from-[#1e52a5] via-blue-600 to-[#1e52a5] text-white py-1 border-b border-blue-400/30">
             <div class="inline-block whitespace-nowrap animate-[marquee_25s_linear_infinite] pl-[100%] text-[10px] sm:text-[11px] font-bold tracking-wide">
                 <i class="fas fa-users mr-1 text-yellow-300"></i> အားကစားချစ်သူ သူငယ်ချင်းတွေအကုန်လုံး ယုံယုံကြည်ကြည် အသုံးပြုနေကြတဲ့ အကောင်းဆုံး 1XBET Betting Hub မှ ကြိုဆိုပါတယ်! <span class="mx-3 text-yellow-300">|</span> 
@@ -309,15 +336,20 @@
                 <h3 class="text-lg font-black italic flex items-center text-slate-800 dark:text-white">
                     <i class="fas fa-fire text-yellow-500 mr-2"></i> လာမည့် ပွဲစဉ်များနှင့် နိုင်ခြေ
                 </h3>
-                <button onclick="fetchMatches()" class="text-[10px] bg-slate-200 dark:bg-white/10 hover:bg-slate-300 dark:hover:bg-white/20 px-2 py-1 rounded border border-slate-300 dark:border-white/10 text-slate-700 dark:text-gray-300 font-bold active:scale-95 transition flex items-center">
+                <button onclick="fetchMatches(true)" class="text-[10px] bg-slate-200 dark:bg-white/10 hover:bg-slate-300 dark:hover:bg-white/20 px-2 py-1 rounded border border-slate-300 dark:border-white/10 text-slate-700 dark:text-gray-300 font-bold active:scale-95 transition flex items-center">
                     <i class="fas fa-sync-alt mr-1"></i> Refresh
                 </button>
             </div>
             
             <div id="matches-container" class="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-2 hide-scrollbar min-h-[180px] items-center">
-                <div class="w-full flex flex-col items-center justify-center text-slate-500 dark:text-gray-400 space-y-3 py-6">
-                    <div class="loader"></div>
-                    <span class="text-xs font-bold italic tracking-wide">ပွဲစဉ်များ ရှာဖွေနေပါသည်...</span>
+                <!-- Skeleton UI (Cool Feature) -->
+                <div class="skeleton-card snap-center rounded-2xl p-4 flex flex-col justify-between animate-pulse">
+                    <div class="flex justify-between items-center mb-4"><div class="h-4 bg-slate-200 dark:bg-slate-700/50 rounded w-20"></div><div class="h-4 bg-slate-200 dark:bg-slate-700/50 rounded w-16"></div></div>
+                    <div class="flex justify-between items-center px-1"><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 bg-slate-200 dark:bg-slate-700/50 rounded-full"></div><div class="h-3 bg-slate-200 dark:bg-slate-700/50 rounded w-16"></div></div><div class="h-4 bg-slate-200 dark:bg-slate-700/50 rounded w-8 mx-2"></div><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 bg-slate-200 dark:bg-slate-700/50 rounded-full"></div><div class="h-3 bg-slate-200 dark:bg-slate-700/50 rounded w-16"></div></div></div>
+                </div>
+                <div class="skeleton-card snap-center rounded-2xl p-4 flex flex-col justify-between animate-pulse opacity-70">
+                    <div class="flex justify-between items-center mb-4"><div class="h-4 bg-slate-200 dark:bg-slate-700/50 rounded w-20"></div><div class="h-4 bg-slate-200 dark:bg-slate-700/50 rounded w-16"></div></div>
+                    <div class="flex justify-between items-center px-1"><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 bg-slate-200 dark:bg-slate-700/50 rounded-full"></div><div class="h-3 bg-slate-200 dark:bg-slate-700/50 rounded w-16"></div></div><div class="h-4 bg-slate-200 dark:bg-slate-700/50 rounded w-8 mx-2"></div><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 bg-slate-200 dark:bg-slate-700/50 rounded-full"></div><div class="h-3 bg-slate-200 dark:bg-slate-700/50 rounded w-16"></div></div></div>
                 </div>
             </div>
 
@@ -495,7 +527,6 @@
 
     <!-- ==================== MATCH STATS MODAL ==================== -->
     <div id="stats-modal" class="fixed inset-0 bg-black/80 z-[70] hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm flex items-end sm:items-center justify-center" onclick="closeStatsModal()">
-        <!-- Stop propagation so clicking inside modal doesn't close it -->
         <div class="bg-white dark:bg-[#0a0f1d] w-full max-w-lg rounded-t-3xl sm:rounded-3xl max-h-[85vh] overflow-y-auto transform translate-y-full transition-transform duration-300 shadow-2xl border border-slate-200 dark:border-white/10" id="stats-modal-content" onclick="event.stopPropagation()">
             <!-- Drag Handle for mobile -->
             <div class="w-full flex justify-center py-3 sm:hidden" onclick="closeStatsModal()">
@@ -520,11 +551,54 @@
     </div>
 
     <script>
-        // Store matches globally for the stats lookup
+        // Global variables
         let globalMatchesMap = {};
+        let previousScores = {};
+
+        // Helper for Haptic Feedback
+        function triggerHaptic() {
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+        }
+
+        // Feature: Show Goal Notification Toast
+        function showGoalToast() {
+            const toast = document.getElementById('goal-toast');
+            toast.classList.remove('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
+            triggerHaptic();
+            if (navigator.vibrate) setTimeout(() => navigator.vibrate(100), 100); // Double vibrate for goal
+            
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
+            }, 4000);
+        }
+
+        // Goal Tracking Logic
+        function checkGoals(liveMatches) {
+            let goalDetected = false;
+            liveMatches.forEach(m => {
+                const matchId = m.id;
+                const currentHome = parseInt(m.homeTeam.score) || 0;
+                const currentAway = parseInt(m.awayTeam.score) || 0;
+
+                if (previousScores[matchId]) {
+                    if (currentHome > previousScores[matchId].home || currentAway > previousScores[matchId].away) {
+                        goalDetected = true;
+                    }
+                }
+                // Update tracker
+                previousScores[matchId] = { home: currentHome, away: currentAway };
+            });
+
+            if (goalDetected) {
+                showGoalToast();
+            }
+        }
 
         // --- Theme & Menu Logic ---
         function toggleTheme() {
+            triggerHaptic();
             const html = document.documentElement;
             const themeIcon = document.getElementById('theme-icon');
             if (html.classList.contains('dark')) {
@@ -539,6 +613,7 @@
         }
 
         function toggleMenu() {
+            triggerHaptic();
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('menu-overlay');
             if (sidebar.classList.contains('-translate-x-full')) {
@@ -556,6 +631,7 @@
 
         // --- Tabs Logic ---
         function switchTab(tabId, btnElement) {
+            triggerHaptic();
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.add('hidden');
                 tab.classList.remove('block');
@@ -578,6 +654,7 @@
 
         // --- Promo Copy Logic ---
         function copyPromo(promo, btn) {
+            triggerHaptic();
             const el = document.createElement('textarea');
             el.value = promo;
             document.body.appendChild(el);
@@ -592,6 +669,7 @@
 
         // --- Stats Modal Logic ---
         async function openStatsModal(matchId) {
+            triggerHaptic();
             const match = globalMatchesMap[matchId];
             if (!match) return;
 
@@ -612,12 +690,15 @@
             const awayShort = match.awayTeam.team.name.replace('Manchester United', 'Man Utd').replace('Manchester City', 'Man City').substring(0, 15);
             const fallbackPixel = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
 
+            const homeRedsHtml = match.homeRedCards > 0 ? `<span class="red-card-indicator"></span>`.repeat(match.homeRedCards) : '';
+            const awayRedsHtml = match.awayRedCards > 0 ? `<span class="red-card-indicator"></span>`.repeat(match.awayRedCards) : '';
+
             // Loading State UI
             container.innerHTML = `
                 <div class="flex items-center justify-between px-6 py-4 bg-slate-50 dark:bg-white/5 border-b border-slate-200 dark:border-white/10">
                     <div class="flex flex-col items-center">
                         <img src="${match.homeTeam.team.logo || fallbackPixel}" class="w-10 h-10 object-contain mb-1" onerror="this.src='${fallbackPixel}'">
-                        <span class="text-xs font-black text-slate-800 dark:text-white">${homeShort}</span>
+                        <span class="text-xs font-black text-slate-800 dark:text-white">${homeShort}${homeRedsHtml}</span>
                     </div>
                     <div class="text-center">
                         <span class="text-xs font-bold bg-slate-200 dark:bg-black/50 px-2 py-1 rounded text-slate-600 dark:text-gray-300">
@@ -626,7 +707,7 @@
                     </div>
                     <div class="flex flex-col items-center">
                         <img src="${match.awayTeam.team.logo || fallbackPixel}" class="w-10 h-10 object-contain mb-1" onerror="this.src='${fallbackPixel}'">
-                        <span class="text-xs font-black text-slate-800 dark:text-white">${awayShort}</span>
+                        <span class="text-xs font-black text-slate-800 dark:text-white">${awayShort}${awayRedsHtml}</span>
                     </div>
                 </div>
                 <div class="w-full flex flex-col items-center justify-center py-10 text-slate-500 dark:text-gray-400">
@@ -653,10 +734,11 @@
                 const homeStats = team1.team.id === match.homeTeam.team.id ? team1.statistics : team2.statistics;
                 const awayStats = team1.team.id === match.homeTeam.team.id ? team2.statistics : team1.statistics;
 
+                // Feature: Enhanced stat mapping with fallback keys (shotsOnTarget vs shotsOnGoal)
                 const statKeys = [
                     { key: 'possessionPct', label: 'ဘောလုံးပိုင်ဆိုင်မှု (%)' },
                     { key: 'shotsSummary', label: 'ဂိုးပေါက်ကန်သွင်းမှု' },
-                    { key: 'shotsOnGoal', label: 'ဂိုးပေါက်တည့်မှု' },
+                    { key: 'shotsOnTarget', altKey: 'shotsOnGoal', label: 'ဂိုးပေါက်တည့်မှု' },
                     { key: 'cornerKicks', label: 'ထောင့်ကန်ဘော' },
                     { key: 'foulsCommitted', label: 'ပြစ်ဒဏ်ကျူးလွန်မှု' },
                     { key: 'yellowCards', label: 'အဝါကတ်' },
@@ -666,19 +748,23 @@
 
                 let statsHtml = '';
                 statKeys.forEach(s => {
-                    const hStatObj = homeStats.find(x => x.name === s.key);
-                    const aStatObj = awayStats.find(x => x.name === s.key);
+                    const hStatObj = homeStats.find(x => x.name === s.key || (s.altKey && x.name === s.altKey));
+                    const aStatObj = awayStats.find(x => x.name === s.key || (s.altKey && x.name === s.altKey));
                     
                     if(hStatObj && aStatObj) {
                         let hValStr = hStatObj.displayValue;
                         let aValStr = aStatObj.displayValue;
 
-                        let hVal = parseFloat(hValStr.split(' ')[0]) || 0; // split to handle "10 (4)" format
+                        let hVal = parseFloat(hValStr.split(' ')[0]) || 0;
                         let aVal = parseFloat(aValStr.split(' ')[0]) || 0;
 
                         let total = hVal + aVal;
                         let hPct = total === 0 ? 50 : (hVal / total) * 100;
                         let aPct = total === 0 ? 50 : (aVal / total) * 100;
+
+                        // Give specific colors for Red Cards to make them pop
+                        const barColorH = s.key === 'redCards' ? 'bg-red-600' : 'bg-blue-500';
+                        const barColorA = s.key === 'redCards' ? 'bg-red-600' : 'bg-red-500';
 
                         statsHtml += `
                             <div class="mb-5">
@@ -688,8 +774,8 @@
                                     <span class="${aVal > hVal ? 'text-red-600 dark:text-red-400 font-black text-[14px]' : ''}">${aValStr}</span>
                                 </div>
                                 <div class="flex h-2 w-full bg-slate-200 dark:bg-black/60 rounded-full overflow-hidden shadow-inner border border-slate-300 dark:border-white/5">
-                                    <div class="h-full bg-blue-500 transition-all duration-1000 ease-out" style="width: ${hPct}%"></div>
-                                    <div class="h-full bg-red-500 transition-all duration-1000 ease-out" style="width: ${aPct}%"></div>
+                                    <div class="h-full ${barColorH} transition-all duration-1000 ease-out" style="width: ${hPct}%"></div>
+                                    <div class="h-full ${barColorA} transition-all duration-1000 ease-out" style="width: ${aPct}%"></div>
                                 </div>
                             </div>
                         `;
@@ -711,6 +797,7 @@
         }
 
         function closeStatsModal() {
+            triggerHaptic();
             const modal = document.getElementById('stats-modal');
             const content = document.getElementById('stats-modal-content');
             modal.classList.add('opacity-0');
@@ -732,7 +819,6 @@
             const isUtd = homeName.includes('Manchester United') || awayName.includes('Manchester United');
             const utdBadge = isUtd ? `<div class="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[8px] font-black px-2 py-0.5 rounded-full border border-red-400 z-10 shadow-sm animate-bounce">GGMU! 🔥</div>` : '';
             
-            // Added onclick event to open stats modal
             const cardClass = `${isCompact ? 'finished-match-card' : 'match-card'} ${isUtd ? 'man-utd' : ''} snap-center rounded-2xl ${isCompact ? 'p-3' : 'p-4'} relative flex flex-col justify-between overflow-hidden`;
             
             const leagueColor = isUtd ? 'text-red-500 dark:text-red-400' : 'text-blue-600 dark:text-blue-400';
@@ -795,7 +881,10 @@
             const shortHome = homeName.replace('Manchester United', 'Man Utd').replace('Manchester City', 'Man City').substring(0, 15);
             const shortAway = awayName.replace('Manchester United', 'Man Utd').replace('Manchester City', 'Man City').substring(0, 15);
 
-            // Added onclick logic directly to the card
+            // Added Red Card Indicators on the match card
+            const homeRedsHtml = match.homeRedCards > 0 ? `<span class="red-card-indicator"></span>`.repeat(match.homeRedCards) : '';
+            const awayRedsHtml = match.awayRedCards > 0 ? `<span class="red-card-indicator"></span>`.repeat(match.awayRedCards) : '';
+
             return `
                 <div class="${cardClass}" onclick="openStatsModal('${match.id}')" title="Stats ကြည့်ရန်နှိပ်ပါ">
                     ${utdBadge}
@@ -810,7 +899,7 @@
                                 <div class="${isCompact ? 'w-8 h-8' : 'w-12 h-12'} mb-1.5 bg-white dark:bg-white/5 rounded-full flex items-center justify-center p-1 shadow-sm border border-slate-200 dark:border-white/10 relative">
                                     <img src="${homeLogo}" class="w-full h-full object-contain" alt="${shortHome}" onerror="this.src='${fallbackPixel}'">
                                 </div>
-                                <h4 class="font-black ${isCompact ? 'text-[11px]' : 'text-[13px]'} leading-tight mb-1 text-slate-800 dark:text-slate-200 ${isUtd && shortHome.includes('Man Utd') ? '!text-red-600 dark:!text-red-500' : ''}">${shortHome}</h4>
+                                <h4 class="font-black ${isCompact ? 'text-[11px]' : 'text-[13px]'} leading-tight mb-1 text-slate-800 dark:text-slate-200 ${isUtd && shortHome.includes('Man Utd') ? '!text-red-600 dark:!text-red-500' : ''}">${shortHome}${homeRedsHtml}</h4>
                                 ${homeScoreHtml}
                             </div>
                             <div class="mx-2 text-[9px] font-black text-slate-400 dark:text-gray-500 italic bg-slate-100 dark:bg-white/5 px-1.5 py-0.5 rounded-full mb-3">VS</div>
@@ -818,7 +907,7 @@
                                 <div class="${isCompact ? 'w-8 h-8' : 'w-12 h-12'} mb-1.5 bg-white dark:bg-white/5 rounded-full flex items-center justify-center p-1 shadow-sm border border-slate-200 dark:border-white/10 relative">
                                     <img src="${awayLogo}" class="w-full h-full object-contain" alt="${shortAway}" onerror="this.src='${fallbackPixel}'">
                                 </div>
-                                <h4 class="font-black ${isCompact ? 'text-[11px]' : 'text-[13px]'} leading-tight mb-1 text-slate-800 dark:text-slate-200 ${isUtd && shortAway.includes('Man Utd') ? '!text-red-600 dark:!text-red-500' : ''}">${shortAway}</h4>
+                                <h4 class="font-black ${isCompact ? 'text-[11px]' : 'text-[13px]'} leading-tight mb-1 text-slate-800 dark:text-slate-200 ${isUtd && shortAway.includes('Man Utd') ? '!text-red-600 dark:!text-red-500' : ''}">${shortAway}${awayRedsHtml}</h4>
                                 ${awayScoreHtml}
                             </div>
                         </div>
@@ -838,12 +927,24 @@
                 </div>`;
         }
 
-        async function fetchMatches() {
+        async function fetchMatches(isManual = false) {
+            if (isManual) triggerHaptic();
+            
             const container = document.getElementById('matches-container');
             const finishedSection = document.getElementById('finished-matches-section');
             const finishedContainer = document.getElementById('finished-matches-container');
-            container.innerHTML = '<div class="w-full flex flex-col items-center py-6 text-slate-500 dark:text-gray-400"><div class="loader mb-3"></div><span class="text-xs font-bold italic tracking-wide">ပွဲစဉ်များ ရှာဖွေနေပါသည်...</span></div>';
-            finishedSection.classList.add('hidden');
+            
+            // Feature: Cool Skeleton Loading UI
+            container.innerHTML = `
+                <div class="skeleton-card snap-center rounded-2xl p-4 flex flex-col justify-between animate-pulse">
+                    <div class="flex justify-between items-center mb-4"><div class="h-4 bg-slate-200 dark:bg-slate-700/50 rounded w-20"></div><div class="h-4 bg-slate-200 dark:bg-slate-700/50 rounded w-16"></div></div>
+                    <div class="flex justify-between items-center px-1"><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 bg-slate-200 dark:bg-slate-700/50 rounded-full"></div><div class="h-3 bg-slate-200 dark:bg-slate-700/50 rounded w-16"></div></div><div class="h-4 bg-slate-200 dark:bg-slate-700/50 rounded w-8 mx-2"></div><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 bg-slate-200 dark:bg-slate-700/50 rounded-full"></div><div class="h-3 bg-slate-200 dark:bg-slate-700/50 rounded w-16"></div></div></div>
+                </div>
+                <div class="skeleton-card snap-center rounded-2xl p-4 flex flex-col justify-between animate-pulse opacity-70 hidden sm:flex">
+                    <div class="flex justify-between items-center mb-4"><div class="h-4 bg-slate-200 dark:bg-slate-700/50 rounded w-20"></div><div class="h-4 bg-slate-200 dark:bg-slate-700/50 rounded w-16"></div></div>
+                    <div class="flex justify-between items-center px-1"><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 bg-slate-200 dark:bg-slate-700/50 rounded-full"></div><div class="h-3 bg-slate-200 dark:bg-slate-700/50 rounded w-16"></div></div><div class="h-4 bg-slate-200 dark:bg-slate-700/50 rounded w-8 mx-2"></div><div class="flex flex-col items-center gap-2"><div class="w-12 h-12 bg-slate-200 dark:bg-slate-700/50 rounded-full"></div><div class="h-3 bg-slate-200 dark:bg-slate-700/50 rounded w-16"></div></div></div>
+                </div>
+            `;
             
             const leagues = ['eng.1', 'uefa.champions', 'uefa.europa', 'ita.1', 'esp.1', 'ger.1', 'fra.1', 'eng.fa', 'eng.2', 'ksa.1', 'usa.1', 'afc.champions'];
             const topLeagues = ['eng.1', 'uefa.champions', 'uefa.europa', 'ita.1', 'esp.1', 'ger.1', 'fra.1'];
@@ -871,9 +972,22 @@
                             
                             let homeGoals = [];
                             let awayGoals = [];
+                            let homeRedCards = 0;
+                            let awayRedCards = 0;
+                            
+                            const homeStatReds = homeTeam.statistics?.find(s => s.name === "redCards")?.displayValue;
+                            const awayStatReds = awayTeam.statistics?.find(s => s.name === "redCards")?.displayValue;
+                            if (homeStatReds) homeRedCards = parseInt(homeStatReds);
+                            if (awayStatReds) awayRedCards = parseInt(awayStatReds);
                             
                             if (event.competitions[0].details) {
                                 event.competitions[0].details.forEach(detail => {
+                                    const isRedCard = detail.redCard || detail.type?.text?.toLowerCase().includes('red card');
+                                    if (isRedCard) {
+                                        if (detail.team?.id === homeTeam.team.id && homeRedCards === 0) homeRedCards++;
+                                        else if (detail.team?.id === awayTeam.team.id && awayRedCards === 0) awayRedCards++;
+                                    }
+
                                     if (detail.scoringPlay) {
                                         const timeStr = detail.clock?.displayValue ? detail.clock.displayValue : '';
                                         const time = timeStr.includes("'") ? timeStr : timeStr + "'";
@@ -901,9 +1015,21 @@
                                 });
                             }
 
-                            const obj = { id: event.id, leagueId: res.id, leagueName: res.data.leagues[0].abbreviation || res.data.leagues[0].name, homeTeam: homeTeam, awayTeam: awayTeam, status: state, displayClock: event.competitions[0].status.displayClock || event.competitions[0].status.type.shortDetail, date: date, homeGoals: homeGoals, awayGoals: awayGoals };
+                            const obj = { 
+                                id: event.id, 
+                                leagueId: res.id, 
+                                leagueName: res.data.leagues[0].abbreviation || res.data.leagues[0].name, 
+                                homeTeam: homeTeam, 
+                                awayTeam: awayTeam, 
+                                status: state, 
+                                displayClock: event.competitions[0].status.displayClock || event.competitions[0].status.type.shortDetail, 
+                                date: date, 
+                                homeGoals: homeGoals, 
+                                awayGoals: awayGoals,
+                                homeRedCards: homeRedCards,
+                                awayRedCards: awayRedCards
+                            };
                             
-                            // Save to global map for stats modal
                             globalMatchesMap[event.id] = obj;
 
                             if (state === 'in') live.push(obj);
@@ -913,6 +1039,11 @@
                     }
                 });
 
+                // Check for live goal updates
+                if (!isManual && live.length > 0) {
+                    checkGoals(live);
+                }
+
                 const timeSort = (a, b) => (a.date - b.date) || (getRank(a.leagueId) - getRank(b.leagueId));
                 const recSort = (a, b) => (b.date - a.date) || (getRank(a.leagueId) - getRank(b.leagueId));
 
@@ -920,7 +1051,7 @@
                 container.innerHTML = '';
                 
                 if (live.length === 0 && upcoming.length === 0) {
-                    container.innerHTML = `<div class="w-full text-center py-6 text-slate-500 dark:text-gray-400 italic text-sm font-bold bg-slate-100 dark:bg-white/5 rounded-2xl border border-slate-200 dark:border-white/5 shadow-inner"><i class="fas fa-calendar-alt mb-2 text-xl text-slate-400 dark:text-gray-500"></i><br>လာမည့်ရက်များအတွင်း ပွဲစဉ်များ မရှိသေးပါဘူး။</div>`;
+                    container.innerHTML = `<div class="w-full text-center py-6 text-slate-500 dark:text-gray-400 italic text-sm font-bold bg-slate-100 dark:bg-white/5 rounded-2xl border border-slate-200 dark:border-white/5 shadow-inner animate-fade-in"><i class="fas fa-calendar-alt mb-2 text-xl text-slate-400 dark:text-gray-500"></i><br>လာမည့်ရက်များအတွင်း ပွဲစဉ်များ မရှိသေးပါဘူး။</div>`;
                 } else {
                     [...live, ...upcoming].forEach(m => container.innerHTML += renderMatchCard(m, false));
                 }
@@ -928,14 +1059,16 @@
                 if (finished.length > 0) {
                     finishedContainer.innerHTML = ''; finished.forEach(m => finishedContainer.innerHTML += renderMatchCard(m, true));
                     finishedSection.classList.remove('hidden');
+                } else {
+                    finishedSection.classList.add('hidden');
                 }
             } catch (error) { 
-                container.innerHTML = '<div class="w-full text-center py-6 text-red-600 dark:text-red-400 italic text-sm font-bold bg-red-50 dark:bg-red-900/20 rounded-2xl border border-red-200 dark:border-red-500/20"><i class="fas fa-exclamation-circle mr-1 mb-2 text-2xl"></i><br>ပွဲစဉ်များ ရယူ၍မရပါ။ <button onclick="fetchMatches()" class="underline ml-1 font-black">ထပ်စမ်းကြည့်ပါ</button></div>'; 
+                container.innerHTML = '<div class="w-full text-center py-6 text-red-600 dark:text-red-400 italic text-sm font-bold bg-red-50 dark:bg-red-900/20 rounded-2xl border border-red-200 dark:border-red-500/20 animate-fade-in"><i class="fas fa-exclamation-circle mr-1 mb-2 text-2xl"></i><br>ပွဲစဉ်များ ရယူ၍မရပါ။ <button onclick="fetchMatches(true)" class="underline ml-1 font-black">ထပ်စမ်းကြည့်ပါ</button></div>'; 
             }
         }
 
-        document.addEventListener('DOMContentLoaded', fetchMatches);
-        setInterval(fetchMatches, 300000); // Fetch every 5 minutes
+        document.addEventListener('DOMContentLoaded', () => fetchMatches(false));
+        setInterval(() => fetchMatches(false), 60000); // Check every 1 minute for faster Goal Toast updates
     </script>
 </body>
 </html>

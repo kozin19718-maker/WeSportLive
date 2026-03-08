@@ -65,22 +65,22 @@
         .golden-gradient-top { background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728); color: #1a1a1a; }
         .golden-gradient-bottom { background: linear-gradient(180deg, #fcf6ba, #bf953f); color: #000; }
 
-        .glass-card { transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .glass-card { transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform; }
         .glass-card:active { transform: scale(0.97); }
 
         .dark .match-card { background: linear-gradient(145deg, rgba(31, 41, 55, 0.9), rgba(17, 24, 39, 0.9)); }
-        .match-card { min-width: 300px; background: linear-gradient(145deg, #ffffff, #f3f4f6); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+        .match-card { min-width: 300px; background: linear-gradient(145deg, #ffffff, #f3f4f6); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; will-change: transform, box-shadow; }
         .match-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.3); }
         
         .dark .match-card.man-utd { background: linear-gradient(145deg, rgba(69, 10, 10, 0.9), rgba(17, 24, 39, 0.9)); }
         .match-card.man-utd { background: linear-gradient(145deg, #fef2f2, #ffffff); }
         
         .dark .finished-match-card { background: linear-gradient(145deg, rgba(31, 41, 55, 0.5), rgba(17, 24, 39, 0.7)); }
-        .finished-match-card { min-width: 250px; background: linear-gradient(145deg, #f9fafb, #ffffff); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+        .finished-match-card { min-width: 250px; background: linear-gradient(145deg, #f9fafb, #ffffff); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; will-change: transform, box-shadow; }
         .finished-match-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.1); }
 
-        .live-pulse { background: linear-gradient(90deg, #ef4444, #b91c1c); animation: pulse-red 2.5s infinite; }
-        .telegram-pulse { background: linear-gradient(90deg, #1e3a8a, #2563eb); animation: pulse-blue 2.5s infinite; animation-delay: 1.25s; }
+        .live-pulse { background: linear-gradient(90deg, #ef4444, #b91c1c); animation: pulse-red 2.5s infinite; will-change: transform, box-shadow; }
+        .telegram-pulse { background: linear-gradient(90deg, #1e3a8a, #2563eb); animation: pulse-blue 2.5s infinite; animation-delay: 1.25s; will-change: transform, box-shadow; }
 
         @keyframes pulse-red { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); } 70% { transform: scale(1.02); box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
         @keyframes pulse-blue { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.6); } 70% { transform: scale(1.02); box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); } }
@@ -89,9 +89,9 @@
         .text-shine { background: linear-gradient(to right, #000000 20%, #6b7280 40%, #6b7280 60%, #000000 80%); background-size: 200% auto; color: #000; background-clip: text; text-fill-color: transparent; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 3s linear infinite; }
 
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-        .animate-float { animation: float 2.5s ease-in-out infinite; }
+        .animate-float { animation: float 2.5s ease-in-out infinite; will-change: transform; }
 
-        .btn-glow { animation: button-glow 2s infinite; }
+        .btn-glow { animation: button-glow 2s infinite; will-change: box-shadow; }
         @keyframes button-glow { 0% { box-shadow: 0 0 5px rgba(234, 179, 8, 0.2); } 50% { box-shadow: 0 0 15px rgba(234, 179, 8, 0.6); } 100% { box-shadow: 0 0 5px rgba(234, 179, 8, 0.2); } }
 
         .hide-scrollbar::-webkit-scrollbar { display: none; }
@@ -185,11 +185,27 @@
                 <i class="fas fa-copy text-yellow-500 text-sm shrink-0"></i>
             </button>
 
+            <!-- INSTALL APP BUTTON -->
+            <button onclick="toggleMenu(); setTimeout(openInstallModal, 300)" class="glass-card w-full flex items-center justify-between p-4 rounded-2xl group border border-purple-200 dark:border-purple-500/30 bg-purple-50/50 dark:bg-purple-900/10 hover:bg-purple-100 dark:hover:bg-purple-900/20 active:scale-95 transition-all shadow-sm mb-2">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-purple-100 dark:bg-purple-500/20 rounded-xl flex items-center justify-center text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-500/20">
+                        <i class="fas fa-mobile-alt text-lg"></i>
+                    </div>
+                    <span class="font-bold text-sm text-purple-700 dark:text-purple-400">App ကို ဖုန်းထဲထည့်သွင်းမယ်</span>
+                </div>
+                <i class="fas fa-chevron-right text-purple-400 dark:text-purple-500/50 text-xs shrink-0"></i>
+            </button>
+
             <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4"><div class="w-10 h-10 bg-orange-100 dark:bg-gradient-to-br dark:from-orange-400/20 dark:to-orange-600/20 rounded-xl flex items-center justify-center text-orange-600 dark:text-orange-500 border border-orange-200 dark:border-orange-500/20"><i class="fas fa-rocket"></i></div><span class="font-bold text-sm">1XBET အကောင့်ဖွင့်မယ်</span></div><i class="fas fa-chevron-right text-slate-400 dark:text-gray-600 text-xs"></i>
             </a>
             <a href="https://reffpa.com/L?tag=d_5044128m_70865c_&site=5044128&ad=70865" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
-                <div class="flex items-center space-x-4"><div class="w-10 h-10 bg-green-100 dark:bg-gradient-to-br dark:from-green-400/20 dark:to-green-600/20 rounded-xl flex items-center justify-center text-green-600 dark:text-green-500 border border-green-200 dark:border-green-500/20"><i class="fas fa-download"></i></div><span class="font-bold text-sm">Android App ဒေါင်းမယ်</span></div><i class="fas fa-chevron-right text-slate-400 dark:text-gray-600 text-xs"></i>
+                <div class="flex items-center space-x-4"><div class="w-10 h-10 bg-green-100 dark:bg-gradient-to-br dark:from-green-400/20 dark:to-green-600/20 rounded-xl flex items-center justify-center text-green-600 dark:text-green-500 border border-green-200 dark:border-green-500/20"><i class="fas fa-download"></i></div>
+                    <div class="flex flex-col">
+                        <span class="font-bold text-sm leading-tight">Android App ဒေါင်းမယ်</span>
+                        <span class="text-[9px] font-bold text-green-600 dark:text-green-400 mt-0.5">PROMO: ZINXBET</span>
+                    </div>
+                </div><i class="fas fa-chevron-right text-slate-400 dark:text-gray-600 text-xs"></i>
             </a>
             <a href="https://t.me/WinExpress99" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4"><div class="w-10 h-10 bg-yellow-100 dark:bg-gradient-to-br dark:from-yellow-400/20 dark:to-yellow-600/20 rounded-xl flex items-center justify-center text-yellow-600 dark:text-yellow-500 border border-yellow-200 dark:border-yellow-500/20"><i class="fas fa-wallet"></i></div><span class="font-bold text-sm">1XBET ငွေသွင်း/ငွေထုတ်</span></div><i class="fas fa-chevron-right text-slate-400 dark:text-gray-600 text-xs"></i>
@@ -197,7 +213,7 @@
             <a href="https://t.me/OneXBetMyanmar2/3" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                 <div class="flex items-center space-x-4"><div class="w-10 h-10 bg-blue-100 dark:bg-gradient-to-br dark:from-blue-400/20 dark:to-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-500 border border-blue-200 dark:border-blue-500/20"><i class="fas fa-book-open"></i></div><span class="font-bold text-sm">အကောင့်ဖွင့်နည်း ကြည့်မယ်</span></div><i class="fas fa-chevron-right text-slate-400 dark:text-gray-600 text-xs"></i>
             </a>
-            <a href="https://t.me/WinExpress99" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl border border-blue-200 dark:border-blue-500/30 group md:col-span-2 bg-blue-50/50 dark:bg-[rgba(17,24,39,0.6)] hover:bg-blue-50 dark:hover:bg-blue-900/10">
+            <a href="https://t.me/WinExpress99" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl border border-blue-200 dark:border-blue-500/30 group bg-blue-50/50 dark:bg-[rgba(17,24,39,0.6)] hover:bg-blue-50 dark:hover:bg-blue-900/10">
                 <div class="flex items-center space-x-4"><div class="w-10 h-10 bg-blue-100 dark:bg-blue-600/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20"><i class="fas fa-comment-dots"></i></div><span class="font-bold text-sm text-blue-700 dark:text-blue-400">Agent ကို စကားပြောမယ်</span></div><i class="fas fa-chevron-right text-blue-400 dark:text-blue-500/50 text-xs"></i>
             </a>
         </div>
@@ -275,7 +291,7 @@
     </header>
 
     <!-- Main Content Area -->
-    <main class="w-full max-w-2xl px-4 pb-8">
+    <main class="w-full max-w-2xl px-4 pb-24"> <!-- Added extra padding bottom for sticky button -->
 
         <!-- ==================== TAB 1: HOME ==================== -->
         <section id="tab-home" class="tab-content block animate-fade-in space-y-5 pt-3">
@@ -433,12 +449,33 @@
             <h3 class="text-base font-black italic mb-2 px-1 text-slate-800 dark:text-white flex items-center">
                 <i class="fas fa-concierge-bell text-orange-400 mr-2"></i> အကူအညီနှင့် ဝန်ဆောင်မှုများ
             </h3>
+            
+            <!-- INSTALL APP PROMINENT CARD IN SERVICES TAB -->
+            <button onclick="openInstallModal()" class="w-full rounded-2xl p-4 border border-purple-300 dark:border-purple-500/40 bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/20 shadow-md relative overflow-hidden text-left group active:scale-95 transition-transform flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-4 relative z-10">
+                    <div class="w-12 h-12 bg-purple-500 text-white rounded-full flex items-center justify-center text-xl shadow-lg group-hover:scale-110 transition-transform">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-black text-[15px] text-purple-900 dark:text-purple-300 mb-0.5">App ကို ဖုန်းထဲထည့်သွင်းမယ်</h4>
+                        <p class="text-[10px] font-bold text-purple-700 dark:text-purple-400">Home Screen ကနေ အလွယ်တကူ ဝင်ကြည့်ရန်</p>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right text-purple-500 relative z-10"></i>
+                <div class="absolute -right-4 -top-4 text-purple-500/10 text-6xl"><i class="fas fa-mobile-alt"></i></div>
+            </button>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                     <div class="flex items-center space-x-4"><div class="w-12 h-12 bg-orange-100 dark:bg-gradient-to-br dark:from-orange-400/20 dark:to-orange-600/20 rounded-xl flex items-center justify-center text-orange-600 dark:text-orange-500 border border-orange-200 dark:border-orange-500/20"><i class="fas fa-rocket text-xl"></i></div><span class="font-bold text-base md:text-lg">1XBET အကောင့်ဖွင့်မယ်</span></div><i class="fas fa-chevron-right text-slate-400 dark:text-slate-600"></i>
                 </a>
                 <a href="https://reffpa.com/L?tag=d_5044128m_70865c_&site=5044128&ad=70865" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
-                    <div class="flex items-center space-x-4"><div class="w-12 h-12 bg-green-100 dark:bg-gradient-to-br dark:from-green-400/20 dark:to-green-600/20 rounded-xl flex items-center justify-center text-green-600 dark:text-green-500 border border-green-200 dark:border-green-500/20"><i class="fas fa-download text-xl"></i></div><span class="font-bold text-base md:text-lg">Android App ဒေါင်းမယ်</span></div><i class="fas fa-chevron-right text-slate-400 dark:text-slate-600"></i>
+                    <div class="flex items-center space-x-4"><div class="w-12 h-12 bg-green-100 dark:bg-gradient-to-br dark:from-green-400/20 dark:to-green-600/20 rounded-xl flex items-center justify-center text-green-600 dark:text-green-500 border border-green-200 dark:border-green-500/20"><i class="fas fa-download text-xl"></i></div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-base md:text-lg leading-tight">Android App ဒေါင်းမယ်</span>
+                            <span class="text-[10px] font-bold text-green-600 dark:text-green-400 mt-0.5">PROMO: ZINXBET</span>
+                        </div>
+                    </div><i class="fas fa-chevron-right text-slate-400 dark:text-slate-600"></i>
                 </a>
                 <a href="https://t.me/WinExpress99" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl group border border-slate-200 dark:border-white/5 bg-white/80 dark:bg-[rgba(17,24,39,0.6)] hover:bg-slate-50 dark:hover:bg-white/5">
                     <div class="flex items-center space-x-4"><div class="w-12 h-12 bg-yellow-100 dark:bg-gradient-to-br dark:from-yellow-400/20 dark:to-yellow-600/20 rounded-xl flex items-center justify-center text-yellow-600 dark:text-yellow-500 border border-yellow-200 dark:border-yellow-500/20"><i class="fas fa-wallet text-xl"></i></div><span class="font-bold text-base md:text-lg">1XBET ငွေသွင်း/ငွေထုတ်</span></div><i class="fas fa-chevron-right text-slate-400 dark:text-slate-600"></i>
@@ -540,6 +577,29 @@
 
     </main>
 
+    <!-- FIXED BOTTOM DOWNLOAD BUTTON (Always Visible) -->
+    <div class="fixed bottom-4 left-0 w-full px-4 z-40 pointer-events-none flex justify-center">
+        <a href="https://reffpa.com/L?tag=d_5044128m_70865c_&site=5044128&ad=70865" target="_blank" class="pointer-events-auto w-full max-w-[400px] bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#b38728] text-black rounded-2xl p-0.5 shadow-[0_10px_30px_rgba(179,135,40,0.4)] hover:scale-[1.02] active:scale-95 transition-transform flex flex-col btn-glow overflow-hidden group">
+            <div class="bg-gradient-to-r from-black to-slate-900 w-full rounded-[14px] px-4 py-2.5 flex items-center justify-between relative overflow-hidden">
+                <!-- Shine effect inside -->
+                <div class="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-20deg] group-hover:animate-[shine_1.5s_infinite]"></div>
+                
+                <div class="flex items-center space-x-3 relative z-10">
+                    <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center text-black text-xl shadow-inner">
+                        <i class="fas fa-download animate-bounce"></i>
+                    </div>
+                    <div class="flex flex-col text-left">
+                        <span class="font-black text-[13px] sm:text-[14px] text-white leading-tight">1XBET App တိုက်ရိုက်ဒေါင်းရန်</span>
+                        <span class="font-black text-[11px] text-yellow-400 mt-0.5 tracking-wider">🎁 PROMO: ZINXBET</span>
+                    </div>
+                </div>
+                <div class="relative z-10 bg-yellow-500 text-black px-3 py-1.5 rounded-lg font-black text-xs shadow-md">
+                    DOWNLOAD
+                </div>
+            </div>
+        </a>
+    </div>
+
     <!-- ==================== MATCH STATS MODAL ==================== -->
     <div id="stats-modal" class="fixed inset-0 bg-black/80 z-[70] hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm flex items-end sm:items-center justify-center" onclick="closeStatsModal()">
         <div class="bg-white dark:bg-[#0a0f1d] w-full max-w-lg rounded-t-3xl sm:rounded-3xl max-h-[85vh] overflow-y-auto transform translate-y-full transition-transform duration-300 shadow-2xl border border-slate-200 dark:border-white/10" id="stats-modal-content" onclick="event.stopPropagation()">
@@ -565,6 +625,65 @@
         </div>
     </div>
 
+    <!-- ==================== INSTALL APP GUIDE MODAL ==================== -->
+    <div id="install-modal" class="fixed inset-0 bg-black/80 z-[80] hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm flex items-end sm:items-center justify-center" onclick="closeInstallModal()">
+        <div class="bg-white dark:bg-[#0a0f1d] w-full max-w-md rounded-t-3xl sm:rounded-3xl overflow-y-auto transform translate-y-full transition-transform duration-300 shadow-2xl border border-slate-200 dark:border-white/10 p-1" id="install-modal-content" onclick="event.stopPropagation()">
+            <div class="w-full flex justify-center pt-2 pb-1 sm:hidden" onclick="closeInstallModal()">
+                <div class="w-12 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full"></div>
+            </div>
+            
+            <div class="p-5">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 class="font-black text-xl italic text-slate-800 dark:text-white mb-1">
+                            <i class="fas fa-mobile-alt text-purple-500 mr-2"></i> App ထည့်သွင်းနည်း
+                        </h3>
+                        <p class="text-xs font-bold text-slate-500 dark:text-gray-400">ဒီ App လေးကို ဖုန်းထဲမှာ အမြဲတမ်း အလွယ်တကူ ဝင်ကြည့်လို့ရအောင် Home Screen မှာ Install လုပ်ထားလိုက်ပါ သူငယ်ချင်းတို့ရေ!</p>
+                    </div>
+                    <button onclick="closeInstallModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center text-slate-500 hover:text-red-500 shrink-0 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- Android Section -->
+                    <div class="bg-slate-50 dark:bg-white/5 rounded-2xl p-4 border border-slate-200 dark:border-white/10">
+                        <h4 class="font-black text-sm text-green-600 dark:text-green-400 mb-3 flex items-center">
+                            <i class="fab fa-android text-lg mr-2"></i> Android ဖုန်းများအတွက် (Chrome Browser)
+                        </h4>
+                        <div class="flex items-start space-x-3 mb-3">
+                            <div class="w-6 h-6 bg-slate-200 dark:bg-black/50 rounded-full flex items-center justify-center text-xs font-black text-slate-600 dark:text-gray-300 shrink-0 mt-0.5">၁</div>
+                            <p class="text-xs font-bold text-slate-700 dark:text-gray-300">ညာဘက်အပေါ်ထောင့်ရှိ <span class="bg-slate-200 dark:bg-black/40 px-1.5 py-0.5 rounded text-[14px]">⋮</span> (အစက် ၃ စက်) ကိုနှိပ်ပါ။</p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-slate-200 dark:bg-black/50 rounded-full flex items-center justify-center text-xs font-black text-slate-600 dark:text-gray-300 shrink-0 mt-0.5">၂</div>
+                            <p class="text-xs font-bold text-slate-700 dark:text-gray-300"><span class="bg-slate-200 dark:bg-black/40 px-1.5 py-0.5 rounded italic">Add to Home screen</span> (သို့မဟုတ်) <span class="bg-slate-200 dark:bg-black/40 px-1.5 py-0.5 rounded italic">Install app</span> ကိုရွေးချယ်ပြီး နှိပ်လိုက်ပါ။</p>
+                        </div>
+                    </div>
+
+                    <!-- iOS Section -->
+                    <div class="bg-slate-50 dark:bg-white/5 rounded-2xl p-4 border border-slate-200 dark:border-white/10">
+                        <h4 class="font-black text-sm text-blue-600 dark:text-blue-400 mb-3 flex items-center">
+                            <i class="fab fa-apple text-lg mr-2"></i> iPhone / iPad များအတွက် (Safari)
+                        </h4>
+                        <div class="flex items-start space-x-3 mb-3">
+                            <div class="w-6 h-6 bg-slate-200 dark:bg-black/50 rounded-full flex items-center justify-center text-xs font-black text-slate-600 dark:text-gray-300 shrink-0 mt-0.5">၁</div>
+                            <p class="text-xs font-bold text-slate-700 dark:text-gray-300">အောက်ခြေဘားရှိ <span class="bg-slate-200 dark:bg-black/40 px-1.5 py-0.5 rounded"><i class="fas fa-external-link-square-alt"></i> Share</span> ခလုတ် (လေးထောင့်ကွက်နှင့် မြှားပုံ) ကိုနှိပ်ပါ။</p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-slate-200 dark:bg-black/50 rounded-full flex items-center justify-center text-xs font-black text-slate-600 dark:text-gray-300 shrink-0 mt-0.5">၂</div>
+                            <p class="text-xs font-bold text-slate-700 dark:text-gray-300">အောက်သို့ဆွဲချ၍ <span class="bg-slate-200 dark:bg-black/40 px-1.5 py-0.5 rounded italic"><i class="far fa-plus-square mr-1"></i> Add to Home Screen</span> ကိုရွေးချယ်ပြီး Add ကိုနှိပ်လိုက်ပါ။</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="closeInstallModal()" class="w-full mt-4 bg-purple-600 hover:bg-purple-500 text-white font-black py-3 rounded-xl shadow-lg active:scale-95 transition-all text-sm">
+                    နားလည်ပါပြီ
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Global variables for caching and state management
         let allCachedMatches = { live: [], upcoming: [], finished: [] };
@@ -575,6 +694,33 @@
         // Feature: Haptic Feedback for better UX on Mobile
         function triggerHaptic() {
             if (navigator.vibrate) navigator.vibrate(50);
+        }
+
+        // --- Install App Modal Logic ---
+        function openInstallModal() {
+            triggerHaptic();
+            const modal = document.getElementById('install-modal');
+            const content = document.getElementById('install-modal-content');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('translate-y-full');
+                content.classList.add('translate-y-0');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeInstallModal() {
+            triggerHaptic();
+            const modal = document.getElementById('install-modal');
+            const content = document.getElementById('install-modal-content');
+            modal.classList.add('opacity-0');
+            content.classList.add('translate-y-full');
+            content.classList.remove('translate-y-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
         }
 
         // --- Feature: Date Helper (Yesterday, Today, Tomorrow) ---
@@ -832,7 +978,6 @@
             `;
 
             try {
-                // Fetch Stats
                 const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${match.leagueId}/summary?event=${matchId}`);
                 const data = await res.json();
 

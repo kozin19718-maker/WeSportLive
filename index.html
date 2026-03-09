@@ -39,6 +39,9 @@
             -webkit-tap-highlight-color: transparent;
             transition: background-color 0.3s, color 0.3s;
             overscroll-behavior: none;
+            /* Performance: Hardware Acceleration */
+            transform: translateZ(0);
+            -webkit-font-smoothing: antialiased;
         }
         body.dark {
             background: radial-gradient(ellipse at 10% 0%, rgba(30,58,138,0.25) 0%, transparent 55%),
@@ -107,14 +110,15 @@
     @keyframes spin { to{transform:rotate(360deg)} }
     @keyframes shine { 0%{background-position:-200% center} 100%{background-position:200% center} }
 
-    .animate-fade-up  { animation: fadeSlideUp .4s cubic-bezier(.22,1,.36,1) both; }
-    .animate-fade-in  { animation: fadeIn .35s ease both; }
-    .animate-pop-in   { animation: popIn .5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
-    .animate-float    { animation: float 2.5s ease-in-out infinite; }
-    .live-pulse       { background:linear-gradient(90deg,#ef4444,#b91c1c); animation:pulse-red 2.5s infinite; }
-    .telegram-pulse   { background:linear-gradient(90deg,#1e3a8a,#2563eb); animation:pulse-blue 2.5s infinite 1.25s; }
-    .btn-glow         { animation:glow-gold 2s infinite; }
-    .loader           { border:3px solid rgba(156,163,175,.2); border-top-color:#3b82f6; border-radius:50%; width:24px; height:24px; animation:spin 1s linear infinite; }
+    /* Performance: Use will-change for heavy animations */
+    .animate-fade-up  { animation: fadeSlideUp .4s cubic-bezier(.22,1,.36,1) both; will-change: transform, opacity; }
+    .animate-fade-in  { animation: fadeIn .35s ease both; will-change: opacity; }
+    .animate-pop-in   { animation: popIn .5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; will-change: transform, opacity; }
+    .animate-float    { animation: float 2.5s ease-in-out infinite; will-change: transform; }
+    .live-pulse       { background:linear-gradient(90deg,#ef4444,#b91c1c); animation:pulse-red 2.5s infinite; will-change: transform, box-shadow; }
+    .telegram-pulse   { background:linear-gradient(90deg,#1e3a8a,#2563eb); animation:pulse-blue 2.5s infinite 1.25s; will-change: transform, box-shadow; }
+    .btn-glow         { animation:glow-gold 2s infinite; will-change: box-shadow; }
+    .loader           { border:3px solid rgba(156,163,175,.2); border-top-color:#3b82f6; border-radius:50%; width:24px; height:24px; animation:spin 1s linear infinite; will-change: transform; }
     .bell-ring        { animation:bell-ring .6s ease-in-out; }
     .text-shine {
         background:linear-gradient(to right,#000 20%,#6b7280 40%,#6b7280 60%,#000 80%);
@@ -142,13 +146,13 @@
         animation: shimmer 1.4s infinite linear;
     }
 
-    /* ── Match Cards (Vertical) ── */
+    /* ── Match Cards (Vertical Optimized) ── */
     .match-card {
         width: 100%; 
         border-radius: var(--card-radius);
         transition: transform .22s cubic-bezier(.4,0,.2,1), box-shadow .22s;
         cursor: pointer;
-        will-change: transform;
+        will-change: transform; /* Hint for GPU */
         border: 1px solid rgba(255,255,255,.06);
     }
     .dark .match-card { background: linear-gradient(145deg,rgba(17,25,45,.97),rgba(9,14,28,.97)); }
@@ -399,8 +403,7 @@
                     </div>
                 </div>
                 <div class="bg-black/40 rounded-xl py-2 px-4 border border-white/10 backdrop-blur-sm">
-                    <div id="mu-countdown" class="flex justify-center gap-3 font-black text-2xl tracking-tighter text-yellow-400 tabular-nums">
-                        </div>
+                    <div id="mu-countdown" class="flex justify-center gap-3 font-black text-2xl tracking-tighter text-yellow-400 tabular-nums"></div>
                     <div id="mu-match-date" class="text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-widest border-t border-white/10 pt-1"></div>
                 </div>
             </div>
@@ -806,7 +809,8 @@ let currentSelectedDate = 'all';
 let notifications = [];
 let notifPanelOpen = false;
 let searchQuery = '';
-let countdownTimers = {};
+// Optimized: Single global interval instead of multiple timeouts
+let globalTimerInterval = null; 
 let manUtdCountdownTimer = null;
 let isFetching = false;
 
@@ -1075,19 +1079,32 @@ function clearSearch() {
     filterAndRenderMatches();
 }
 
-// ── Countdown Renderer ──────────────
-function renderCountdown(matchId, targetDate) {
-    const el = document.getElementById(`cd-${matchId}`);
-    if (!el) { delete countdownTimers[matchId]; return; }
-    const now = Date.now();
-    const diff = Math.max(0, targetDate.getTime() - now);
-    if (diff === 0) { el.innerHTML = '<span class="text-yellow-400 font-black text-[11px] animate-pulse">ပွဲစဖို့ နီးနေပါပြီ!</span>'; delete countdownTimers[matchId]; return; }
-    const h = Math.floor(diff / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    const unit = (v,l) => `<div class="countdown-unit"><span class="val">${String(v).padStart(2,'0')}</span><span class="lbl">${l}</span></div>`;
-    el.innerHTML = `<div class="countdown-wrap">${h?unit(h,'Hrs'):''}${unit(m,'Min')}${unit(s,'Sec')}</div>`;
-    countdownTimers[matchId] = setTimeout(() => renderCountdown(matchId, targetDate), 1000);
+// ── OPTIMIZED Countdown Renderer ──────────────
+// Uses a single interval for all countdowns to save CPU
+function startGlobalTimer() {
+    if (globalTimerInterval) clearInterval(globalTimerInterval);
+    globalTimerInterval = setInterval(() => {
+        const els = document.querySelectorAll('.countdown-target');
+        if (els.length === 0) return;
+        
+        const now = Date.now();
+        els.forEach(el => {
+            const targetTime = parseInt(el.dataset.time);
+            const diff = targetTime - now;
+            
+            if (diff <= 0) {
+                el.innerHTML = '<span class="text-yellow-400 font-black text-[11px] animate-pulse">ပွဲစဖို့ နီးနေပါပြီ!</span>';
+                el.classList.remove('countdown-target'); // Stop updating this one
+                return;
+            }
+            
+            const h = Math.floor(diff / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            const unit = (v,l) => `<div class="countdown-unit"><span class="val">${String(v).padStart(2,'0')}</span><span class="lbl">${l}</span></div>`;
+            el.innerHTML = `<div class="countdown-wrap">${h?unit(h,'Hrs'):''}${unit(m,'Min')}${unit(s,'Sec')}</div>`;
+        });
+    }, 1000);
 }
 
 // ── Filter & Render ──────────────
@@ -1126,15 +1143,18 @@ function filterAndRenderMatches() {
         infoEl.classList.add('hidden');
     }
 
-    // Clear old countdown timers
-    Object.keys(countdownTimers).forEach(id => { clearTimeout(countdownTimers[id]); delete countdownTimers[id]; });
-
     if (live.length === 0 && upcoming.length === 0) {
         container.innerHTML = `<div class="w-full text-center py-8 text-slate-500 dark:text-gray-400 italic text-sm font-bold bg-slate-100 dark:bg-white/4 rounded-2xl border border-slate-200 dark:border-white/5 animate-fade-in"><i class="fas fa-calendar-alt mb-2 text-2xl text-slate-400 dark:text-gray-500 block"></i>ပွဲစဉ်များ မရှိသေးပါ</div>`;
     } else {
-        container.innerHTML = [...live, ...upcoming].map(m => renderMatchCard(m, false)).join('');
-        // Start countdowns for upcoming
-        upcoming.forEach(m => { if (m.status === 'pre' && !m.isPostponed) renderCountdown(m.id, m.date); });
+        // Efficient DOM update using DocumentFragment
+        const fragment = document.createDocumentFragment();
+        [...live, ...upcoming].forEach(m => {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = renderMatchCard(m, false);
+            fragment.appendChild(tempDiv.firstChild);
+        });
+        container.innerHTML = '';
+        container.appendChild(fragment);
     }
 
     if (finished.length > 0) {
@@ -1143,6 +1163,9 @@ function filterAndRenderMatches() {
     } else {
         finishedSection.classList.add('hidden');
     }
+    
+    // Restart global timer for new elements
+    startGlobalTimer();
 }
 
 // ── Match Card HTML ──────────────
@@ -1245,12 +1268,11 @@ function renderMatchCard(match, isCompact) {
         </div>`;
     }
 
-    // Countdown
+    // Countdown Placeholder (Optimized)
     const cdHtml = (!isCompact && isPre && !match.isPostponed)
-        ? `<div id="cd-${match.id}" class="mt-3 flex justify-center"></div>`
+        ? `<div class="mt-3 flex justify-center countdown-target" data-time="${match.date.getTime()}"></div>`
         : '';
 
-    // MODIFIED for Vertical: removed snap-center
     const cardCls = `${isCompact?'finished-match-card':'match-card'} ${isUtd?'man-utd':''} ${isLive&&!isCompact?'live-card':''} p-${isCompact?'3':'4'} relative flex flex-col justify-between overflow-hidden`;
 
     return `<div class="${cardCls}" onclick="openStatsModal('${match.id}')">
@@ -1601,7 +1623,7 @@ async function fetchMatches(isManual=false) {
         const rs = (a,b)=>(b.date-a.date)||rank(a.leagueId)-rank(b.leagueId);
         live.sort(ts); upcoming.sort(ts); finished.sort(rs);
         
-        // NEW: Find next Man Utd match for banner
+        // Find next Man Utd match for banner
         const nextMU = upcoming.find(m => m.homeTeam.team.name.includes('Manchester United') || m.awayTeam.team.name.includes('Manchester United'));
         renderManUtdBanner(nextMU);
 

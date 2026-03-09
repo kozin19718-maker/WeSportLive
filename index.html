@@ -61,6 +61,11 @@
         to   { opacity: 1; transform: translateY(0); }
     }
     @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
+    @keyframes popIn {
+        0% { opacity: 0; transform: scale(0.8); }
+        70% { opacity: 1; transform: scale(1.05); }
+        100% { opacity: 1; transform: scale(1); }
+    }
     @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
     @keyframes shimmer {
         0%   { background-position: -600px 0; }
@@ -104,6 +109,7 @@
 
     .animate-fade-up  { animation: fadeSlideUp .4s cubic-bezier(.22,1,.36,1) both; }
     .animate-fade-in  { animation: fadeIn .35s ease both; }
+    .animate-pop-in   { animation: popIn .5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
     .animate-float    { animation: float 2.5s ease-in-out infinite; }
     .live-pulse       { background:linear-gradient(90deg,#ef4444,#b91c1c); animation:pulse-red 2.5s infinite; }
     .telegram-pulse   { background:linear-gradient(90deg,#1e3a8a,#2563eb); animation:pulse-blue 2.5s infinite 1.25s; }
@@ -717,7 +723,58 @@
             <button onclick="closeInstallModal()" class="w-full mt-4 bg-purple-600 hover:bg-purple-500 text-white font-black py-3 rounded-xl shadow-lg active:scale-95 transition text-sm">နားလည်ပါပြီ</button>
         </div>
     </div>
-</div><script>
+</div>
+
+<div id="welcome-modal" class="fixed inset-0 bg-black/80 z-[100] hidden flex items-center justify-center px-4 backdrop-blur-sm" onclick="closeWelcomeModal()">
+    <div class="relative w-full max-w-[360px] rounded-3xl overflow-hidden shadow-2xl animate-pop-in border border-yellow-500/30" onclick="event.stopPropagation()">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#1a0b2e] via-[#4b1d52] to-[#000000] z-0"></div>
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20 z-0"></div>
+        
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+            <div class="absolute top-[-10px] left-[10%] text-xl animate-float" style="animation-duration:3s">🎉</div>
+            <div class="absolute top-[20%] right-[10%] text-xl animate-float" style="animation-duration:4s;animation-delay:1s">✨</div>
+            <div class="absolute bottom-[10%] left-[20%] text-xl animate-float" style="animation-duration:3.5s;animation-delay:0.5s">💰</div>
+        </div>
+
+        <button onclick="closeWelcomeModal()" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 flex items-center justify-center text-white/70 hover:text-white hover:bg-black/60 z-20 transition active:scale-90">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <div class="relative z-10 p-6 text-center flex flex-col items-center">
+            <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(234,179,8,0.5)] mb-4 rotate-3 border-2 border-yellow-200">
+                🎁
+            </div>
+            
+            <h2 class="text-xl font-black text-white italic tracking-tight mb-1">မင်္ဂလာပါ! 1XBET မှ ကြိုဆိုပါတယ်</h2>
+            <p class="text-[11px] font-bold text-purple-200 mb-4 uppercase tracking-wider">ပထမဆုံး ငွေသွင်းမှုအတွက် အထူးဘောနပ်စ်</p>
+            
+            <div class="bg-black/40 rounded-xl p-4 w-full border border-white/10 backdrop-blur-sm mb-5">
+                <div class="text-[10px] text-slate-300 font-bold mb-1">အများဆုံးရနိုင်သော ပမာဏ</div>
+                <div class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-400 drop-shadow-sm tracking-tighter">
+                    ၆၅၀,၀၀၀ ကျပ်
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-3 w-full">
+                <div class="flex bg-white/10 rounded-xl p-1.5 border border-white/10">
+                    <div class="flex-1 flex flex-col justify-center items-center">
+                        <span class="text-[8px] text-slate-400 font-bold uppercase">Promo Code</span>
+                        <span class="text-lg font-black text-white tracking-widest">ZINXBET</span>
+                    </div>
+                    <button onclick="copyPromo('ZINXBET',this)" class="bg-yellow-500 text-black font-black text-xs px-4 rounded-lg hover:bg-yellow-400 transition active:scale-95">
+                        COPY
+                    </button>
+                </div>
+                
+                <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="w-full py-3.5 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white rounded-xl font-black text-sm shadow-lg border border-green-400/50 active:scale-95 transition-all btn-glow">
+                    အကောင့်ဖွင့်ပြီး ဘောနပ်စ်ယူမယ် <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
 // ── State ──────────────
 let allCachedMatches = { live: [], upcoming: [], finished: [] };
 let globalMatchesMap = {};
@@ -831,6 +888,18 @@ function closeInstallModal() {
     setTimeout(() => { modal.classList.add('hidden'); document.body.style.overflow = ''; }, 300);
 }
 
+// ── Welcome Promo Modal ──────────────
+function showWelcomeModal() {
+    const modal = document.getElementById('welcome-modal');
+    modal.classList.remove('hidden');
+    triggerHaptic();
+}
+function closeWelcomeModal() {
+    const modal = document.getElementById('welcome-modal');
+    modal.classList.add('hidden');
+    triggerHaptic();
+}
+
 // ── Copy Promo ──────────────
 function copyPromo(promo, btn) {
     triggerHaptic();
@@ -839,7 +908,7 @@ function copyPromo(promo, btn) {
         document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
     })();
     const orig = btn.innerHTML;
-    btn.innerHTML = '<div class="w-full flex items-center justify-center space-x-2 text-green-500"><i class="fas fa-check-circle"></i><span class="font-bold text-sm">ကူးယူပြီးပါပြီ!</span></div>';
+    btn.innerHTML = '<div class="w-full flex items-center justify-center space-x-2 text-green-500"><i class="fas fa-check-circle"></i><span class="font-bold text-xs">COPIED!</span></div>';
     setTimeout(() => btn.innerHTML = orig, 2000);
 }
 
@@ -1468,6 +1537,9 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchMatches(false);
     // Poll every 90s — balance freshness vs battery
     setInterval(() => fetchMatches(false), 90000);
+    
+    // Show Welcome Promo after 2 seconds
+    setTimeout(showWelcomeModal, 2000);
 });
 </script></body>
 </html>

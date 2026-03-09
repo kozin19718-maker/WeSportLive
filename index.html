@@ -3,820 +3,543 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>W.E Sports - Live Match Hub</title>
-    <meta name="description" content="Man Utd ပရိသတ်များနှင့် ဘောလုံးဝါသနာရှင်များအတွက် 1XBET Agent - W.E Sports">
+    <title>W.E Sports - 1XBET Official Agent</title>
+    <meta name="description" content="Best 1XBET Agent in Myanmar - W.E Sports">
     <link rel="preconnect" href="https://site.api.espn.com">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="shortcut icon" href="https://i.ibb.co/Tx06dFv3/image.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
-            theme: { extend: { colors: { darkbg: '#050810', lightbg: '#f0f4ff' } } }
+            theme: { 
+                extend: { 
+                    colors: { 
+                        darkbg: '#0a0f1d', 
+                        lightbg: '#f1f5f9',
+                        betgreen: '#16a34a',
+                        betgold: '#fbbf24',
+                        winred: '#dc2626'
+                    },
+                    fontFamily: {
+                        burmese: ['Pyidaungsu', 'Padauk', 'sans-serif']
+                    }
+                } 
+            }
         }
     </script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Pyidaungsu:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pyidaungsu:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --gold1: #bf953f; --gold2: #fcf6ba; --gold3: #b38728;
-            --card-radius: 20px;
-        }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body {
-            font-family: 'Pyidaungsu', sans-serif;
-            overscroll-behavior-y: contain; /* Prevents browser pull-to-refresh to use our custom one */
-            transition: background-color 0.3s;
-        }
-        body.dark {
-            background: radial-gradient(ellipse at 10% 0%, rgba(30,58,138,0.25) 0%, transparent 55%),
-                        radial-gradient(ellipse at 90% 100%, rgba(179,135,40,0.08) 0%, transparent 50%), #050810;
-        }
-        body:not(.dark) {
-            background: radial-gradient(ellipse at 10% 0%, rgba(30,58,138,0.07) 0%, transparent 55%),
-                        radial-gradient(ellipse at 90% 100%, rgba(234,179,8,0.05) 0%, transparent 50%), #f0f4ff;
-        }
-
-        /* Utilities */
+        :root { --card-radius: 16px; }
+        body { font-family: 'Pyidaungsu', sans-serif; -webkit-tap-highlight-color: transparent; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
         /* Animations */
-        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(239,68,68,0.7); } 70% { box-shadow: 0 0 0 10px rgba(239,68,68,0); } 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); } }
-        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
-        @keyframes spin { to{transform:rotate(360deg)} }
-        @keyframes shimmer { 0% {background-position: -600px 0;} 100% {background-position: 600px 0;} }
+        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 5px rgba(22, 163, 74, 0.5); } 50% { box-shadow: 0 0 20px rgba(22, 163, 74, 0.8); } }
         @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-100%)} }
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
         
-        .live-pulse { animation: pulse-red 2s infinite; }
-        .animate-float { animation: float 3s ease-in-out infinite; }
-        .animate-spin-slow { animation: spin 3s linear infinite; }
-        .btn-glow { animation: glow-gold 2s infinite; }
-        @keyframes glow-gold { 0%,100% { box-shadow:0 0 5px rgba(234,179,8,.3); } 50% { box-shadow:0 0 15px rgba(234,179,8,.6); } }
-
-        /* Match Cards */
-        .match-card {
-            min-width: 305px; border-radius: var(--card-radius);
-            transition: transform .2s, box-shadow .2s;
-            border: 1px solid rgba(255,255,255,.1);
-        }
-        .dark .match-card { background: linear-gradient(145deg,rgba(17,25,45,.95),rgba(9,14,28,.98)); }
-        .match-card { background: linear-gradient(145deg,#fff,#f8fafc); border-color: rgba(0,0,0,0.05); }
-        .match-card:active { transform: scale(0.98); }
+        .animate-marquee { display: inline-block; white-space: nowrap; animation: marquee 30s linear infinite; }
+        .btn-pulse { animation: pulse-glow 2s infinite; }
+        .float-icon { animation: float 3s ease-in-out infinite; }
         
-        /* Man Utd Theme */
-        .dark .match-card.man-utd { background: linear-gradient(145deg,rgba(69,10,10,.9),rgba(17,5,5,.95)); border-color: rgba(239,68,68,0.3); }
-        .match-card.man-utd { background: linear-gradient(145deg,#fff5f5,#fff0f0); border-color: rgba(239,68,68,0.2); }
-
-        /* Pull to Refresh Indicator */
-        #ptr-indicator {
-            height: 0; overflow: hidden; transition: height 0.2s;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 20px; color: #3b82f6;
-        }
-
-        /* Floating Action Button (FAB) */
-        .fab-container {
-            position: fixed; bottom: 85px; right: 16px; z-index: 45;
-            display: flex; flex-direction: column; gap: 10px; align-items: end;
-        }
-        .fab-btn {
-            width: 50px; height: 50px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: transform 0.2s; cursor: pointer;
-        }
-        .fab-btn:active { transform: scale(0.9); }
+        /* Glassmorphism */
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .dark .glass-nav { background: rgba(5, 8, 16, 0.95); }
         
-        /* Marquee */
-        .marquee-wrapper { overflow: hidden; white-space: nowrap; background: #000; }
-        .animate-marquee { display: inline-block; padding-left: 100%; animation: marquee 20s linear infinite; }
-
-        /* Skeleton Loading */
-        .skeleton {
-            background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
-            background-size: 600px 100%; animation: shimmer 1.5s infinite linear;
-        }
-
-        /* Tab Content */
-        .tab-content { display: none; padding-bottom: 80px; }
-        .tab-content.active { display: block; animation: fadeIn 0.4s; }
-        @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+        /* Match Card */
+        .match-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .dark .match-card { background: #151f32; border: 1px solid rgba(255,255,255,0.05); }
+        .match-card.live { border: 1px solid rgba(220, 38, 38, 0.5); }
     </style>
 </head>
 
-<body class="min-h-screen flex flex-col items-center bg-lightbg dark:bg-darkbg text-slate-800 dark:text-white">
+<body class="min-h-screen flex flex-col items-center bg-lightbg dark:bg-darkbg text-slate-800 dark:text-white pb-24">
 
-    <div id="goal-toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-[110] pointer-events-none opacity-0 translate-y-[-24px] transition-all duration-500 min-w-[280px]">
-        <div class="bg-gradient-to-r from-green-600 to-emerald-700 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center border border-green-400">
-            <i class="fas fa-futbol animate-bounce mr-3 text-3xl text-yellow-300 drop-shadow-md"></i>
-            <div>
-                <div id="toast-title"  class="font-black text-[14px] leading-tight">⚽ ဂိုးဝင်သွားပါပြီ!</div>
-                <div id="toast-subtitle" class="text-[11px] font-bold text-green-100 mt-0.5 bg-black/20 px-2 py-0.5 rounded uppercase"></div>
+    <header class="w-full max-w-md sticky top-0 z-50 glass-nav border-b border-slate-200 dark:border-white/5 transition-all duration-300">
+        <div class="bg-gradient-to-r from-blue-900 to-black text-white py-1.5 overflow-hidden relative">
+            <div class="absolute left-0 top-0 bottom-0 bg-blue-900 z-10 px-2 flex items-center text-[10px] font-black text-yellow-400 italic">
+                WINNERS <i class="fas fa-trophy ml-1"></i>
             </div>
-        </div>
-    </div>
-
-    <div id="ptr-indicator" class="w-full">
-        <div class="bg-white dark:bg-slate-800 rounded-full p-2 shadow-md border border-slate-200 dark:border-white/10">
-            <i class="fas fa-sync-alt animate-spin text-blue-500"></i>
-        </div>
-    </div>
-
-    <div id="menu-overlay" class="fixed inset-0 bg-black/60 z-50 hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="toggleMenu()"></div>
-    <aside id="sidebar" class="fixed top-0 left-0 h-full w-[80%] max-w-[300px] bg-white dark:bg-[#0b1121] z-[60] transform -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl border-r border-slate-200 dark:border-white/5">
-        <div class="p-5 border-b border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-black/20 flex items-center gap-3">
-            <div class="w-12 h-12 rounded-full border-2 border-yellow-400 overflow-hidden shadow-lg bg-white">
-                <img src="https://i.ibb.co/Tx06dFv3/image.png" class="w-full h-full object-cover">
-            </div>
-            <div>
-                <h2 class="font-black text-lg text-blue-800 dark:text-white">W.E Sports</h2>
-                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-bold">1XBET Official Agent</p>
-            </div>
-        </div>
-        <div class="p-4 space-y-3 overflow-y-auto flex-1">
-            <button onclick="copyPromo('ZINXBET',this)" class="w-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-black p-3 rounded-xl font-bold text-sm shadow-lg active:scale-95 transition-transform flex items-center justify-between">
-                <span><i class="fas fa-gift mr-2"></i> Promo Code</span> <span class="bg-black/20 px-2 py-0.5 rounded text-xs font-black">ZINXBET</span>
-            </button>
-            <a href="https://t.me/WinExpress99" target="_blank" class="block p-3 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 transition flex items-center gap-3">
-                <i class="fas fa-wallet text-blue-500 text-xl w-6"></i> <span class="text-sm font-bold">ငွေသွင်း/ငွေထုတ်</span>
-            </a>
-            <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="block p-3 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 transition flex items-center gap-3">
-                <i class="fas fa-user-plus text-green-500 text-xl w-6"></i> <span class="text-sm font-bold">အကောင့်ဖွင့်မယ်</span>
-            </a>
-            <button onclick="openInstallModal()" class="w-full text-left p-3 rounded-xl bg-purple-50 dark:bg-purple-900/10 hover:bg-purple-100 transition flex items-center gap-3">
-                <i class="fas fa-mobile-alt text-purple-500 text-xl w-6"></i> <span class="text-sm font-bold text-purple-700 dark:text-purple-300">App ဒေါင်းရန်</span>
-            </button>
-        </div>
-    </aside>
-
-    <header class="w-full max-w-2xl sticky top-0 bg-white/95 dark:bg-[#050810]/95 backdrop-blur-xl z-40 border-b border-slate-200 dark:border-white/5 transition-colors">
-        <div class="bg-[#1e52a5] text-white py-1 overflow-hidden border-b border-blue-400/30">
-            <div class="animate-marquee whitespace-nowrap text-[10px] font-bold tracking-wide">
-                <i class="fas fa-bullhorn text-yellow-300 mr-1"></i> မင်္ဂလာပါ W.E Sports မှ ကြိုဆိုပါတယ်! (1XBET ငွေသွင်းငွေထုတ် စိတ်ချရဆုံး Agent - WinExpress99) <span class="mx-2">|</span> 🎁 Promo Code: ZINXBET ဖြင့် 100% Bonus ရယူပါ
-            </div>
+            <div class="animate-marquee whitespace-nowrap text-[10px] font-bold tracking-wide pl-20" id="fomo-text">
+                </div>
         </div>
 
-        <div class="flex justify-between items-center px-3 py-2">
-            <div class="flex items-center gap-3">
-                <button onclick="toggleMenu()" class="w-9 h-9 flex items-center justify-center bg-slate-100 dark:bg-white/5 rounded-xl text-slate-600 dark:text-slate-300 active:scale-95 transition">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="flex items-center gap-2" onclick="location.reload()">
-                    <div class="w-9 h-9 rounded-full border border-yellow-400 overflow-hidden">
-                        <img src="https://i.ibb.co/Tx06dFv3/image.png" class="w-full h-full object-cover">
-                    </div>
-                    <div>
-                        <h1 class="text-[15px] font-black leading-none text-blue-900 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-white dark:to-yellow-400">W.E Sports</h1>
-                        <span class="text-[9px] font-bold text-slate-500 dark:text-slate-500 uppercase">Live Match Hub</span>
-                    </div>
+        <div class="flex justify-between items-center px-4 py-3">
+            <div class="flex items-center gap-3" onclick="location.reload()">
+                <div class="relative">
+                    <img src="https://i.ibb.co/Tx06dFv3/image.png" class="w-10 h-10 rounded-full border-2 border-yellow-500 shadow-md">
+                    <div class="absolute -bottom-1 -right-1 bg-green-500 w-3 h-3 rounded-full border-2 border-white"></div>
+                </div>
+                <div>
+                    <h1 class="text-lg font-black leading-none text-blue-900 dark:text-white tracking-tight">W.E Sports</h1>
+                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">1XBET Agent</span>
                 </div>
             </div>
-            <div class="flex items-center gap-2">
-                <button onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-white/5 flex items-center justify-center text-slate-500 dark:text-yellow-400 active:scale-90 transition">
+            <div class="flex gap-2">
+                 <button onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-yellow-400">
                     <i id="theme-icon" class="fas fa-sun"></i>
                 </button>
-                <a href="https://t.me/WinExpress99" target="_blank" class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-white shadow-lg active:scale-90 transition">
-                    <i class="fab fa-telegram-plane"></i>
+                <a href="https://t.me/WinExpress99" target="_blank" class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black px-4 py-2 rounded-xl font-black text-xs shadow-lg btn-pulse flex items-center gap-1">
+                    <i class="fas fa-wallet"></i> ငွေသွင်း
                 </a>
             </div>
         </div>
 
-        <nav class="flex px-3 pb-2 space-x-2 overflow-x-auto hide-scrollbar">
-            <button onclick="switchTab('tab-home', this)" class="nav-tab-btn active px-4 py-1.5 rounded-full text-[11px] font-black bg-blue-600 text-white shadow-md whitespace-nowrap transition-all">
-                <i class="fas fa-home mr-1"></i> ပင်မ
+        <div class="flex px-2 space-x-1 pb-2">
+            <button onclick="switchTab('home')" class="flex-1 py-2 rounded-lg text-xs font-bold bg-blue-600 text-white shadow-md nav-btn" id="nav-home">
+                <i class="fas fa-futbol mr-1"></i> Matches
             </button>
-            <button onclick="switchTab('tab-matches', this)" class="nav-tab-btn px-4 py-1.5 rounded-full text-[11px] font-bold bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-white/10 whitespace-nowrap transition-all">
-                <i class="fas fa-futbol mr-1"></i> ပွဲစဉ်များ
+            <button onclick="switchTab('standings')" class="flex-1 py-2 rounded-lg text-xs font-bold bg-slate-100 dark:bg-white/10 text-slate-500 dark:text-slate-400 nav-btn" id="nav-standings">
+                <i class="fas fa-list-ol mr-1"></i> Table
             </button>
-            <button onclick="switchTab('tab-casino', this)" class="nav-tab-btn px-4 py-1.5 rounded-full text-[11px] font-bold bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-white/10 whitespace-nowrap transition-all">
-                <i class="fas fa-dice mr-1"></i> ကာစီနို
+            <button onclick="switchTab('promo')" class="flex-1 py-2 rounded-lg text-xs font-bold bg-slate-100 dark:bg-white/10 text-slate-500 dark:text-slate-400 nav-btn" id="nav-promo">
+                <i class="fas fa-gift mr-1"></i> Promo
             </button>
-            <button onclick="switchTab('tab-promos', this)" class="nav-tab-btn px-4 py-1.5 rounded-full text-[11px] font-bold bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-white/10 whitespace-nowrap transition-all">
-                <i class="fas fa-gift mr-1"></i> ပရိုမို
-            </button>
-        </nav>
+        </div>
     </header>
 
-    <main class="w-full max-w-2xl px-3 pt-3 flex-1" id="main-content">
+    <main class="w-full max-w-md px-3 pt-2 space-y-4 flex-1">
         
-        <section id="tab-home" class="tab-content active space-y-4">
-            <div class="relative rounded-2xl overflow-hidden bg-gradient-to-br from-blue-900 to-black p-5 text-white shadow-lg border border-blue-500/30">
-                <div class="absolute -right-6 -bottom-6 text-9xl opacity-10 text-blue-400"><i class="fas fa-futbol"></i></div>
-                <div class="relative z-10">
-                    <div class="inline-block bg-yellow-500 text-black text-[9px] font-black px-2 py-0.5 rounded mb-2 animate-pulse">🔥 HOT PROMO</div>
-                    <h2 class="text-lg font-black leading-tight mb-2">ဘောလုံးပွဲတိုင်းကို အနိုင်ငွေပြောင်းမလား?</h2>
-                    <p class="text-xs text-slate-300 mb-4 font-bold">Promo Code <span class="text-yellow-400">ZINXBET</span> ဖြင့် အကောင့်ဖွင့်ပြီး 100% Bonus ရယူပါ။</p>
-                    <div class="flex gap-2">
-                        <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="flex-1 bg-green-600 hover:bg-green-500 py-2.5 rounded-xl text-xs font-black text-center shadow-lg active:scale-95 transition">အကောင့်ဖွင့်မယ်</a>
-                        <button onclick="switchTabById('tab-matches')" class="flex-1 bg-white/10 border border-white/20 py-2.5 rounded-xl text-xs font-bold active:scale-95 transition">ပွဲစဉ်ကြည့်မယ်</button>
-                    </div>
-                </div>
+        <section id="tab-home" class="tab-content block">
+            <div class="flex overflow-x-auto hide-scrollbar gap-2 mb-3 pb-1">
+                <button onclick="filterLeague('all')" class="league-chip active px-4 py-1.5 rounded-full text-[11px] font-bold bg-slate-800 dark:bg-white text-white dark:text-black shadow transition-all whitespace-nowrap">All</button>
+                <button onclick="filterLeague('eng.1')" class="league-chip px-4 py-1.5 rounded-full text-[11px] font-bold bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-400 transition-all whitespace-nowrap">Premier League</button>
+                <button onclick="filterLeague('uefa.champions')" class="league-chip px-4 py-1.5 rounded-full text-[11px] font-bold bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-400 transition-all whitespace-nowrap">UCL</button>
+                <button onclick="filterLeague('esp.1')" class="league-chip px-4 py-1.5 rounded-full text-[11px] font-bold bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-400 transition-all whitespace-nowrap">La Liga</button>
+                <button onclick="filterLeague('ita.1')" class="league-chip px-4 py-1.5 rounded-full text-[11px] font-bold bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-400 transition-all whitespace-nowrap">Serie A</button>
+                <button onclick="filterLeague('tha.1')" class="league-chip px-4 py-1.5 rounded-full text-[11px] font-bold bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-400 transition-all whitespace-nowrap">Thai League</button>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
-                <a href="https://t.me/footballlivemm2?livestream" target="_blank" class="col-span-2 bg-gradient-to-r from-red-600 to-red-700 p-4 rounded-2xl flex items-center justify-center text-white font-black italic shadow-lg active:scale-95 transition border border-red-500/50 live-pulse">
-                    <i class="fas fa-play-circle mr-2 text-xl"></i> LIVE ပွဲစဉ်ကြည့်ရန်
-                </a>
-                <a href="https://t.me/WinExpress99" class="bg-gradient-to-br from-orange-500 to-orange-600 p-3 rounded-2xl flex flex-col items-center justify-center text-white text-center shadow-md active:scale-95 transition">
-                    <i class="fas fa-wallet text-2xl mb-1"></i>
-                    <span class="text-[10px] font-black">ငွေသွင်း/ထုတ်</span>
-                </a>
-                <a href="https://t.me/WESPORT1" class="bg-gradient-to-br from-blue-500 to-blue-600 p-3 rounded-2xl flex flex-col items-center justify-center text-white text-center shadow-md active:scale-95 transition">
-                    <i class="fab fa-telegram-plane text-2xl mb-1"></i>
-                    <span class="text-[10px] font-black">Telegram Channel</span>
-                </a>
-            </div>
+            <div id="date-selector" class="flex overflow-x-auto hide-scrollbar gap-2 mb-3"></div>
 
-            <div class="pt-2">
-                <div class="flex justify-between items-center mb-2 px-1">
-                    <h3 class="text-sm font-black italic text-slate-700 dark:text-white"><i class="fas fa-dice text-purple-500 mr-1"></i> လူကြိုက်များ ဂိမ်းများ</h3>
-                </div>
-                <div onclick="switchTabById('tab-casino')" class="bg-gradient-to-r from-[#240b36] to-[#c31432] rounded-2xl p-4 text-white flex justify-between items-center cursor-pointer active:scale-95 transition shadow-lg border border-purple-500/30 relative overflow-hidden">
-                    <div class="relative z-10">
-                        <div class="text-xl font-black italic">SLOTS & CASINO</div>
-                        <div class="text-[10px] text-purple-200">ငွေသွင်းငွေထုတ် စိတ်ချရဆုံးမှာကစားပါ</div>
-                    </div>
-                    <div class="text-3xl animate-float">🎰</div>
+            <div id="matches-container" class="space-y-3 min-h-[300px]">
+                <div class="text-center py-20">
+                    <i class="fas fa-circle-notch animate-spin text-green-500 text-3xl"></i>
+                    <p class="text-xs font-bold text-slate-400 mt-2">Loading Matches...</p>
                 </div>
             </div>
         </section>
 
-        <section id="tab-matches" class="tab-content space-y-4">
-            <div class="flex gap-2">
-                <div class="relative flex-1">
-                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                    <input type="text" id="search-input" placeholder="အသင်းရှာရန်..." oninput="onSearch()" class="w-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl py-2.5 pl-8 pr-3 text-xs font-bold focus:outline-none focus:border-blue-500 transition text-slate-800 dark:text-white">
+        <section id="tab-standings" class="tab-content hidden">
+            <div class="bg-white dark:bg-[#151f32] p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-white/5">
+                <div class="mb-4">
+                    <label class="text-[10px] font-black uppercase text-slate-400 mb-1 block">Select League</label>
+                    <select id="standings-league-select" onchange="fetchStandings(this.value)" class="w-full bg-slate-100 dark:bg-black/20 text-slate-800 dark:text-white text-xs font-bold p-3 rounded-xl border border-slate-200 dark:border-white/10 outline-none focus:border-blue-500">
+                        <option value="eng.1">Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿</option>
+                        <option value="esp.1">La Liga 🇪🇸</option>
+                        <option value="ger.1">Bundesliga 🇩🇪</option>
+                        <option value="ita.1">Serie A 🇮🇹</option>
+                        <option value="fra.1">Ligue 1 🇫🇷</option>
+                        <option value="tha.1">Thai League 🇹🇭</option>
+                    </select>
                 </div>
-                <button onclick="fetchMatches(true)" class="bg-blue-600 text-white w-10 h-10 rounded-xl flex items-center justify-center active:scale-90 transition shadow-md">
-                    <i class="fas fa-sync-alt" id="refresh-icon"></i>
-                </button>
-            </div>
-
-            <div id="date-selector" class="flex overflow-x-auto hide-scrollbar gap-2 pb-1">
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="text-[10px] text-slate-400 border-b border-slate-200 dark:border-white/5">
+                                <th class="py-2 pl-1 w-8">#</th>
+                                <th class="py-2">Team</th>
+                                <th class="py-2 text-center w-8">P</th>
+                                <th class="py-2 text-center w-8">GD</th>
+                                <th class="py-2 text-center w-8 font-black text-black dark:text-white">Pts</th>
+                            </tr>
+                        </thead>
+                        <tbody id="standings-body" class="text-xs font-bold text-slate-700 dark:text-slate-200">
+                            </tbody>
+                    </table>
                 </div>
-
-            <div id="matches-container" class="space-y-3 min-h-[200px]">
-                <div class="match-card p-4">
-                    <div class="flex justify-between mb-4"><div class="skeleton h-3 w-16 rounded"></div><div class="skeleton h-3 w-12 rounded"></div></div>
-                    <div class="flex justify-between items-center"><div class="skeleton w-10 h-10 rounded-full"></div><div class="skeleton w-8 h-4 rounded"></div><div class="skeleton w-10 h-10 rounded-full"></div></div>
+                <div id="standings-loading" class="text-center py-10 hidden">
+                    <i class="fas fa-circle-notch animate-spin text-blue-500"></i>
                 </div>
-            </div>
-        </section>
-
-        <section id="tab-casino" class="tab-content pt-2">
-            <div class="grid grid-cols-2 gap-3">
-                <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="aspect-[4/3] rounded-2xl bg-gradient-to-br from-purple-600 to-indigo-700 flex flex-col items-center justify-center text-white shadow-lg active:scale-95 transition border border-white/10 relative overflow-hidden group">
-                    <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-20 transition"></div>
-                    <span class="text-4xl mb-2 animate-float">🃏</span>
-                    <span class="font-black text-xs tracking-widest">LIVE CASINO</span>
-                </a>
-                <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="aspect-[4/3] rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 flex flex-col items-center justify-center text-white shadow-lg active:scale-95 transition border border-white/10 relative overflow-hidden group">
-                    <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-20 transition"></div>
-                    <span class="text-4xl mb-2 animate-float" style="animation-delay:0.5s">🎰</span>
-                    <span class="font-black text-xs tracking-widest">SLOTS</span>
-                </a>
-                <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="aspect-[4/3] rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex flex-col items-center justify-center text-white shadow-lg active:scale-95 transition border border-white/10 relative overflow-hidden group">
-                    <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-20 transition"></div>
-                    <span class="text-4xl mb-2 animate-float" style="animation-delay:1s">🐟</span>
-                    <span class="font-black text-xs tracking-widest">FISHING</span>
-                </a>
-                <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="aspect-[4/3] rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex flex-col items-center justify-center text-white shadow-lg active:scale-95 transition border border-white/10 relative overflow-hidden group">
-                    <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-20 transition"></div>
-                    <span class="text-4xl mb-2 animate-float" style="animation-delay:1.5s">🚀</span>
-                    <span class="font-black text-xs tracking-widest">CRASH</span>
-                </a>
             </div>
         </section>
 
-        <section id="tab-promos" class="tab-content pt-2">
-            <div class="w-full rounded-2xl overflow-hidden shadow-xl border border-yellow-500/30">
+        <section id="tab-promo" class="tab-content hidden">
+             <div class="w-full rounded-2xl overflow-hidden shadow-xl border border-yellow-500/30">
                 <div class="bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#b38728] text-center py-2 border-b border-yellow-600/20">
                     <div class="flex items-center justify-center text-[10px] font-black uppercase text-black tracking-wide">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/1xbet_Logo.svg/1200px-1xbet_Logo.svg.png" class="h-3 mr-2"> ဖြင့်: 📲 ငွေသွင်း/ထုတ် - @WinExpress99
+                        1XBET VIP PROMO
                     </div>
                 </div>
-                <div class="bg-gradient-to-b from-[#fcf6ba] to-[#bf953f] p-6 text-center relative overflow-hidden">
+                <div class="bg-gradient-to-b from-[#fcf6ba] to-[#bf953f] p-8 text-center relative overflow-hidden">
                     <div class="absolute top-2 left-2 text-black/20 text-xl"><i class="fas fa-star"></i></div>
                     <div class="absolute bottom-2 right-2 text-black/20 text-3xl"><i class="fas fa-gift"></i></div>
                     
-                    <h2 class="text-2xl font-black text-black italic drop-shadow-sm mb-1 animate-float">🎁 PROMO CODE</h2>
-                    <div class="text-3xl font-black text-blue-900 tracking-tighter mb-4">ZINXBET</div>
+                    <h2 class="text-3xl font-black text-black italic drop-shadow-sm mb-1 float-icon">BONUS 100%</h2>
+                    <div class="text-sm font-bold text-black/70 mb-4">ပထမဆုံးငွေသွင်းမှုအတွက်</div>
                     
-                    <div class="flex gap-2 justify-center">
-                        <button onclick="copyPromo('ZINXBET', this)" class="bg-black text-white px-4 py-2 rounded-lg text-xs font-bold active:scale-95 transition flex items-center shadow-lg btn-glow">
-                            <i class="fas fa-copy text-yellow-500 mr-2"></i> ကော်ပီကူးမည်
-                        </button>
-                        <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="bg-green-600 text-white px-4 py-2 rounded-lg text-xs font-bold active:scale-95 transition shadow-lg flex items-center">
-                            <i class="fas fa-user-plus mr-2"></i> အကောင့်ဖွင့်မည်
-                        </a>
+                    <div class="bg-black/90 text-white p-3 rounded-xl mb-4 border-2 border-dashed border-white/50">
+                        <div class="text-[10px] text-slate-400 uppercase">Promo Code</div>
+                        <div class="text-2xl font-black tracking-widest text-yellow-400">ZINXBET</div>
                     </div>
-                    <p class="text-[10px] font-bold text-black mt-3 opacity-80">ပထမဆုံးသွင်းငွေ 100% Bonus အတွက် အခုပဲသုံးပါ</p>
-                </div>
-            </div>
-            
-            <div class="mt-4 space-y-2">
-                <div class="bg-white dark:bg-white/5 p-3 rounded-xl border border-slate-200 dark:border-white/10 flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-black">1</div>
-                    <div class="text-xs font-bold text-slate-600 dark:text-slate-300">1XBET App သို့မဟုတ် Website တွင် Registration ပြုလုပ်ပါ။</div>
-                </div>
-                <div class="bg-white dark:bg-white/5 p-3 rounded-xl border border-slate-200 dark:border-white/10 flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-black">2</div>
-                    <div class="text-xs font-bold text-slate-600 dark:text-slate-300">Promo Code နေရာတွင် <span class="text-yellow-500 font-black">ZINXBET</span> ဟု ရေးထည့်ပါ။</div>
-                </div>
-                <div class="bg-white dark:bg-white/5 p-3 rounded-xl border border-slate-200 dark:border-white/10 flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-black">3</div>
-                    <div class="text-xs font-bold text-slate-600 dark:text-slate-300">ပထမဆုံး ငွေသွင်းမှုအတွက် 300,000 ကျပ်အထိ Bonus ရယူပါ။</div>
+                    
+                    <button onclick="copyPromo()" class="w-full bg-blue-600 text-white px-4 py-3 rounded-xl text-sm font-black shadow-lg flex items-center justify-center gap-2 active:scale-95 transition">
+                        <i class="fas fa-copy"></i> CODE ကော်ပီကူးမည်
+                    </button>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <div class="fab-container">
-        <a href="https://t.me/WinExpress99" target="_blank" class="fab-btn bg-blue-600 text-white hover:bg-blue-700">
-            <i class="fab fa-telegram-plane text-xl"></i>
-        </a>
-        <a href="https://t.me/WinExpress99" target="_blank" class="fab-btn bg-gradient-to-r from-yellow-500 to-yellow-600 text-black hover:scale-110 btn-glow">
-            <i class="fas fa-wallet text-xl"></i>
-        </a>
-    </div>
-
-    <div class="fixed bottom-0 left-0 w-full z-30 pointer-events-none">
-        <div class="pointer-events-auto bg-gradient-to-r from-[#1a1a1a] to-[#2d2d2d] border-t-2 border-yellow-500 p-2 flex justify-between items-center shadow-2xl max-w-2xl mx-auto">
-            <div class="flex items-center gap-2">
-                <img src="https://i.ibb.co/Tx06dFv3/image.png" class="w-8 h-8 rounded-full border border-yellow-400">
-                <div class="text-left">
-                    <div class="text-[10px] text-yellow-400 font-black uppercase tracking-wider">1XBET Agent</div>
-                    <div class="text-[9px] text-white font-bold">@WinExpress99 (Viber/Tele)</div>
+    <div class="fixed bottom-0 left-0 w-full z-50 pointer-events-none">
+        <div class="pointer-events-auto max-w-md mx-auto bg-[#1a1a1a] border-t-2 border-yellow-500 shadow-2xl p-2 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-yellow-500 text-black text-xs font-black px-2 py-1 rounded">PROMO</div>
+                <div class="flex flex-col">
+                    <span class="text-[10px] text-slate-400 font-bold uppercase">Code</span>
+                    <span class="text-sm font-black text-white leading-none tracking-wider">ZINXBET</span>
                 </div>
             </div>
-            <a href="https://t.me/WinExpress99" target="_blank" class="bg-yellow-500 hover:bg-yellow-400 text-black px-3 py-1.5 rounded font-black text-[10px] animate-pulse">
-                ငွေသွင်းမည်
+            <a href="https://t.me/WinExpress99" target="_blank" class="bg-green-600 hover:bg-green-500 text-white px-5 py-2 rounded-lg font-black text-xs shadow-lg flex items-center gap-2 animate-pulse">
+                <i class="fab fa-telegram-plane"></i> ဆက်သွယ်ရန်
             </a>
         </div>
     </div>
 
-    <div id="welcome-modal" class="fixed inset-0 bg-black/80 z-[100] hidden opacity-0 transition-opacity duration-500 flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white dark:bg-[#151b2e] w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl border border-yellow-500/30 transform scale-90 transition-transform duration-300" id="welcome-content">
-            <div class="relative h-32 bg-gradient-to-r from-red-600 to-red-900 flex items-center justify-center overflow-hidden">
-                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-30"></div>
-                <i class="fas fa-futbol text-white/10 text-9xl absolute -bottom-4 -right-4"></i>
-                <div class="text-center relative z-10 p-4">
-                    <h2 class="text-2xl font-black text-white italic tracking-tighter">MAN UTD FAN?</h2>
-                    <p class="text-xs text-yellow-300 font-bold uppercase">Community သို့ ကြိုဆိုပါတယ်</p>
-                </div>
-                <button onclick="closeWelcomeModal()" class="absolute top-2 right-2 text-white/60 hover:text-white"><i class="fas fa-times-circle text-2xl"></i></button>
+    <div id="stats-modal" class="fixed inset-0 bg-black/90 z-[100] hidden opacity-0 transition-opacity duration-300 flex items-end sm:items-center justify-center backdrop-blur-sm" onclick="closeStatsModal()">
+        <div class="bg-white dark:bg-[#0f172a] w-full max-w-md h-[85vh] sm:rounded-3xl rounded-t-3xl overflow-hidden transform translate-y-full transition-transform duration-300 flex flex-col" id="stats-content" onclick="event.stopPropagation()">
+            <div class="p-4 bg-slate-50 dark:bg-white/5 border-b border-slate-200 dark:border-white/5 flex justify-between items-center">
+                <h3 class="font-black text-slate-700 dark:text-white uppercase italic">Match Stats</h3>
+                <button onclick="closeStatsModal()" class="w-8 h-8 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-white"><i class="fas fa-times"></i></button>
             </div>
-            <div class="p-6 text-center space-y-4">
-                <p class="text-sm font-bold text-slate-600 dark:text-slate-300">1XBET မှာ အကောင့်မရှိသေးဘူးလား?<br>Bonus ယူပြီး ဒီနေ့ပွဲတွေကို စိတ်ကြိုက်ကစားလိုက်ပါ။</p>
-                <div class="bg-slate-100 dark:bg-black/40 p-3 rounded-xl border border-dashed border-slate-400 dark:border-slate-600">
-                    <div class="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase">Promo Code</div>
-                    <div class="text-2xl font-black text-blue-600 dark:text-blue-400 tracking-widest">ZINXBET</div>
-                </div>
-                <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="block w-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-black py-3 rounded-xl shadow-lg btn-glow">
-                    BONUS ရယူမည်
+            <div class="flex-1 overflow-y-auto p-4" id="stats-body-container"></div>
+            <div class="p-4 border-t border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5">
+                <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="block w-full bg-green-600 hover:bg-green-500 text-white text-center py-3 rounded-xl font-black text-sm shadow-lg">
+                    <i class="fas fa-check-circle mr-2"></i> 1XBET တွင်လောင်းမည်
                 </a>
             </div>
         </div>
     </div>
 
-    <div id="stats-modal" class="fixed inset-0 bg-black/80 z-[70] hidden opacity-0 transition-opacity duration-300 flex items-end sm:items-center justify-center" onclick="closeStatsModal()">
-        <div class="bg-white dark:bg-[#0a0f1d] w-full max-w-lg rounded-t-3xl sm:rounded-3xl max-h-[85vh] overflow-y-auto transform translate-y-full transition-transform duration-300" id="stats-modal-content" onclick="event.stopPropagation()">
-            <div class="w-full flex justify-center py-2 sm:hidden"><div class="w-12 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full"></div></div>
-            <div id="stats-container" class="pb-10"></div>
-        </div>
-    </div>
-
-    <div id="install-modal" class="fixed inset-0 bg-black/80 z-[80] hidden opacity-0 transition-opacity duration-300 flex items-end sm:items-center justify-center" onclick="closeInstallModal()">
-        <div class="bg-white dark:bg-[#0a0f1d] w-full max-w-md rounded-t-3xl sm:rounded-3xl p-5 transform translate-y-full transition-transform duration-300" id="install-content" onclick="event.stopPropagation()">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="font-black text-lg text-slate-800 dark:text-white">App ထည့်သွင်းနည်း</h3>
-                <button onclick="closeInstallModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="space-y-3">
-                <div class="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-200 dark:border-white/10">
-                    <h4 class="font-bold text-sm text-blue-500 mb-2"><i class="fab fa-android mr-1"></i> Android (Chrome)</h4>
-                    <p class="text-xs text-slate-600 dark:text-slate-300">ညာဘက်အပေါ် <span class="bg-slate-200 dark:bg-white/10 px-1 rounded">⋮</span> နှိပ်ပြီး <b>Add to Home Screen</b> ကိုရွေးပါ။</p>
-                </div>
-                <div class="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-200 dark:border-white/10">
-                    <h4 class="font-bold text-sm text-blue-500 mb-2"><i class="fab fa-apple mr-1"></i> iOS (Safari)</h4>
-                    <p class="text-xs text-slate-600 dark:text-slate-300">Share <span class="bg-slate-200 dark:bg-white/10 px-1 rounded"><i class="fas fa-share-square"></i></span> နှိပ်ပြီး <b>Add to Home Screen</b> ကိုရွေးပါ။</p>
-                </div>
-                <button onclick="closeInstallModal()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl mt-2">နားလည်ပါပြီ</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // --- State ---
-        let allMatches = { live: [], upcoming: [], finished: [] };
+        // --- Configuration ---
+        const LEAGUE_IDS = ['eng.1', 'uefa.champions', 'uefa.europa', 'esp.1', 'ita.1', 'ger.1', 'fra.1', 'tha.1', 'jpn.1', 'afc.champions'];
+        let allMatches = [];
         let currentDate = 'all';
-        let searchQuery = '';
-        let pollingInterval = null;
-        let previousScores = {};
+        let currentLeague = 'all';
 
-        // --- Utils ---
-        const triggerHaptic = () => navigator.vibrate && navigator.vibrate(20);
-        
-        // ** Myanmar Time Converter **
-        function toMMT(dateObj) {
-            return dateObj.toLocaleTimeString('en-US', { timeZone: 'Asia/Yangon', hour: '2-digit', minute: '2-digit', hour12: true });
-        }
-        function getMMTDate(dateObj) {
-            // Returns YYYY-MM-DD in Myanmar Time
-            return new Date(dateObj.toLocaleString('en-US', { timeZone: 'Asia/Yangon' })).toISOString().split('T')[0];
-        }
-
-        // --- Theme ---
-        function toggleTheme() {
-            triggerHaptic();
-            const html = document.documentElement;
-            html.classList.toggle('dark');
-            const isDark = html.classList.contains('dark');
-            document.getElementById('theme-icon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        }
-        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-            document.getElementById('theme-icon').className = 'fas fa-sun';
-        }
-
-        // --- Menu & Navigation ---
-        function toggleMenu() {
-            triggerHaptic();
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('menu-overlay');
-            const isOpen = !sidebar.classList.contains('-translate-x-full');
+        // --- 1. Dynamic FOMO Generator ---
+        function generateFomoMessages() {
+            const names = ['Ko Aung', 'Mg Mg', 'Ko Phyoe', 'U Hla', 'Zaw Gyi', 'Sai Sai', 'Myo Min', 'Ko Kyaw'];
+            const amounts = ['300,000', '500,000', '1,200,000', '800,000', '150,000', '2,000,000'];
+            const games = ['Man Utd vs Liv', 'Shan United', 'Baccarat', 'Slots', 'Mix Parlay'];
             
-            sidebar.classList.toggle('-translate-x-full');
-            if (isOpen) {
-                overlay.classList.add('opacity-0');
-                setTimeout(() => overlay.classList.add('hidden'), 300);
-            } else {
-                overlay.classList.remove('hidden');
-                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+            let html = '';
+            // Generate 10 random winning messages
+            for(let i=0; i<10; i++) {
+                const n = names[Math.floor(Math.random() * names.length)];
+                const a = amounts[Math.floor(Math.random() * amounts.length)];
+                const g = games[Math.floor(Math.random() * games.length)];
+                html += `<span class="mx-6 text-yellow-300">🎉 <b>${n}</b> just won <b class="text-white">${a} Ks</b> on ${g}!</span>`;
             }
+            document.getElementById('fomo-text').innerHTML = html;
         }
+        setInterval(generateFomoMessages, 30000); // Refresh every 30s
+        generateFomoMessages(); // Init
 
-        function switchTab(tabId, btn) {
-            triggerHaptic();
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            
-            // Reset buttons
-            document.querySelectorAll('.nav-tab-btn').forEach(el => {
-                el.classList.remove('bg-blue-600', 'text-white', 'shadow-md');
-                el.classList.add('bg-slate-100', 'dark:bg-white/5', 'text-slate-600', 'dark:text-slate-300');
-            });
-            // Activate button
-            if (btn) {
-                btn.classList.remove('bg-slate-100', 'dark:bg-white/5', 'text-slate-600', 'dark:text-slate-300');
-                btn.classList.add('bg-blue-600', 'text-white', 'shadow-md');
-                btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        function switchTabById(id) {
-            const btn = document.querySelector(`button[onclick="switchTab('${id}', this)"]`);
-            switchTab(id, btn);
-        }
-
-        // --- Pull to Refresh ---
-        let touchStart = 0;
-        let ptrIndicator = document.getElementById('ptr-indicator');
-        
-        window.addEventListener('touchstart', e => { 
-            if (window.scrollY === 0) touchStart = e.touches[0].clientY; 
-        }, {passive: true});
-
-        window.addEventListener('touchmove', e => {
-            if (window.scrollY === 0 && touchStart > 0) {
-                const pull = e.touches[0].clientY - touchStart;
-                if (pull > 0 && pull < 150) {
-                    ptrIndicator.style.height = `${pull / 2}px`;
-                    if (pull > 100) ptrIndicator.querySelector('i').classList.add('text-green-500');
-                }
-            }
-        }, {passive: true});
-
-        window.addEventListener('touchend', e => {
-            if (window.scrollY === 0 && touchStart > 0) {
-                const pull = e.changedTouches[0].clientY - touchStart;
-                if (pull > 100) {
-                    triggerHaptic();
-                    fetchMatches(true);
-                }
-            }
-            touchStart = 0;
-            ptrIndicator.style.height = '0';
-            ptrIndicator.querySelector('i').classList.remove('text-green-500');
-        });
-
-        // --- Data Fetching ---
+        // --- 2. Data Fetching (Robust) ---
         async function fetchMatches(manual = false) {
-            const refreshIcon = document.getElementById('refresh-icon');
-            if (manual) refreshIcon.classList.add('animate-spin-slow');
+            const container = document.getElementById('matches-container');
+            if(manual) container.innerHTML = `<div class="text-center py-10"><i class="fas fa-circle-notch animate-spin text-green-500 text-3xl"></i></div>`;
 
-            const leagues = ['eng.1', 'uefa.champions', 'uefa.europa', 'ita.1', 'esp.1', 'ger.1', 'fra.1', 'eng.fa', 'eng.2', 'afc.champions'];
-            const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, ''); // ESPN API format YYYYMMDD
-            
             try {
-                // Parallel Fetch
-                const responses = await Promise.allSettled(
-                    leagues.map(id => fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${id}/scoreboard`))
+                const promises = LEAGUE_IDS.map(id => 
+                    fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${id}/scoreboard`)
+                        .then(res => res.ok ? res.json() : null)
+                        .catch(e => null)
                 );
-
-                let live = [], upcoming = [], finished = [];
-                const now = new Date();
-
-                for (const res of responses) {
-                    if (res.status === 'fulfilled' && res.value.ok) {
-                        const data = await res.value.json();
-                        data.events?.forEach(ev => {
-                            const comp = ev.competitions[0];
-                            const status = ev.status.type.state; // pre, in, post
-                            const matchDate = new Date(ev.date);
-                            const home = comp.competitors.find(c => c.homeAway === 'home');
-                            const away = comp.competitors.find(c => c.homeAway === 'away');
-                            
-                            // Check for Man Utd
-                            const isUtd = home.team.name.includes('Manchester United') || away.team.name.includes('Manchester United');
-                            const leagueName = data.leagues[0]?.abbreviation || 'CUP';
-
-                            const matchObj = {
-                                id: ev.id,
-                                league: leagueName,
-                                leagueId: data.leagues[0].id, // for stats
-                                home: { name: home.team.name, score: home.score || 0, logo: home.team.logo },
-                                away: { name: away.team.name, score: away.score || 0, logo: away.team.logo },
-                                date: matchDate,
-                                status: status,
-                                clock: ev.status.displayClock || ev.status.type.shortDetail,
-                                isUtd: isUtd
-                            };
-
-                            if (status === 'in') live.push(matchObj);
-                            else if (status === 'pre') upcoming.push(matchObj);
-                            else finished.push(matchObj);
-                        });
-                    }
-                }
-
-                // Sort: Man Utd first, then time
-                const sortFn = (a, b) => (b.isUtd - a.isUtd) || (a.date - b.date);
-                live.sort(sortFn);
-                upcoming.sort(sortFn);
-                finished.sort((a, b) => (b.isUtd - a.isUtd) || (b.date - a.date)); // finished reverse time
-
-                allMatches = { live, upcoming, finished };
-                checkGoals(live);
-                renderMatches();
                 
-                // ** Dynamic Polling **
-                clearTimeout(pollingInterval);
-                // If there are live matches, poll every 30s, else 90s
-                const nextPoll = live.length > 0 ? 30000 : 90000; 
-                pollingInterval = setTimeout(() => fetchMatches(), nextPoll);
+                const results = await Promise.all(promises);
+                let live = [], upcoming = [], finished = [];
+
+                results.forEach(data => {
+                    if (!data || !data.events) return;
+                    const leagueName = data.leagues[0]?.abbreviation || 'CUP';
+                    const leagueSlug = data.leagues[0]?.slug;
+                    const leagueId = data.leagues[0]?.id;
+
+                    data.events.forEach(ev => {
+                        const comp = ev.competitions[0];
+                        const home = comp.competitors.find(c => c.homeAway === 'home');
+                        const away = comp.competitors.find(c => c.homeAway === 'away');
+                        const isUtd = (home.team.name + away.team.name).includes('Manchester United');
+                        
+                        const match = {
+                            id: ev.id, league: leagueName, leagueSlug: leagueSlug, leagueId: leagueId,
+                            date: new Date(ev.date),
+                            status: ev.status.type.state, // pre, in, post
+                            clock: ev.status.type.shortDetail,
+                            home: { name: home.team.name, score: home.score || 0, logo: home.team.logo },
+                            away: { name: away.team.name, score: away.score || 0, logo: away.team.logo },
+                            isUtd: isUtd
+                        };
+
+                        if (match.status === 'in') live.push(match);
+                        else if (match.status === 'pre') upcoming.push(match);
+                        else finished.push(match);
+                    });
+                });
+
+                const sortFn = (a, b) => (b.isUtd - a.isUtd) || (a.date - b.date);
+                live.sort(sortFn); upcoming.sort(sortFn); finished.sort((a, b) => (b.date - a.date));
+                allMatches = [...live, ...upcoming, ...finished];
+                renderMatches();
 
             } catch (err) {
                 console.error(err);
-            } finally {
-                if (manual) setTimeout(() => refreshIcon.classList.remove('animate-spin-slow'), 500);
+                if(manual) container.innerHTML = `<div class="text-center text-red-500 py-10">Connection Error. Please try again.</div>`;
             }
         }
 
-        // --- Rendering ---
+        // --- 3. Render Matches (With Banners & Static Odds) ---
         function renderMatches() {
             const container = document.getElementById('matches-container');
-            const dateSelector = document.getElementById('date-selector');
+            const dateContainer = document.getElementById('date-selector');
             
-            // 1. Date Logic
-            const dates = new Set(['all']);
-            [...allMatches.live, ...allMatches.upcoming, ...allMatches.finished].forEach(m => {
-                 dates.add(getMMTDate(m.date));
+            // Filter
+            let filtered = allMatches.filter(m => {
+                const matchDate = m.date.toISOString().split('T')[0];
+                return (currentLeague === 'all' || m.leagueSlug === currentLeague) &&
+                       (currentDate === 'all' || matchDate === currentDate);
             });
-            const sortedDates = Array.from(dates).sort();
-            
-            // Render Date Selector
-            dateSelector.innerHTML = sortedDates.map(d => {
-                let label = d === 'all' ? 'အားလုံး' : d.slice(5); // Show MM-DD
-                const today = new Date().toLocaleDateString('en-US', {timeZone:'Asia/Yangon'}).split('/').reverse().join('-'); // Very rough check, better to strictly format
-                // Simple helper for Today/Tmr
-                const mmtNow = new Date().toLocaleString('en-US', {timeZone: 'Asia/Yangon'});
-                const dObj = new Date(d); const nowObj = new Date(mmtNow);
-                if (d === getMMTDate(new Date())) label = 'ဒီနေ့';
-                
-                const activeClass = currentDate === d ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-white/10';
-                
-                return `<button onclick="currentDate='${d}'; renderMatches()" class="px-4 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition active:scale-95 ${activeClass}">${label}</button>`;
-            }).join('');
 
-            // 2. Filter Matches
-            let displayMatches = [...allMatches.live, ...allMatches.upcoming, ...allMatches.finished];
-            if (currentDate !== 'all') {
-                displayMatches = displayMatches.filter(m => getMMTDate(m.date) === currentDate);
-            }
-            if (searchQuery) {
-                const q = searchQuery.toLowerCase();
-                displayMatches = displayMatches.filter(m => m.home.name.toLowerCase().includes(q) || m.away.name.toLowerCase().includes(q));
-            }
+            // Date Selector
+            const dates = [...new Set(allMatches.map(m => m.date.toISOString().split('T')[0]))].sort();
+            dateContainer.innerHTML = `<button onclick="currentDate='all'; renderMatches()" class="${currentDate === 'all' ? 'bg-slate-800 text-white dark:bg-white dark:text-black' : 'bg-white dark:bg-white/10'} px-3 py-1.5 rounded-lg text-[10px] font-black shadow border border-transparent transition-all">Today</button>` + 
+                dates.map(d => `<button onclick="currentDate='${d}'; renderMatches()" class="${currentDate === d ? 'bg-slate-800 text-white dark:bg-white dark:text-black' : 'bg-white dark:bg-white/10'} px-3 py-1.5 rounded-lg text-[10px] font-bold shadow border border-transparent transition-all">${d.slice(5)}</button>`).join('');
 
-            // 3. Render Cards
-            if (displayMatches.length === 0) {
-                container.innerHTML = `<div class="text-center py-10 text-slate-400 text-sm font-bold">ပွဲစဉ်များ မရှိသေးပါ</div>`;
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="flex flex-col items-center justify-center py-10 opacity-50"><i class="fas fa-futbol text-4xl mb-2"></i><span class="text-xs font-bold">No Matches Found</span></div>`;
                 return;
             }
 
-            container.innerHTML = displayMatches.map(m => {
+            // Loop with Banner Injection
+            let htmlContent = '';
+            filtered.forEach((m, index) => {
                 const isLive = m.status === 'in';
-                const isFinished = m.status === 'post';
-                const shortName = n => n.replace('Manchester United', 'Man Utd').replace('Manchester City', 'Man City').substring(0, 15);
+                const timeStr = m.date.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit', hour12:true});
                 
-                let statusBadge = '';
-                if (isLive) statusBadge = `<span class="bg-red-600 text-white text-[9px] px-2 py-0.5 rounded animate-pulse font-bold">LIVE ${m.clock}'</span>`;
-                else if (isFinished) statusBadge = `<span class="bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-400 text-[9px] px-2 py-0.5 rounded font-bold">FT</span>`;
-                else statusBadge = `<span class="bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-300 text-[9px] px-2 py-0.5 rounded font-bold">${toMMT(m.date)}</span>`;
-
-                const oddsSection = (!isLive && !isFinished) ? `
-                    <div class="mt-3 pt-2 border-t border-slate-200 dark:border-white/5 flex justify-between items-center" onclick="event.stopPropagation(); window.open('https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration', '_blank')">
-                         <div class="text-[9px] text-slate-400 font-bold">1XBET ကြေး :</div>
-                         <button class="bg-blue-600/10 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded text-[10px] font-bold hover:bg-blue-600 hover:text-white transition">🔥 ကြေးကြည့်မည်</button>
-                    </div>
-                ` : '';
-
-                const utdStyle = m.isUtd ? 'man-utd border-red-500/30' : '';
-                const utdBadge = m.isUtd ? `<div class="absolute top-0 right-0 bg-red-600 text-white text-[8px] font-black px-2 py-0.5 rounded-bl-lg z-10">GGMU 😈</div>` : '';
-
-                return `
-                <div class="match-card ${utdStyle} relative p-4 cursor-pointer" onclick="openStats('${m.id}', '${m.leagueId}')">
-                    ${utdBadge}
+                // Match Card
+                htmlContent += `
+                <div class="match-card ${m.isUtd ? 'border-red-500/50 bg-red-50/50 dark:bg-red-900/10' : ''} p-4 relative cursor-pointer active:scale-95 transition-transform duration-200" onclick="openStats('${m.id}', '${m.leagueId}')">
+                    ${m.isUtd ? '<div class="absolute -top-2 -right-2 bg-red-600 text-white text-[8px] px-2 py-1 rounded-full font-black z-10 shadow-sm animate-bounce">RED ARMY</div>' : ''}
+                    
                     <div class="flex justify-between items-center mb-3">
-                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider">${m.league}</span>
-                        ${statusBadge}
+                         <div class="flex items-center gap-1">
+                            <span class="text-[9px] font-black text-slate-500 bg-slate-100 dark:bg-white/10 px-2 py-0.5 rounded uppercase">${m.league}</span>
+                            ${isLive ? '<span class="text-[8px] bg-red-500 text-white px-1.5 py-0.5 rounded font-bold animate-pulse">LIVE</span>' : ''}
+                         </div>
+                         <span class="text-[10px] font-bold ${isLive ? 'text-red-500' : 'text-slate-400'}">${isLive ? m.clock : (m.status === 'post' ? 'FT' : timeStr)}</span>
                     </div>
-                    <div class="flex justify-between items-center">
-                        <div class="flex flex-col items-center w-1/3">
-                            <img src="${m.home.logo}" class="w-10 h-10 object-contain mb-1">
-                            <span class="text-[11px] font-bold text-center leading-tight dark:text-slate-200">${shortName(m.home.name)}</span>
+
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex-1 flex flex-col items-center gap-1">
+                            <img src="${m.home.logo}" class="w-10 h-10 object-contain drop-shadow-sm">
+                            <span class="text-[10px] font-bold text-center leading-tight dark:text-slate-200">${m.home.name}</span>
                         </div>
-                        <div class="text-xl font-black text-slate-700 dark:text-white bg-slate-100 dark:bg-white/5 px-3 py-1 rounded-lg">
-                            ${isLive || isFinished ? `${m.home.score} - ${m.away.score}` : 'VS'}
+                        <div class="px-3">
+                            <div class="text-xl font-black text-slate-800 dark:text-white bg-slate-100 dark:bg-black/30 px-3 py-1 rounded-lg tracking-tighter">
+                                ${m.status === 'pre' ? 'VS' : `${m.home.score}-${m.away.score}`}
+                            </div>
                         </div>
-                        <div class="flex flex-col items-center w-1/3">
-                            <img src="${m.away.logo}" class="w-10 h-10 object-contain mb-1">
-                            <span class="text-[11px] font-bold text-center leading-tight dark:text-slate-200">${shortName(m.away.name)}</span>
+                        <div class="flex-1 flex flex-col items-center gap-1">
+                            <img src="${m.away.logo}" class="w-10 h-10 object-contain drop-shadow-sm">
+                            <span class="text-[10px] font-bold text-center leading-tight dark:text-slate-200">${m.away.name}</span>
                         </div>
                     </div>
-                    ${oddsSection}
+
+                    <div class="border-t border-slate-100 dark:border-white/5 pt-2 flex justify-between items-center" onclick="event.stopPropagation(); window.open('https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration')">
+                        <div class="text-[9px] text-slate-400 font-bold">1XBET ODDS:</div>
+                        <div class="flex gap-1">
+                            <div class="bg-slate-50 dark:bg-white/5 px-2 py-1 rounded text-[10px] font-bold text-slate-500">1.95</div>
+                            <div class="bg-slate-50 dark:bg-white/5 px-2 py-1 rounded text-[10px] font-bold text-slate-500">3.40</div>
+                            <div class="bg-green-100 dark:bg-green-900/20 px-2 py-1 rounded text-[10px] font-bold text-green-600 dark:text-green-400 border border-green-500/30">Bet Now</div>
+                        </div>
+                    </div>
                 </div>`;
-            }).join('');
+
+                // Inject Banner every 4 matches to break clutter
+                if ((index + 1) % 4 === 0) {
+                    htmlContent += `
+                    <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-xl p-3 flex justify-between items-center shadow-lg relative overflow-hidden group my-2">
+                        <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-20 transition"></div>
+                        <div class="text-black relative z-10">
+                            <div class="text-[10px] font-black uppercase opacity-70">Don't Miss Out</div>
+                            <div class="text-sm font-black italic">ဒီအပတ် ပွဲကြီးတွေများတယ်!</div>
+                        </div>
+                        <a href="https://t.me/WinExpress99" target="_blank" class="bg-black text-white px-3 py-1.5 rounded-lg text-[10px] font-bold shadow">ငွေသွင်းမည်</a>
+                    </div>`;
+                }
+            });
+            container.innerHTML = htmlContent;
         }
 
-        function onSearch() {
-            searchQuery = document.getElementById('search-input').value;
+        // --- 4. Standings Fetcher ---
+        async function fetchStandings(leagueId = 'eng.1') {
+            const tbody = document.getElementById('standings-body');
+            const loader = document.getElementById('standings-loading');
+            
+            tbody.innerHTML = '';
+            loader.classList.remove('hidden');
+
+            try {
+                // Note: Using a reliable ESPN endpoint structure
+                const res = await fetch(`https://site.api.espn.com/apis/v2/sports/soccer/${leagueId}/standings`);
+                const data = await res.json();
+                
+                loader.classList.add('hidden');
+                
+                if (!data.children || !data.children[0] || !data.children[0].standings) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-slate-400">No Data Available</td></tr>`;
+                    return;
+                }
+
+                const entries = data.children[0].standings.entries;
+                
+                tbody.innerHTML = entries.map((entry, idx) => {
+                    const stats = entry.stats;
+                    // Helper to find stat by name (robust)
+                    const getStat = (name) => stats.find(s => s.name === name)?.value || 0;
+                    
+                    const played = getStat('gamesPlayed');
+                    const gd = getStat('pointDifferential');
+                    const points = getStat('points');
+                    
+                    // Top 4 styling
+                    let posColor = 'text-slate-500';
+                    if(idx < 4) posColor = 'text-blue-500 font-black';
+                    if(idx > entries.length - 4) posColor = 'text-red-500';
+
+                    return `
+                    <tr class="border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 transition">
+                        <td class="py-3 pl-1 ${posColor} text-[10px]">${idx + 1}</td>
+                        <td class="py-3 flex items-center gap-2">
+                            <img src="${entry.team.logos[0].href}" class="w-5 h-5 object-contain">
+                            <span class="truncate w-24">${entry.team.shortDisplayName}</span>
+                        </td>
+                        <td class="py-3 text-center text-slate-500">${played}</td>
+                        <td class="py-3 text-center text-slate-500">${gd > 0 ? '+'+gd : gd}</td>
+                        <td class="py-3 text-center font-black text-black dark:text-white">${points}</td>
+                    </tr>`;
+                }).join('');
+
+            } catch (e) {
+                console.error(e);
+                loader.classList.add('hidden');
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-red-400 text-[10px]">Failed to load standings</td></tr>`;
+            }
+        }
+
+        // --- 5. Navigation & UI Logic ---
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tab}`).classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-btn').forEach(el => {
+                el.classList.remove('bg-blue-600', 'text-white', 'shadow-md');
+                el.classList.add('bg-slate-100', 'dark:bg-white/10', 'text-slate-500', 'dark:text-slate-400');
+            });
+            const activeBtn = document.getElementById(`nav-${tab}`);
+            activeBtn.classList.remove('bg-slate-100', 'dark:bg-white/10', 'text-slate-500', 'dark:text-slate-400');
+            activeBtn.classList.add('bg-blue-600', 'text-white', 'shadow-md');
+
+            if(tab === 'standings') fetchStandings(); // Initial fetch
+        }
+
+        function filterLeague(slug) {
+            currentLeague = slug;
+            document.querySelectorAll('.league-chip').forEach(el => {
+                el.className = 'league-chip px-4 py-1.5 rounded-full text-[11px] font-bold bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-400 transition-all whitespace-nowrap';
+            });
+            const activeBtn = document.querySelector(`button[onclick="filterLeague('${slug}')"]`);
+            if(activeBtn) activeBtn.className = 'league-chip active px-4 py-1.5 rounded-full text-[11px] font-bold bg-slate-800 dark:bg-white text-white dark:text-black shadow transition-all whitespace-nowrap';
             renderMatches();
         }
 
-        // --- Notifications (Toast) ---
-        function checkGoals(liveMatches) {
-            liveMatches.forEach(m => {
-                if (previousScores[m.id]) {
-                    if (m.home.score > previousScores[m.id].home) showToast(m.home.name, "Goal Scored!");
-                    if (m.away.score > previousScores[m.id].away) showToast(m.away.name, "Goal Scored!");
-                }
-                previousScores[m.id] = { home: m.home.score, away: m.away.score };
-            });
-        }
-        function showToast(team, msg) {
-            const t = document.getElementById('goal-toast');
-            document.getElementById('toast-subtitle').innerText = team;
-            t.classList.remove('opacity-0', 'translate-y-[-24px]');
-            triggerHaptic();
-            setTimeout(() => t.classList.add('opacity-0', 'translate-y-[-24px]'), 4000);
-        }
-
-        // --- Stats Modal ---
+        // Stats Modal Logic
         async function openStats(eventId, leagueId) {
-            triggerHaptic();
             const modal = document.getElementById('stats-modal');
-            const content = document.getElementById('stats-modal-content');
-            const container = document.getElementById('stats-container');
-            
+            const body = document.getElementById('stats-body-container');
             modal.classList.remove('hidden');
-            setTimeout(() => { modal.classList.remove('opacity-0'); content.classList.remove('translate-y-full'); }, 10);
+            setTimeout(() => { modal.classList.remove('opacity-0'); document.getElementById('stats-content').classList.remove('translate-y-full'); }, 10);
             
-            container.innerHTML = `<div class="p-10 text-center"><i class="fas fa-circle-notch animate-spin text-blue-500 text-2xl"></i></div>`;
-
+            body.innerHTML = `<div class="text-center py-10"><i class="fas fa-circle-notch animate-spin text-green-500 text-2xl"></i></div>`;
+            
             try {
-                // Fetch details
                 const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${leagueId || 'eng.1'}/summary?event=${eventId}`);
                 const data = await res.json();
                 
-                const team1 = data.boxscore.teams[0];
-                const team2 = data.boxscore.teams[1];
-                const stats = ['possessionPct', 'shotsOnTarget', 'foulsCommitted', 'cornerKicks', 'yellowCards'];
-                const labels = { 'possessionPct': 'Possession', 'shotsOnTarget': 'On Target', 'foulsCommitted': 'Fouls', 'cornerKicks': 'Corners', 'yellowCards': 'Yellow Cards' };
+                if(!data.boxscore) throw new Error("No Stats");
+                const t1 = data.boxscore.teams[0];
+                const t2 = data.boxscore.teams[1];
+                const stats = t1.statistics || [];
+                
+                const statRows = [
+                    {k:'possessionPct', l:'Possession %'}, {k:'shots', l:'Total Shots'}, 
+                    {k:'shotsOnTarget', l:'On Target'}, {k:'cornerKicks', l:'Corners'}, 
+                    {k:'foulsCommitted', l:'Fouls'}, {k:'yellowCards', l:'Yellow Cards', c:'text-yellow-500'}, 
+                    {k:'redCards', l:'Red Cards', c:'text-red-600 font-black'}
+                ];
 
-                let statsHtml = stats.map(key => {
-                    const v1 = team1.statistics.find(s => s.name === key)?.displayValue || 0;
-                    const v2 = team2.statistics.find(s => s.name === key)?.displayValue || 0;
-                    const n1 = parseFloat(v1) || 0; const n2 = parseFloat(v2) || 0;
-                    const total = n1 + n2 || 1;
-                    
+                const statsHtml = stats.length ? statRows.map(i => {
+                    const v1 = t1.statistics.find(s => s.name === i.k)?.displayValue || 0;
+                    const v2 = t2.statistics.find(s => s.name === i.k)?.displayValue || 0;
+                    const p1 = parseFloat(v1)||0, p2 = parseFloat(v2)||0, t = p1+p2||1;
                     return `
-                    <div class="mb-4">
-                        <div class="flex justify-between text-xs font-bold mb-1 dark:text-slate-300">
-                            <span>${v1}</span> <span class="text-slate-400 uppercase text-[9px]">${labels[key]}</span> <span>${v2}</span>
+                    <div class="mb-3">
+                        <div class="flex justify-between text-[10px] font-bold mb-1 dark:text-slate-300">
+                            <span>${v1}</span> <span class="${i.c || 'text-slate-400'} uppercase tracking-wide">${i.l}</span> <span>${v2}</span>
                         </div>
-                        <div class="flex h-1.5 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
-                            <div class="bg-blue-500 h-full" style="width: ${(n1/total)*100}%"></div>
-                            <div class="bg-red-500 h-full" style="width: ${(n2/total)*100}%"></div>
+                        <div class="flex h-1.5 bg-slate-100 dark:bg-white/10 rounded-full overflow-hidden">
+                            <div class="bg-blue-600 h-full" style="width:${i.k==='possessionPct'?p1:(p1/t)*100}%"></div>
+                            <div class="bg-red-500 h-full" style="width:${i.k==='possessionPct'?p2:(p2/t)*100}%"></div>
                         </div>
                     </div>`;
-                }).join('');
+                }).join('') : '<div class="text-center text-xs text-slate-400">Stats not available for this match</div>';
 
-                container.innerHTML = `
-                    <div class="p-4 border-b border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5 flex justify-between items-center rounded-t-3xl">
-                        <div class="flex flex-col items-center w-20">
-                            <img src="${team1.team.logo}" class="w-8 h-8 object-contain">
-                            <span class="text-[10px] font-bold mt-1 leading-none text-center dark:text-white">${team1.team.abbreviation}</span>
-                        </div>
-                        <div class="text-xl font-black dark:text-white">${team1.score || 0} - ${team2.score || 0}</div>
-                        <div class="flex flex-col items-center w-20">
-                            <img src="${team2.team.logo}" class="w-8 h-8 object-contain">
-                            <span class="text-[10px] font-bold mt-1 leading-none text-center dark:text-white">${team2.team.abbreviation}</span>
-                        </div>
+                body.innerHTML = `
+                    <div class="flex justify-between items-center mb-6 px-2">
+                        <div class="flex flex-col items-center"><img src="${t1.team.logo}" class="w-12 h-12 object-contain mb-2"><span class="text-[10px] font-black dark:text-white text-center leading-none">${t1.team.abbreviation}</span></div>
+                        <div class="text-3xl font-black dark:text-white tracking-tighter">${t1.score||0} - ${t2.score||0}</div>
+                        <div class="flex flex-col items-center"><img src="${t2.team.logo}" class="w-12 h-12 object-contain mb-2"><span class="text-[10px] font-black dark:text-white text-center leading-none">${t2.team.abbreviation}</span></div>
                     </div>
-                    <div class="p-5">${statsHtml}</div>
-                    <div class="px-5 pb-5">
-                         <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_blank" class="block w-full bg-blue-600 text-white text-center py-3 rounded-xl font-bold text-sm shadow-md">
-                            အသေးစိတ် ကြေးကြည့်မည်
-                         </a>
-                    </div>
+                    <div class="bg-slate-50 dark:bg-black/20 rounded-xl p-4 border border-slate-100 dark:border-white/5">${statsHtml}</div>
                 `;
-
-            } catch (e) {
-                container.innerHTML = `<div class="p-10 text-center text-slate-400 text-xs">Stats မရရှိနိုင်ပါ</div>`;
+            } catch(e) {
+                body.innerHTML = `<div class="text-center text-xs text-slate-400 py-10">Data not available</div>`;
             }
         }
 
         function closeStatsModal() {
             const modal = document.getElementById('stats-modal');
-            const content = document.getElementById('stats-modal-content');
             modal.classList.add('opacity-0');
-            content.classList.add('translate-y-full');
+            document.getElementById('stats-content').classList.add('translate-y-full');
             setTimeout(() => modal.classList.add('hidden'), 300);
         }
 
-        // --- Install Modal & Promo ---
-        function openInstallModal() {
-            document.getElementById('install-modal').classList.remove('hidden');
-            setTimeout(() => {
-                document.getElementById('install-modal').classList.remove('opacity-0');
-                document.getElementById('install-content').classList.remove('translate-y-full');
-            }, 10);
-        }
-        function closeInstallModal() {
-            document.getElementById('install-modal').classList.add('opacity-0');
-            document.getElementById('install-content').classList.add('translate-y-full');
-            setTimeout(() => document.getElementById('install-modal').classList.add('hidden'), 300);
-        }
-        function copyPromo(code, btn) {
-            navigator.clipboard.writeText(code);
-            const original = btn.innerHTML;
-            btn.innerHTML = `<i class="fas fa-check-circle text-green-500 mr-2"></i> ကူးယူပြီး`;
-            setTimeout(() => btn.innerHTML = original, 2000);
+        function copyPromo() {
+            navigator.clipboard.writeText('ZINXBET');
+            alert('Promo Code ZINXBET Copied!');
         }
 
-        // --- Welcome Modal (First Time) ---
-        function checkFirstTime() {
-            if (!localStorage.getItem('we_visited_v2')) {
-                setTimeout(() => {
-                    const modal = document.getElementById('welcome-modal');
-                    modal.classList.remove('hidden');
-                    setTimeout(() => {
-                        modal.classList.remove('opacity-0');
-                        document.getElementById('welcome-content').classList.remove('scale-90');
-                        document.getElementById('welcome-content').classList.add('scale-100');
-                    }, 10);
-                }, 2000);
-            }
-        }
-        function closeWelcomeModal() {
-            const modal = document.getElementById('welcome-modal');
-            modal.classList.add('opacity-0');
-            localStorage.setItem('we_visited_v2', 'true');
-            setTimeout(() => modal.classList.add('hidden'), 500);
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-icon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
         }
 
-        // --- Init ---
+        // Init
+        if(localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            document.getElementById('theme-icon').className = 'fas fa-sun';
+        }
         fetchMatches();
-        checkFirstTime();
-
+        setInterval(() => fetchMatches(), 60000); // Auto Refresh Matches
     </script>
 </body>
 </html>

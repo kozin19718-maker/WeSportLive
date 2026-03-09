@@ -164,15 +164,18 @@
     .dark .match-card.live-card { box-shadow: 0 0 0 1px rgba(239,68,68,.25), 0 4px 20px -4px rgba(239,68,68,.2); }
 
     .finished-match-card {
-        min-width: 240px;
-        border-radius: 16px;
+        width: 100%;
+        border-radius: 12px;
         transition: transform .2s, box-shadow .2s;
         cursor: pointer;
+        /* Compact Styling */
+        padding: 8px 12px !important;
+        margin-bottom: 2px;
     }
     .dark .finished-match-card { background: linear-gradient(145deg,rgba(31,41,55,.5),rgba(17,24,39,.7)); border: 1px solid rgba(255,255,255,.05); }
     .finished-match-card       { background: linear-gradient(145deg,#f9fafb,#fff); border: 1px solid rgba(0,0,0,.06); }
-    .finished-match-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px -5px rgba(0,0,0,.12); }
-    .finished-match-card:active{ transform: scale(.97); }
+    .finished-match-card:hover { transform: translateX(4px); box-shadow: 0 4px 10px -2px rgba(0,0,0,.12); }
+    .finished-match-card:active{ transform: scale(.98); }
 
     /* ── Countdown ── */
     .countdown-tick { animation: countdown-tick .4s ease; }
@@ -399,8 +402,7 @@
                     </div>
                 </div>
                 <div class="bg-black/40 rounded-xl py-2 px-4 border border-white/10 backdrop-blur-sm">
-                    <div id="mu-countdown" class="flex justify-center gap-3 font-black text-2xl tracking-tighter text-yellow-400 tabular-nums">
-                        </div>
+                    <div id="mu-countdown" class="flex justify-center gap-3 font-black text-2xl tracking-tighter text-yellow-400 tabular-nums"></div>
                     <div id="mu-match-date" class="text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-widest border-t border-white/10 pt-1"></div>
                 </div>
             </div>
@@ -466,41 +468,52 @@
     </div>
     <div id="search-results-info" class="hidden text-[11px] text-slate-500 dark:text-gray-400 px-1 font-bold italic"></div>
 
-    <div class="flex justify-between items-end px-1">
-        <h3 class="text-base font-black italic flex items-center text-slate-800 dark:text-white">
-            <i class="fas fa-fire text-yellow-500 mr-2"></i> ပွဲစဉ်များ နှင့် နိုင်ခြေ
-        </h3>
-        <button onclick="fetchMatches(true)" class="text-[10px] bg-slate-200 dark:bg-white/10 hover:bg-slate-300 dark:hover:bg-white/20 px-2.5 py-1 rounded-lg border border-slate-300 dark:border-white/10 text-slate-700 dark:text-gray-300 font-bold active:scale-90 transition flex items-center gap-1">
-            <i class="fas fa-sync-alt" id="refresh-icon"></i> Refresh
+    <div class="flex p-1 bg-slate-200 dark:bg-white/10 rounded-xl">
+        <button onclick="toggleMatchView('live')" id="btn-view-live" class="flex-1 py-1.5 rounded-lg text-[11px] font-black transition-all bg-white dark:bg-blue-600 text-slate-800 dark:text-white shadow-sm">
+            Live / Upcoming
+        </button>
+        <button onclick="toggleMatchView('finished')" id="btn-view-finished" class="flex-1 py-1.5 rounded-lg text-[11px] font-black transition-all text-slate-500 dark:text-gray-400 hover:text-slate-700 dark:hover:text-white">
+            Finished Matches
         </button>
     </div>
 
-    <div id="date-selector" class="flex overflow-x-auto hide-scrollbar gap-2 px-1 pb-1 snap-x"></div>
+    <div id="live-upcoming-view">
+        <div class="flex justify-between items-end px-1 mb-2">
+            <h3 class="text-base font-black italic flex items-center text-slate-800 dark:text-white">
+                <i class="fas fa-fire text-yellow-500 mr-2"></i> ပွဲစဉ်များ နှင့် နိုင်ခြေ
+            </h3>
+            <button onclick="fetchMatches(true)" class="text-[10px] bg-slate-200 dark:bg-white/10 hover:bg-slate-300 dark:hover:bg-white/20 px-2.5 py-1 rounded-lg border border-slate-300 dark:border-white/10 text-slate-700 dark:text-gray-300 font-bold active:scale-90 transition flex items-center gap-1">
+                <i class="fas fa-sync-alt" id="refresh-icon"></i> Refresh
+            </button>
+        </div>
 
-    <div id="matches-container" class="flex flex-col gap-3 pb-2 min-h-[190px]">
-        <div class="match-card rounded-2xl p-4 w-full animate-pulse">
-            <div class="flex justify-between mb-4"><div class="skeleton h-4 w-20 rounded"></div><div class="skeleton h-4 w-16 rounded"></div></div>
-            <div class="flex justify-between items-center px-2">
-                <div class="flex flex-col items-center gap-2"><div class="skeleton w-12 h-12 rounded-full"></div><div class="skeleton h-3 w-16 rounded"></div></div>
-                <div class="skeleton h-4 w-8 rounded mx-2"></div>
-                <div class="flex flex-col items-center gap-2"><div class="skeleton w-12 h-12 rounded-full"></div><div class="skeleton h-3 w-16 rounded"></div></div>
+        <div id="date-selector" class="flex overflow-x-auto hide-scrollbar gap-2 px-1 pb-1 snap-x mb-2"></div>
+
+        <div id="matches-container" class="flex flex-col gap-3 pb-2 min-h-[190px]">
+            <div class="match-card rounded-2xl p-4 w-full animate-pulse">
+                <div class="flex justify-between mb-4"><div class="skeleton h-4 w-20 rounded"></div><div class="skeleton h-4 w-16 rounded"></div></div>
+                <div class="flex justify-between items-center px-2">
+                    <div class="flex flex-col items-center gap-2"><div class="skeleton w-12 h-12 rounded-full"></div><div class="skeleton h-3 w-16 rounded"></div></div>
+                    <div class="skeleton h-4 w-8 rounded mx-2"></div>
+                    <div class="flex flex-col items-center gap-2"><div class="skeleton w-12 h-12 rounded-full"></div><div class="skeleton h-3 w-16 rounded"></div></div>
+                </div>
             </div>
         </div>
+    </div>
+
+    <div id="finished-matches-view" class="hidden">
+        <div class="px-1 mb-2 mt-1">
+            <h3 class="text-sm font-black italic text-slate-500 dark:text-gray-400 flex items-center">
+                <i class="fas fa-history mr-2"></i> ပြီးခဲ့သော ပွဲစဉ်ရလဒ်များ
+            </h3>
+        </div>
+        <div id="finished-matches-container" class="flex flex-col gap-2 pb-2 min-h-[100px]"></div>
     </div>
 
     <div class="pt-1 px-1">
         <a href="https://t.me/WinExpress99" target="_blank" class="w-full flex items-center justify-center py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-800 text-white font-black text-[14px] italic shadow-lg active:scale-95 transition border dark:border-blue-400/30">
             🔥 ဒီနေ့ပွဲတွေ အတူတူ ရင်ခုန်ရအောင်! <i class="fab fa-telegram ml-2"></i>
         </a>
-    </div>
-
-    <div id="finished-matches-section" class="hidden pt-4 space-y-2">
-        <div class="px-1 border-t border-slate-200 dark:border-white/8 pt-4 flex justify-between items-center">
-            <h3 class="text-sm font-black italic text-slate-500 dark:text-gray-400 flex items-center">
-                <i class="fas fa-history mr-2"></i> ပြီးခဲ့သော ပွဲစဉ်ရလဒ်
-            </h3>
-        </div>
-        <div id="finished-matches-container" class="flex overflow-x-auto snap-x snap-mandatory gap-2 pb-2 hide-scrollbar items-center min-h-[100px]"></div>
     </div>
 </section>
 
@@ -889,6 +902,35 @@ document.querySelectorAll('.bottom-nav-item').forEach(n => {
     n.addEventListener('click', () => switchTabById(n.dataset.navtab));
 });
 
+// ── Matches View Toggling ──
+function toggleMatchView(viewName) {
+    triggerHaptic();
+    const liveView = document.getElementById('live-upcoming-view');
+    const finishedView = document.getElementById('finished-matches-view');
+    const btnLive = document.getElementById('btn-view-live');
+    const btnFinished = document.getElementById('btn-view-finished');
+
+    if (viewName === 'live') {
+        liveView.classList.remove('hidden');
+        finishedView.classList.add('hidden');
+        
+        btnLive.classList.remove('text-slate-500', 'dark:text-gray-400');
+        btnLive.classList.add('bg-white', 'dark:bg-blue-600', 'text-slate-800', 'dark:text-white', 'shadow-sm');
+        
+        btnFinished.classList.add('text-slate-500', 'dark:text-gray-400');
+        btnFinished.classList.remove('bg-white', 'dark:bg-blue-600', 'text-slate-800', 'dark:text-white', 'shadow-sm');
+    } else {
+        liveView.classList.add('hidden');
+        finishedView.classList.remove('hidden');
+        
+        btnFinished.classList.remove('text-slate-500', 'dark:text-gray-400');
+        btnFinished.classList.add('bg-white', 'dark:bg-blue-600', 'text-slate-800', 'dark:text-white', 'shadow-sm');
+        
+        btnLive.classList.add('text-slate-500', 'dark:text-gray-400');
+        btnLive.classList.remove('bg-white', 'dark:bg-blue-600', 'text-slate-800', 'dark:text-white', 'shadow-sm');
+    }
+}
+
 // ── Install Modal ──────────────
 function openInstallModal() {
     triggerHaptic();
@@ -1114,7 +1156,6 @@ function filterAndRenderMatches() {
     finished = filterBySearch(filterByDate(allCachedMatches.finished));
 
     const container          = document.getElementById('matches-container');
-    const finishedSection    = document.getElementById('finished-matches-section');
     const finishedContainer  = document.getElementById('finished-matches-container');
     const infoEl             = document.getElementById('search-results-info');
 
@@ -1138,10 +1179,10 @@ function filterAndRenderMatches() {
     }
 
     if (finished.length > 0) {
+        // Force isCompact = true for finished matches
         finishedContainer.innerHTML = finished.map(m => renderMatchCard(m, true)).join('');
-        finishedSection.classList.remove('hidden');
     } else {
-        finishedSection.classList.add('hidden');
+        finishedContainer.innerHTML = `<div class="text-center text-xs text-slate-400 py-4">ပြီးခဲ့သောပွဲစဉ် မရှိသေးပါ</div>`;
     }
 }
 
@@ -1601,7 +1642,7 @@ async function fetchMatches(isManual=false) {
         const rs = (a,b)=>(b.date-a.date)||rank(a.leagueId)-rank(b.leagueId);
         live.sort(ts); upcoming.sort(ts); finished.sort(rs);
         
-        // NEW: Find next Man Utd match for banner
+        // Find next Man Utd match for banner
         const nextMU = upcoming.find(m => m.homeTeam.team.name.includes('Manchester United') || m.awayTeam.team.name.includes('Manchester United'));
         renderManUtdBanner(nextMU);
 

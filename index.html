@@ -174,7 +174,7 @@
             <i class="fas fa-chevron-right text-slate-400 text-xs"></i>
         </a>
         <a href="https://reffpa.com/L?tag=d_5044128m_70865c_&site=5044128&ad=70865" target="_top" class="glass-card flex items-center justify-between p-4 rounded-2xl active:scale-95 transition">
-            <div class="flex items-center space-x-4"><div class="w-10 h-10 bg-indigo-100 dark:bg-indigo-500/20 rounded-xl flex items-center justify-center text-indigo-600"><i class="fas fa-download text-lg"></i></div><span class="font-bold text-[13px]">1XBET App ဒေါင်းရန်</span></div>
+            <div class="flex items-center space-x-4"><div class="w-10 h-10 bg-indigo-100 dark:bg-indigo-500/20 rounded-xl flex items-center justify-center text-indigo-600"><i class="fas fa-cloud-download-alt text-lg"></i></div><span class="font-bold text-[13px]">1XBET App ဒေါင်းရန်</span></div>
             <i class="fas fa-chevron-right text-slate-400 text-xs"></i>
         </a>
         <a href="https://t.me/WinExpress99" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl active:scale-95 transition">
@@ -482,9 +482,8 @@ let allCachedMatches = { live: [], upcoming: [], finished: [] };
 let globalMatchesMap = {};
 let previousScores = {};
 
-// မနက် ၅ နာရီအထိကို ဒီနေ့ (Today) လို့ သတ်မှတ်ရန် တွက်ချက်မှု (Global Date Shift)
 function getMatchDayString(dateObj) {
-    const d = new Date(dateObj.getTime() - 5 * 3600000); // Shift back by 5 hours
+    const d = new Date(dateObj.getTime() - 5 * 3600000); 
     return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 const todayShifted = new Date(Date.now() - 5 * 3600000);
@@ -497,13 +496,11 @@ let countdownTimers = {};
 let manUtdCountdownTimer = null;
 let isFetching = false;
 
-// --- Haptic & Theme ---
 const triggerHaptic = () => navigator.vibrate && navigator.vibrate(35);
 
 function toggleTheme() {
     triggerHaptic();
-    const html = document.documentElement;
-    const icon = document.getElementById('theme-icon');
+    const html = document.documentElement, icon = document.getElementById('theme-icon');
     html.classList.toggle('dark');
     icon.classList.toggle('fa-sun', html.classList.contains('dark'));
     icon.classList.toggle('fa-moon', !html.classList.contains('dark'));
@@ -511,8 +508,7 @@ function toggleTheme() {
 
 function toggleMenu() {
     triggerHaptic();
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('menu-overlay');
+    const sidebar = document.getElementById('sidebar'), overlay = document.getElementById('menu-overlay');
     if (sidebar.classList.contains('-translate-x-full')) {
         overlay.classList.remove('hidden'); setTimeout(() => overlay.classList.remove('opacity-0'), 10);
         sidebar.classList.remove('-translate-x-full'); document.body.style.overflow = 'hidden';
@@ -522,7 +518,6 @@ function toggleMenu() {
     }
 }
 
-// --- Modals ---
 function openInstallModal() {
     const modal = document.getElementById('install-modal'), content = document.getElementById('install-modal-content');
     modal.classList.remove('hidden');
@@ -536,7 +531,6 @@ function closeInstallModal() {
 function showWelcomeModal() { document.getElementById('welcome-modal').classList.remove('hidden'); }
 function closeWelcomeModal() { document.getElementById('welcome-modal').classList.add('hidden'); }
 
-// --- Tabs ---
 function switchTab(tabId, btnEl) {
     triggerHaptic();
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -579,13 +573,11 @@ function toggleMatchView(viewName) {
     }
 }
 
-// --- Utils ---
 function copyPromo(promo, btn) {
     navigator.clipboard ? navigator.clipboard.writeText(promo) : (()=>{ const el=document.createElement('textarea'); el.value=promo; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); })();
     const orig = btn.innerHTML; btn.innerHTML = 'COPIED!'; setTimeout(() => btn.innerHTML = orig, 2000);
 }
 
-// --- Notifications & Goals ---
 function addNotification(title, detail) {
     notifications.unshift({ title, detail, time: new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}) });
     if (notifications.length > 20) notifications.pop(); updateNotifUI();
@@ -625,7 +617,6 @@ function checkGoals(liveMatches) {
     });
 }
 
-// --- Date Selector ---
 function renderDateSelector() {
     const container = document.getElementById('date-selector'), dates = [{ label:'အားလုံး', value:'all' }];
     const baseDate = new Date(Date.now() - 5 * 3600000);
@@ -643,10 +634,8 @@ function renderDateSelector() {
 }
 function selectDate(val) { currentSelectedDate = val; renderDateSelector(); filterAndRenderMatches(); }
 
-// --- Search ---
 function onSearch() { searchQuery = document.getElementById('search-input').value.trim().toLowerCase(); filterAndRenderMatches(); }
 
-// --- Countdown ---
 function renderCountdown(matchId, targetDate) {
     const el = document.getElementById(`cd-${matchId}`); if (!el) { delete countdownTimers[matchId]; return; }
     const diff = Math.max(0, targetDate.getTime() - Date.now());
@@ -657,13 +646,27 @@ function renderCountdown(matchId, targetDate) {
     countdownTimers[matchId] = setTimeout(() => renderCountdown(matchId, targetDate), 1000);
 }
 
-// --- Render Home Top Matches (5 AM Logic Included) ---
+// --- Render Home Top Matches (With Team Priority Sorting) ---
 function renderHomeTopMatches() {
     const container = document.getElementById('home-top-matches'); if (!container) return;
     
     let cutoff = new Date();
     if (cutoff.getHours() < 5) { cutoff.setHours(5, 0, 0, 0); } else { cutoff.setDate(cutoff.getDate() + 1); cutoff.setHours(5, 0, 0, 0); }
-    let matches = [...allCachedMatches.live, ...allCachedMatches.upcoming].filter(m => m.date <= cutoff).slice(0, 10);
+    let matches = [...allCachedMatches.live, ...allCachedMatches.upcoming].filter(m => m.date <= cutoff);
+    
+    // Priority Sorting for Big Teams
+    const topTeams = ['Manchester United', 'Arsenal', 'Liverpool', 'Chelsea', 'Manchester City', 'Tottenham', 'Real Madrid', 'Barcelona', 'Bayern Munich', 'Paris Saint-Germain', 'Juventus', 'Inter Milan', 'AC Milan', 'Myanmar', 'Portugal', 'Argentina', 'Brazil', 'France', 'England', 'Spain', 'Germany'];
+    
+    matches.sort((a, b) => {
+        const aIsTop = topTeams.some(t => a.homeTeam.team.name.includes(t) || a.awayTeam.team.name.includes(t));
+        const bIsTop = topTeams.some(t => b.homeTeam.team.name.includes(t) || b.awayTeam.team.name.includes(t));
+        
+        if (aIsTop && !bIsTop) return -1;
+        if (!aIsTop && bIsTop) return 1;
+        return a.date - b.date; // Sort by date if both are top or both are not top
+    });
+
+    matches = matches.slice(0, 10);
     
     if (matches.length === 0) { container.innerHTML = `<div class="w-full text-center py-6 text-slate-500 text-[11px] bg-slate-100 dark:bg-slate-800/50 rounded-2xl">ယနေ့အတွက် အထူးပွဲစဉ် မရှိသေးပါ</div>`; return; }
     
@@ -684,9 +687,7 @@ function renderHomeTopMatches() {
     }).join('');
 }
 
-// --- Match Renderers ---
 function filterAndRenderMatches() {
-    // Uses getMatchDayString to properly align midnight matches with the previous calendar day
     const filterByDate = arr => currentSelectedDate === 'all' ? arr : arr.filter(m => getMatchDayString(m.date) === currentSelectedDate);
     const filterBySearch = arr => !searchQuery ? arr : arr.filter(m => m.homeTeam.team.name.toLowerCase().includes(searchQuery) || m.awayTeam.team.name.toLowerCase().includes(searchQuery) || m.leagueName.toLowerCase().includes(searchQuery));
 
@@ -764,7 +765,6 @@ function renderMatchCard(match, isCompact) {
     </div>`;
 }
 
-// --- Stats Modal Logic ---
 async function openStatsModal(matchId) {
     const match = globalMatchesMap[matchId]; if (!match) return;
     const modal = document.getElementById('stats-modal'), content = document.getElementById('stats-modal-content'), cont = document.getElementById('stats-container');
@@ -794,7 +794,6 @@ function closeStatsModal() {
     setTimeout(() => modal.classList.add('hidden'), 300);
 }
 
-// --- Data Fetching ---
 function renderManUtdBanner(match) {
     const banner = document.getElementById('man-utd-banner');
     if (!match) { banner.classList.add('hidden'); if(manUtdCountdownTimer) clearInterval(manUtdCountdownTimer); return; }
@@ -873,7 +872,6 @@ async function fetchMatches(isManual=false) {
     } catch(e) { console.error(e); } finally { isFetching=false; }
 }
 
-// --- Init ---
 document.addEventListener('DOMContentLoaded', () => { fetchMatches(); setInterval(() => fetchMatches(), 90000); setTimeout(showWelcomeModal, 2000); });
 </script>
 </body>

@@ -47,28 +47,30 @@
             -webkit-tap-highlight-color: transparent;
             transition: background-color 0.3s, color 0.3s;
             overscroll-behavior: none;
+            position: relative;
         }
         
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        @keyframes fadeSlideUp {
-            from { opacity: 0; transform: translateY(14px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.8); }
-            70% { opacity: 1; transform: scale(1.05); }
-            100% { opacity: 1; transform: scale(1); }
-        }
+        @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.8); } 70% { opacity: 1; transform: scale(1.05); } 100% { opacity: 1; transform: scale(1); } }
         @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
-        @keyframes pulse-red {
-            0%  { transform:scale(1);   box-shadow:0 0 0 0   rgba(239,68,68,.6); }
-            70% { transform:scale(1.02);box-shadow:0 0 0 10px rgba(239,68,68,0); }
-            100%{ transform:scale(1);   box-shadow:0 0 0 0   rgba(239,68,68,0); }
-        }
+        @keyframes pulse-red { 0% { transform:scale(1); box-shadow:0 0 0 0 rgba(239,68,68,.6); } 70% { transform:scale(1.02);box-shadow:0 0 0 10px rgba(239,68,68,0); } 100%{ transform:scale(1); box-shadow:0 0 0 0 rgba(239,68,68,0); } }
         @keyframes spin { to{transform:rotate(360deg)} }
         @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-100%)} }
+        
+        /* Background Floating Animation */
+        @keyframes float-up {
+            0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 0.08; }
+            90% { opacity: 0.08; }
+            100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+        .dark @keyframes float-up {
+            10% { opacity: 0.15; } 90% { opacity: 0.15; }
+        }
+        .bg-particle { position: fixed; pointer-events: none; z-index: -1; opacity: 0; animation: float-up linear infinite; }
 
         .animate-fade-up  { animation: fadeSlideUp .4s ease-out both; }
         .animate-pop-in   { animation: popIn .5s ease-out both; }
@@ -77,70 +79,40 @@
         .loader           { border:3px solid rgba(156,163,175,.2); border-top-color:#eab308; border-radius:50%; width:24px; height:24px; animation:spin 1s linear infinite; }
 
         /* Match Cards */
-        .match-card {
-            width: 100%; 
-            border-radius: var(--card-radius);
-            transition: transform .2s, box-shadow .2s;
-            cursor: pointer;
-            border: 1px solid rgba(0,0,0,.05);
-        }
+        .match-card { width: 100%; border-radius: var(--card-radius); transition: transform .2s, box-shadow .2s; cursor: pointer; border: 1px solid rgba(0,0,0,.05); }
         .dark .match-card { background: linear-gradient(145deg, #1e293b, #0f172a); border-color: rgba(255,255,255,.05); }
-        .match-card       { background: linear-gradient(145deg, #ffffff, #f8fafc); }
+        .match-card { background: linear-gradient(145deg, #ffffff, #f8fafc); }
         .match-card:active{ transform: scale(.98); }
-
         .dark .match-card.man-utd { background: linear-gradient(145deg, rgba(69,10,10,.8), rgba(15,23,42,.9)); border-color:rgba(239,68,68,.3); }
-        .match-card.man-utd       { background: linear-gradient(145deg, #fef2f2, #ffffff); border-color:rgba(239,68,68,.2); }
-
+        .match-card.man-utd { background: linear-gradient(145deg, #fef2f2, #ffffff); border-color:rgba(239,68,68,.2); }
         .match-card.live-card { border-color: rgba(239,68,68,.4); }
         .dark .match-card.live-card { box-shadow: 0 0 0 1px rgba(239,68,68,.3), 0 4px 15px -4px rgba(239,68,68,.2); }
 
-        .finished-match-card {
-            width: 100%;
-            border-radius: 12px;
-            transition: transform .2s;
-            cursor: pointer;
-            padding: 10px 14px !important;
-            margin-bottom: 2px;
-        }
+        .finished-match-card { width: 100%; border-radius: 12px; transition: transform .2s; cursor: pointer; padding: 10px 14px !important; margin-bottom: 2px; }
         .dark .finished-match-card { background: linear-gradient(145deg, rgba(30,41,59,.6), rgba(15,23,42,.8)); border: 1px solid rgba(255,255,255,.05); }
-        .finished-match-card       { background: linear-gradient(145deg, #f8fafc, #ffffff); border: 1px solid rgba(0,0,0,.05); }
+        .finished-match-card { background: linear-gradient(145deg, #f8fafc, #ffffff); border: 1px solid rgba(0,0,0,.05); }
         .finished-match-card:active{ transform: scale(.98); }
 
         /* Unified Glass/Service Cards */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            transition: transform 0.2s;
-        }
-        .dark .glass-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(8px);
-        }
+        .glass-card { background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(226, 232, 240, 0.8); transition: transform 0.2s; }
+        .dark .glass-card { background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(8px); }
         .glass-card:active { transform: scale(.98); }
 
         /* Countdown */
         .countdown-wrap { display: flex; gap: 6px; justify-content: center; font-variant-numeric: tabular-nums; }
-        .countdown-unit {
-            display: flex; flex-direction: column; align-items: center;
-            background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
-            border-radius: 8px; padding: 4px 8px; min-width: 40px;
-        }
+        .countdown-unit { display: flex; flex-direction: column; align-items: center; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: 4px 8px; min-width: 40px; }
         .countdown-unit .val { font-size: 14px; font-weight: 900; line-height: 1; }
         .countdown-unit .lbl { font-size: 8px; opacity:.7; text-transform:uppercase; margin-top:2px; }
         .countdown-unit { background:rgba(0,0,0,.03); border-color:rgba(0,0,0,.05); }
 
-        /* Notifications */
+        /* Notifications & Nav */
         .notif-dot { position:absolute; top:-2px; right:-2px; width:10px; height:10px; border-radius:50%; background:#ef4444; border:2px solid #0b1120; animation: pulse-red 2s infinite; }
         .notif-panel { position: absolute; top: calc(100% + 8px); right: 0; width: 300px; max-height: 340px; overflow-y: auto; background: #0f172a; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; box-shadow: 0 16px 40px rgba(0,0,0,.6); z-index: 200; padding: 12px; }
-
-        /* Nav Bar */
         .bottom-nav-item { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:8px 4px; cursor:pointer; transition: color .2s; gap:4px; }
         .bottom-nav-item .nav-icon { font-size:18px; transition: transform .2s; }
         .bottom-nav-item .nav-label { font-size:10px; font-weight:700; }
         .bottom-nav-item.active .nav-icon { transform: scale(1.15); color: #eab308; }
         .bottom-nav-item.active .nav-label { color: #eab308; }
-
         .red-card-indicator { display:inline-block; width:8px; height:12px; background:#ef4444; border-radius:2px; margin-left:4px; vertical-align:middle; }
         
         .tab-content { display:none; }
@@ -148,6 +120,13 @@
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center bg-lightbg dark:bg-darkbg text-slate-800 dark:text-slate-200">
+
+<i class="fas fa-futbol bg-particle text-slate-400 dark:text-slate-600 text-6xl" style="left: 10%; animation-duration: 18s; animation-delay: 0s;"></i>
+<i class="fas fa-coins bg-particle text-yellow-500 text-5xl" style="left: 35%; animation-duration: 22s; animation-delay: 3s;"></i>
+<i class="fas fa-futbol bg-particle text-slate-400 dark:text-slate-600 text-4xl" style="left: 60%; animation-duration: 15s; animation-delay: 7s;"></i>
+<i class="fas fa-dice bg-particle text-purple-400 text-5xl" style="left: 80%; animation-duration: 25s; animation-delay: 1s;"></i>
+<i class="fas fa-coins bg-particle text-yellow-500 text-4xl" style="left: 20%; animation-duration: 19s; animation-delay: 5s;"></i>
+<i class="fas fa-futbol bg-particle text-slate-400 dark:text-slate-600 text-7xl" style="left: 75%; animation-duration: 28s; animation-delay: 8s;"></i>
 
 <div id="goal-toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-[110] pointer-events-none opacity-0 translate-y-[-24px] transition-all duration-300 min-w-[280px]">
     <div class="bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,.5)] flex items-center border border-green-500/50">
@@ -171,9 +150,7 @@
                 <p class="text-[10px] text-brand-gold font-bold uppercase tracking-widest">Live Match Hub</p>
             </div>
         </div>
-        <button onclick="toggleMenu()" class="text-slate-400 hover:text-red-500 transition p-2 active:scale-90">
-            <i class="fas fa-times text-xl"></i>
-        </button>
+        <button onclick="toggleMenu()" class="text-slate-400 hover:text-red-500 transition p-2 active:scale-90"><i class="fas fa-times text-xl"></i></button>
     </div>
     <div class="flex-1 overflow-y-auto p-4 space-y-3">
         <p class="text-[11px] text-slate-400 font-bold uppercase tracking-widest px-2 mb-2">အမြန် ဝန်ဆောင်မှုများ</p>
@@ -194,7 +171,7 @@
             </div>
             <i class="fas fa-chevron-right text-slate-400 text-xs shrink-0"></i>
         </button>
-        <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_top" class="glass-card flex items-center justify-between p-4 rounded-2xl active:scale-95 transition">
+        <a href="https://reffpa.com/L?tag=d_5044128m_97c_Slot&site=5044128&ad=97&r=slots" target="_top" class="glass-card flex items-center justify-between p-4 rounded-2xl active:scale-95 transition">
             <div class="flex items-center space-x-4"><div class="w-10 h-10 bg-blue-100 dark:bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-600"><i class="fas fa-user-plus text-lg"></i></div><span class="font-bold text-[13px]">1XBET အကောင့်ဖွင့်မယ်</span></div>
             <i class="fas fa-chevron-right text-slate-400 text-xs"></i>
         </a>
@@ -259,7 +236,7 @@
 
 <main class="w-full max-w-2xl px-4 pb-28">
     
-    <section id="tab-home" class="tab-content active animate-fade-up space-y-4 pt-4">
+    <section id="tab-home" class="tab-content active animate-fade-up space-y-5 pt-4">
         <div id="man-utd-banner" class="hidden rounded-2xl p-4 bg-gradient-to-r from-red-900 to-slate-900 shadow-lg border border-red-500/30 relative overflow-hidden text-white">
             <div class="relative z-10 flex items-center justify-between">
                 <div class="flex flex-col items-center w-[30%]">
@@ -278,20 +255,11 @@
             </div>
         </div>
 
-        <div class="rounded-2xl p-5 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1e293b] shadow-sm">
-            <p class="text-[12px] font-bold text-brand-gold mb-1"><i class="fas fa-fire mr-1"></i> အခုပဲ Join လိုက်ပါ</p>
-            <h2 class="text-[16px] font-black leading-tight mb-3">ဘောလုံးပွဲတိုင်းကို အနိုင်ငွေဖန်တီးမလား? ⚽</h2>
-            <div class="flex gap-3">
-                <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_top" class="flex-1 bg-brand-gold text-slate-900 py-3 rounded-xl font-black text-[13px] text-center active:scale-95 transition">အကောင့်ဖွင့်မယ်</a>
-                <button onclick="switchTabById('tab-matches')" class="flex-1 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white py-3 rounded-xl font-bold text-[13px] active:scale-95 transition">ပွဲစဉ်ကြည့်မယ်</button>
-            </div>
-        </div>
-
         <div class="grid grid-cols-2 gap-3">
             <a href="https://t.me/+lOFOKgFA8rY0NjBl" target="_blank" class="col-span-2 live-pulse bg-red-600 w-full flex items-center justify-center py-4 rounded-2xl text-[15px] font-black text-white shadow-md active:scale-95 transition">
                 <i class="fas fa-play-circle mr-2 text-xl"></i> LIVE ကြည့်ရှုရန်
             </a>
-            <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_top" class="glass-card rounded-2xl py-4 flex flex-col items-center justify-center text-slate-800 dark:text-white">
+            <a href="https://reffpa.com/L?tag=d_5044128m_97c_Slot&site=5044128&ad=97&r=slots" target="_top" class="glass-card rounded-2xl py-4 flex flex-col items-center justify-center text-slate-800 dark:text-white">
                 <i class="fas fa-user-plus text-2xl mb-2 text-green-500"></i>
                 <span class="text-[12px] font-black text-center">1XBET<br>အကောင့်ဖွင့်ရန်</span>
             </a>
@@ -300,44 +268,73 @@
                 <span class="text-[12px] font-black text-center">1XBET<br>ငွေသွင်း/ထုတ်</span>
             </a>
         </div>
+
+        <div class="rounded-2xl p-0.5 bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-600 shadow-md">
+            <div class="bg-[#0f172a] rounded-[14px] p-4 flex items-center justify-between relative overflow-hidden">
+                <div class="absolute -right-4 -top-4 opacity-10 text-5xl text-yellow-400"><i class="fas fa-gift"></i></div>
+                <div class="relative z-10">
+                    <h3 class="text-[14px] font-black text-white mb-1">100% Bonus ရယူရန် 🎁</h3>
+                    <p class="text-[11px] text-brand-gold font-bold tracking-wide">Promo Code: ZINXBET</p>
+                </div>
+                <button onclick="copyPromo('ZINXBET',this)" class="relative z-10 bg-brand-gold text-slate-900 px-3 py-2 rounded-xl font-black text-[11px] active:scale-95 transition shadow-sm">
+                    COPY ယူမည်
+                </button>
+            </div>
+        </div>
+
+        <div>
+            <div class="flex justify-between items-center px-1 mb-3">
+                <h3 class="text-[14px] font-black text-slate-800 dark:text-white">🔥 အထူးပွဲစဉ်များ</h3>
+                <button onclick="switchTabById('tab-matches')" class="text-[10px] text-slate-400 font-bold hover:text-brand-gold transition">အားလုံးကြည့်ရန် <i class="fas fa-chevron-right text-[8px] ml-1"></i></button>
+            </div>
+            <div id="home-top-matches" class="flex overflow-x-auto hide-scrollbar gap-3 pb-2 snap-x">
+                <div class="w-full text-center py-6 text-slate-500 text-[11px]"><div class="loader inline-block mb-2"></div><br>ပွဲစဉ်များ ရှာနေပါသည်...</div>
+            </div>
+        </div>
+
+        <div>
+            <div class="flex justify-between items-center px-1 mb-3">
+                <h3 class="text-[14px] font-black text-slate-800 dark:text-white">🎰 လူကြိုက်များသော ဂိမ်းများ</h3>
+                <button onclick="switchTabById('tab-casino')" class="text-[10px] text-slate-400 font-bold hover:text-brand-gold transition">အားလုံးကြည့်ရန် <i class="fas fa-chevron-right text-[8px] ml-1"></i></button>
+            </div>
+            <div class="grid grid-cols-4 gap-2">
+                <a href="https://reffpa.com/L?tag=d_5044128m_97c_Slot&site=5044128&ad=97&r=slots" target="_top" class="glass-card rounded-xl aspect-square flex flex-col items-center justify-center text-slate-800 dark:text-white">
+                    <span class="text-2xl mb-1">🎰</span><span class="text-[9px] font-black">Slots</span>
+                </a>
+                <a href="https://reffpa.com/L?tag=d_5044128m_97c_Slot&site=5044128&ad=97&r=slots" target="_top" class="glass-card rounded-xl aspect-square flex flex-col items-center justify-center text-slate-800 dark:text-white">
+                    <span class="text-2xl mb-1">🃏</span><span class="text-[9px] font-black">Casino</span>
+                </a>
+                <a href="https://reffpa.com/L?tag=d_5044128m_97c_Slot&site=5044128&ad=97&r=slots" target="_top" class="glass-card rounded-xl aspect-square flex flex-col items-center justify-center text-slate-800 dark:text-white">
+                    <span class="text-2xl mb-1">🎡</span><span class="text-[9px] font-black">Roulette</span>
+                </a>
+                <a href="https://reffpa.com/L?tag=d_5044128m_97c_Slot&site=5044128&ad=97&r=slots" target="_top" class="glass-card rounded-xl aspect-square flex flex-col items-center justify-center text-slate-800 dark:text-white">
+                    <span class="text-2xl mb-1">🚀</span><span class="text-[9px] font-black">Crash</span>
+                </a>
+            </div>
+        </div>
     </section>
 
     <section id="tab-matches" class="tab-content pt-4 space-y-4 animate-fade-up">
         <div class="relative">
             <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-            <input id="search-input" type="text" placeholder="အသင်းနာမည် ရှာရန်..." oninput="onSearch()"
-                class="w-full pl-10 pr-4 py-3 rounded-xl bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-slate-700 text-[13px] font-bold focus:ring-2 focus:ring-brand-gold focus:outline-none shadow-sm"/>
+            <input id="search-input" type="text" placeholder="အသင်းနာမည် ရှာရန်..." oninput="onSearch()" class="w-full pl-10 pr-4 py-3 rounded-xl bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-slate-700 text-[13px] font-bold focus:ring-2 focus:ring-brand-gold focus:outline-none shadow-sm"/>
         </div>
-
         <div class="flex p-1 bg-slate-200 dark:bg-slate-800 rounded-xl">
-            <button onclick="toggleMatchView('live')" id="btn-view-live" class="flex-1 py-2 rounded-lg text-[12px] font-black transition-all bg-white dark:bg-[#0f172a] text-slate-800 dark:text-brand-gold shadow-sm">
-                Live / Upcoming
-            </button>
-            <button onclick="toggleMatchView('finished')" id="btn-view-finished" class="flex-1 py-2 rounded-lg text-[12px] font-bold transition-all text-slate-500 dark:text-slate-400">
-                Finished Matches
-            </button>
+            <button onclick="toggleMatchView('live')" id="btn-view-live" class="flex-1 py-2 rounded-lg text-[12px] font-black transition-all bg-white dark:bg-[#0f172a] text-slate-800 dark:text-brand-gold shadow-sm">Live / Upcoming</button>
+            <button onclick="toggleMatchView('finished')" id="btn-view-finished" class="flex-1 py-2 rounded-lg text-[12px] font-bold transition-all text-slate-500 dark:text-slate-400">Finished Matches</button>
         </div>
-
         <div id="live-upcoming-view">
             <div class="flex justify-between items-center px-1 mb-2">
                 <h3 class="text-[15px] font-black text-slate-800 dark:text-white">ပွဲစဉ်များ</h3>
-                <button onclick="fetchMatches(true)" class="text-[11px] bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 font-bold active:scale-95 flex items-center gap-1.5">
-                    <i class="fas fa-sync-alt" id="refresh-icon"></i> Refresh
-                </button>
+                <button onclick="fetchMatches(true)" class="text-[11px] bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 font-bold active:scale-95 flex items-center gap-1.5"><i class="fas fa-sync-alt" id="refresh-icon"></i> Refresh</button>
             </div>
             <div id="date-selector" class="flex overflow-x-auto hide-scrollbar gap-2 px-1 pb-1 snap-x mb-3"></div>
-            
             <div id="matches-container" class="flex flex-col gap-3 min-h-[200px]">
-                <div class="flex flex-col items-center justify-center py-10 text-slate-500">
-                    <div class="loader mb-3"></div><span class="text-[12px] font-bold">Woxy 🦊 က ပွဲစဉ်များကို ရှာဖွေပေးနေပါသည်...</span>
-                </div>
+                <div class="flex flex-col items-center justify-center py-10 text-slate-500"><div class="loader mb-3"></div><span class="text-[12px] font-bold">Woxy 🦊 က ပွဲစဉ်များကို ရှာဖွေပေးနေပါသည်...</span></div>
             </div>
         </div>
-
         <div id="finished-matches-view" class="hidden">
-            <div class="px-1 mb-2">
-                <h3 class="text-[15px] font-black text-slate-500 dark:text-slate-400">ပြီးခဲ့သော ရလဒ်များ</h3>
-            </div>
+            <div class="px-1 mb-2"><h3 class="text-[15px] font-black text-slate-500 dark:text-slate-400">ပြီးခဲ့သော ရလဒ်များ</h3></div>
             <div id="finished-matches-container" class="flex flex-col gap-2 min-h-[100px]"></div>
         </div>
     </section>
@@ -354,9 +351,7 @@
             </select>
         </div>
         <div id="standings-container" class="w-full bg-white dark:bg-[#1e293b] rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden min-h-[300px]">
-             <div class="flex flex-col items-center justify-center py-12 text-slate-500">
-                <div class="loader mb-3"></div><span class="text-[12px] font-bold">Livey 🦊 က ဇယားကို ယူဆောင်လာပါပြီ...</span>
-            </div>
+             <div class="flex flex-col items-center justify-center py-12 text-slate-500"><div class="loader mb-3"></div><span class="text-[12px] font-bold">Livey 🦊 က ဇယားကို ယူဆောင်လာပါပြီ...</span></div>
         </div>
     </section>
 
@@ -366,16 +361,16 @@
             <p class="text-[12px] font-bold text-slate-500">စိတ်ကြိုက် ဂိမ်းပေါင်းစုံကို တစ်နေရာတည်းတွင်</p>
         </div>
         <div class="grid grid-cols-2 gap-3">
-            <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_top" class="glass-card rounded-2xl aspect-[4/3] flex flex-col items-center justify-center text-slate-800 dark:text-white">
+            <a href="https://reffpa.com/L?tag=d_5044128m_97c_Slot&site=5044128&ad=97&r=slots" target="_top" class="glass-card rounded-2xl aspect-[4/3] flex flex-col items-center justify-center text-slate-800 dark:text-white">
                 <span class="text-4xl mb-2">🎰</span><span class="font-black text-[12px] tracking-widest">SLOTS</span>
             </a>
-            <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_top" class="glass-card rounded-2xl aspect-[4/3] flex flex-col items-center justify-center text-slate-800 dark:text-white">
+            <a href="https://reffpa.com/L?tag=d_5044128m_97c_Slot&site=5044128&ad=97&r=slots" target="_top" class="glass-card rounded-2xl aspect-[4/3] flex flex-col items-center justify-center text-slate-800 dark:text-white">
                 <span class="text-4xl mb-2">🃏</span><span class="font-black text-[12px] tracking-widest text-center">LIVE<br>CASINO</span>
             </a>
-            <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_top" class="glass-card rounded-2xl aspect-[4/3] flex flex-col items-center justify-center text-slate-800 dark:text-white">
+            <a href="https://reffpa.com/L?tag=d_5044128m_97c_Slot&site=5044128&ad=97&r=slots" target="_top" class="glass-card rounded-2xl aspect-[4/3] flex flex-col items-center justify-center text-slate-800 dark:text-white">
                 <span class="text-4xl mb-2">🎡</span><span class="font-black text-[12px] tracking-widest">ROULETTE</span>
             </a>
-            <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_top" class="glass-card rounded-2xl aspect-[4/3] flex flex-col items-center justify-center text-slate-800 dark:text-white">
+            <a href="https://reffpa.com/L?tag=d_5044128m_97c_Slot&site=5044128&ad=97&r=slots" target="_top" class="glass-card rounded-2xl aspect-[4/3] flex flex-col items-center justify-center text-slate-800 dark:text-white">
                 <span class="text-4xl mb-2">🚀</span><span class="font-black text-[12px] tracking-widest text-center">CRASH<br>GAMES</span>
             </a>
         </div>
@@ -384,33 +379,22 @@
     <section id="tab-services" class="tab-content pt-4 space-y-4 animate-fade-up">
         <h3 class="text-[15px] font-black px-1 text-slate-800 dark:text-white">အကူအညီနှင့် ဝန်ဆောင်မှုများ</h3>
         <button onclick="openInstallModal()" class="w-full glass-card rounded-2xl p-4 flex items-center justify-between active:scale-95 transition">
-            <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full flex items-center justify-center text-xl"><i class="fas fa-arrow-down"></i></div>
-                <div class="text-left">
-                    <h4 class="font-black text-[14px] text-slate-900 dark:text-white">App ကို ဖုန်းထဲထည့်မယ်</h4>
-                    <p class="text-[11px] font-bold text-slate-500">Home Screen ကနေ အလွယ်တကူ ဝင်ကြည့်ရန်</p>
-                </div>
-            </div>
-            <i class="fas fa-chevron-right text-slate-400"></i>
+            <div class="flex items-center space-x-4"><div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full flex items-center justify-center text-xl"><i class="fas fa-arrow-down"></i></div><div class="text-left"><h4 class="font-black text-[14px] text-slate-900 dark:text-white">App ကို ဖုန်းထဲထည့်မယ်</h4><p class="text-[11px] font-bold text-slate-500">Home Screen ကနေ အလွယ်တကူ ဝင်ကြည့်ရန်</p></div></div><i class="fas fa-chevron-right text-slate-400"></i>
         </button>
         <div class="grid grid-cols-1 gap-3">
             <a href="https://t.me/WinExpress99" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl active:scale-95 transition">
-                <div class="flex items-center space-x-4"><div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-blue-600"><i class="fas fa-comment-dots text-xl"></i></div><span class="font-bold text-[14px]">Agent ကို စကားပြောမယ်</span></div>
-                <i class="fas fa-chevron-right text-slate-400"></i>
+                <div class="flex items-center space-x-4"><div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-blue-600"><i class="fas fa-comment-dots text-xl"></i></div><span class="font-bold text-[14px]">Agent ကို စကားပြောမယ်</span></div><i class="fas fa-chevron-right text-slate-400"></i>
             </a>
         </div>
     </section>
 
     <section id="tab-promos" class="tab-content pt-4 animate-fade-up">
-        <div class="text-center mb-4">
-            <h2 class="text-lg font-black text-slate-900 dark:text-white mb-1">အထူး ပရိုမိုရှင်းများ</h2>
-            <p class="text-[12px] font-bold text-slate-500">ဘောနပ်စ်အပြည့်နဲ့ ဆော့ကစားဖို့ အကောင့်ဖွင့်ပါ</p>
-        </div>
+        <div class="text-center mb-4"><h2 class="text-lg font-black text-slate-900 dark:text-white mb-1">အထူး ပရိုမိုရှင်းများ</h2><p class="text-[12px] font-bold text-slate-500">ဘောနပ်စ်အပြည့်နဲ့ ဆော့ကစားဖို့ အကောင့်ဖွင့်ပါ</p></div>
         <div class="w-full rounded-2xl overflow-hidden shadow-xl border border-yellow-500/30">
             <div class="bg-gradient-to-b from-yellow-200 to-brand-gold pt-6 pb-6 px-4 text-center text-slate-900 relative">
                 <div class="text-2xl font-black italic uppercase tracking-tighter mb-4">🎁 Promo Code: ZINXBET</div>
                 <div class="flex flex-col gap-3 mt-2">
-                    <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_top" class="bg-slate-900 text-brand-gold px-4 py-3.5 rounded-xl font-black text-[13px] active:scale-95 transition">အကောင့်ဖွင့်မယ်</a>
+                    <a href="https://reffpa.com/L?tag=d_5044128m_97c_Slot&site=5044128&ad=97&r=slots" target="_top" class="bg-slate-900 text-brand-gold px-4 py-3.5 rounded-xl font-black text-[13px] active:scale-95 transition">အကောင့်ဖွင့်မယ်</a>
                     <button onclick="copyPromo('ZINXBET',this)" class="bg-white/50 border border-slate-900/20 text-slate-900 px-4 py-3.5 rounded-xl font-black text-[13px] active:scale-95 transition">PROMO ယူမည်</button>
                 </div>
                 <p class="text-[12px] font-bold mt-4 opacity-90">100% Bonus အတွက် အခုပဲ အသုံးပြုလိုက်ပါ</p>
@@ -434,9 +418,7 @@
 <div id="stats-modal" class="fixed inset-0 bg-black/80 z-[70] hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm flex items-end sm:items-center justify-center" onclick="closeStatsModal()">
     <div class="bg-white dark:bg-[#0f172a] w-full max-w-lg rounded-t-3xl sm:rounded-3xl max-h-[88vh] overflow-y-auto transform translate-y-full transition-transform duration-300 shadow-2xl border border-slate-200 dark:border-white/10" id="stats-modal-content" onclick="event.stopPropagation()">
         <div class="p-4 flex justify-between items-center border-b border-slate-200 dark:border-slate-700 sticky top-0 bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md z-10">
-            <h3 class="font-black text-slate-800 dark:text-white flex items-center text-[16px]">
-                <i class="fas fa-chart-bar text-brand-gold mr-2"></i> ပွဲစဉ် Stats
-            </h3>
+            <h3 class="font-black text-slate-800 dark:text-white flex items-center text-[16px]"><i class="fas fa-chart-bar text-brand-gold mr-2"></i> ပွဲစဉ် Stats</h3>
             <button onclick="closeStatsModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-red-500 transition"><i class="fas fa-times"></i></button>
         </div>
         <div id="stats-container" class="pb-6"></div>
@@ -447,10 +429,7 @@
     <div class="bg-white dark:bg-[#0f172a] w-full max-w-md rounded-t-3xl sm:rounded-3xl overflow-y-auto transform translate-y-full transition-transform duration-300 shadow-2xl border border-slate-200 dark:border-white/10 p-1" id="install-modal-content" onclick="event.stopPropagation()">
         <div class="p-5">
             <div class="flex justify-between items-start mb-4">
-                <div>
-                    <h3 class="font-black text-xl text-slate-800 dark:text-white mb-1">App ထည့်သွင်းနည်း</h3>
-                    <p class="text-[12px] font-bold text-slate-500">Home Screen မှာ Install လုပ်ထားလိုက်ပါ</p>
-                </div>
+                <div><h3 class="font-black text-xl text-slate-800 dark:text-white mb-1">App ထည့်သွင်းနည်း</h3><p class="text-[12px] font-bold text-slate-500">Home Screen မှာ Install လုပ်ထားလိုက်ပါ</p></div>
                 <button onclick="closeInstallModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-red-500 transition"><i class="fas fa-times"></i></button>
             </div>
             <div class="space-y-4">
@@ -478,7 +457,7 @@
                 <span class="text-[10px] text-slate-500 font-bold block mb-1 uppercase">Promo Code</span>
                 <span class="text-xl font-black text-brand-gold tracking-widest">ZINXBET</span>
             </div>
-            <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_top" class="w-full py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-black text-[14px] shadow-md active:scale-95 transition-transform">အကောင့်ဖွင့်ပြီး ဘောနပ်စ်ယူမယ်</a>
+            <a href="https://reffpa.com/L?tag=d_5044128m_97c_Slot&site=5044128&ad=97&r=slots" target="_top" class="w-full py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-black text-[14px] shadow-md active:scale-95 transition-transform">အကောင့်ဖွင့်ပြီး ဘောနပ်စ်ယူမယ်</a>
         </div>
     </div>
 </div>
@@ -514,35 +493,23 @@ function toggleMenu() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('menu-overlay');
     if (sidebar.classList.contains('-translate-x-full')) {
-        overlay.classList.remove('hidden');
-        setTimeout(() => overlay.classList.remove('opacity-0'), 10);
-        sidebar.classList.remove('-translate-x-full');
-        document.body.style.overflow = 'hidden';
+        overlay.classList.remove('hidden'); setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+        sidebar.classList.remove('-translate-x-full'); document.body.style.overflow = 'hidden';
     } else {
-        overlay.classList.add('opacity-0');
-        sidebar.classList.add('-translate-x-full');
-        setTimeout(() => overlay.classList.add('hidden'), 300);
-        document.body.style.overflow = '';
+        overlay.classList.add('opacity-0'); sidebar.classList.add('-translate-x-full');
+        setTimeout(() => overlay.classList.add('hidden'), 300); document.body.style.overflow = '';
     }
 }
 
 // --- Modals ---
 function openInstallModal() {
-    const modal = document.getElementById('install-modal');
-    const content = document.getElementById('install-modal-content');
+    const modal = document.getElementById('install-modal'), content = document.getElementById('install-modal-content');
     modal.classList.remove('hidden');
-    requestAnimationFrame(() => {
-        modal.classList.remove('opacity-0');
-        content.classList.remove('translate-y-full');
-        content.classList.add('translate-y-0');
-    });
+    requestAnimationFrame(() => { modal.classList.remove('opacity-0'); content.classList.remove('translate-y-full'); content.classList.add('translate-y-0'); });
 }
 function closeInstallModal() {
-    const modal = document.getElementById('install-modal');
-    const content = document.getElementById('install-modal-content');
-    modal.classList.add('opacity-0');
-    content.classList.add('translate-y-full');
-    content.classList.remove('translate-y-0');
+    const modal = document.getElementById('install-modal'), content = document.getElementById('install-modal-content');
+    modal.classList.add('opacity-0'); content.classList.add('translate-y-full'); content.classList.remove('translate-y-0');
     setTimeout(() => modal.classList.add('hidden'), 300);
 }
 function showWelcomeModal() { document.getElementById('welcome-modal').classList.remove('hidden'); }
@@ -577,94 +544,59 @@ function switchTab(tabId, btnEl) {
 function switchTabById(tabId) { switchTab(tabId, document.querySelector(`.tab-btn[data-tab="${tabId}"]`)); }
 
 function toggleMatchView(viewName) {
-    const liveView = document.getElementById('live-upcoming-view');
-    const finishedView = document.getElementById('finished-matches-view');
-    const btnLive = document.getElementById('btn-view-live');
-    const btnFinished = document.getElementById('btn-view-finished');
+    const liveView = document.getElementById('live-upcoming-view'), finishedView = document.getElementById('finished-matches-view');
+    const btnLive = document.getElementById('btn-view-live'), btnFinished = document.getElementById('btn-view-finished');
 
     if (viewName === 'live') {
         liveView.classList.remove('hidden'); finishedView.classList.add('hidden');
-        btnLive.classList.replace('text-slate-500', 'text-slate-800');
-        btnLive.classList.add('bg-white', 'dark:bg-[#0f172a]', 'dark:text-brand-gold', 'shadow-sm');
-        btnFinished.classList.remove('bg-white', 'dark:bg-[#0f172a]', 'dark:text-brand-gold', 'shadow-sm', 'text-slate-800');
-        btnFinished.classList.add('text-slate-500');
+        btnLive.classList.replace('text-slate-500', 'text-slate-800'); btnLive.classList.add('bg-white', 'dark:bg-[#0f172a]', 'dark:text-brand-gold', 'shadow-sm');
+        btnFinished.classList.remove('bg-white', 'dark:bg-[#0f172a]', 'dark:text-brand-gold', 'shadow-sm', 'text-slate-800'); btnFinished.classList.add('text-slate-500');
     } else {
         liveView.classList.add('hidden'); finishedView.classList.remove('hidden');
-        btnFinished.classList.replace('text-slate-500', 'text-slate-800');
-        btnFinished.classList.add('bg-white', 'dark:bg-[#0f172a]', 'dark:text-brand-gold', 'shadow-sm');
-        btnLive.classList.remove('bg-white', 'dark:bg-[#0f172a]', 'dark:text-brand-gold', 'shadow-sm', 'text-slate-800');
-        btnLive.classList.add('text-slate-500');
+        btnFinished.classList.replace('text-slate-500', 'text-slate-800'); btnFinished.classList.add('bg-white', 'dark:bg-[#0f172a]', 'dark:text-brand-gold', 'shadow-sm');
+        btnLive.classList.remove('bg-white', 'dark:bg-[#0f172a]', 'dark:text-brand-gold', 'shadow-sm', 'text-slate-800'); btnLive.classList.add('text-slate-500');
     }
 }
 
 // --- Utils ---
 function copyPromo(promo, btn) {
-    navigator.clipboard ? navigator.clipboard.writeText(promo) : (()=>{
-        const el=document.createElement('textarea'); el.value=promo;
-        document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
-    })();
-    const orig = btn.innerHTML;
-    btn.innerHTML = 'COPIED!';
-    setTimeout(() => btn.innerHTML = orig, 2000);
+    navigator.clipboard ? navigator.clipboard.writeText(promo) : (()=>{ const el=document.createElement('textarea'); el.value=promo; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); })();
+    const orig = btn.innerHTML; btn.innerHTML = 'COPIED!'; setTimeout(() => btn.innerHTML = orig, 2000);
 }
 
 // --- Notifications & Goals ---
 function addNotification(title, detail) {
     notifications.unshift({ title, detail, time: new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}) });
-    if (notifications.length > 20) notifications.pop();
-    updateNotifUI();
+    if (notifications.length > 20) notifications.pop(); updateNotifUI();
 }
 function updateNotifUI() {
-    const dot  = document.getElementById('notif-dot');
-    const list = document.getElementById('notif-list');
-    if (notifications.length === 0) {
-        dot.classList.add('hidden');
-        list.innerHTML = '<div class="text-[11px] text-slate-400 text-center py-4">Livey 🦊 စောင့်ကြည့်နေပါတယ်..</div>';
-        return;
-    }
+    const dot = document.getElementById('notif-dot'), list = document.getElementById('notif-list');
+    if (notifications.length === 0) { dot.classList.add('hidden'); list.innerHTML = '<div class="text-[11px] text-slate-400 text-center py-4">Livey 🦊 စောင့်ကြည့်နေပါတယ်..</div>'; return; }
     dot.classList.remove('hidden');
-    list.innerHTML = notifications.slice(0,10).map(n => `
-        <div class="p-2 mb-1 bg-white/5 rounded-lg border border-white/10">
-            <div class="flex items-center gap-2 mb-1"><span class="text-white text-[12px] font-black">⚽ ${n.title}</span><span class="ml-auto text-[9px] text-slate-400">${n.time}</span></div>
-            <div class="text-[11px] text-slate-300">${n.detail}</div>
-        </div>`).join('');
+    list.innerHTML = notifications.slice(0,10).map(n => `<div class="p-2 mb-1 bg-white/5 rounded-lg border border-white/10"><div class="flex items-center gap-2 mb-1"><span class="text-white text-[12px] font-black">⚽ ${n.title}</span><span class="ml-auto text-[9px] text-slate-400">${n.time}</span></div><div class="text-[11px] text-slate-300">${n.detail}</div></div>`).join('');
 }
 function clearNotifications() { notifications = []; updateNotifUI(); }
-function toggleNotifPanel() {
-    notifPanelOpen = !notifPanelOpen;
-    document.getElementById('notif-panel').classList.toggle('hidden', !notifPanelOpen);
-}
-document.addEventListener('click', e => {
-    if (notifPanelOpen && !document.getElementById('notif-wrapper').contains(e.target)) {
-        notifPanelOpen = false; document.getElementById('notif-panel').classList.add('hidden');
-    }
-});
+function toggleNotifPanel() { notifPanelOpen = !notifPanelOpen; document.getElementById('notif-panel').classList.toggle('hidden', !notifPanelOpen); }
+document.addEventListener('click', e => { if (notifPanelOpen && !document.getElementById('notif-wrapper').contains(e.target)) { notifPanelOpen = false; document.getElementById('notif-panel').classList.add('hidden'); } });
 
 function showGoalToast(title, subtitle) {
     const toast = document.getElementById('goal-toast');
-    document.getElementById('toast-title').innerText = title;
-    document.getElementById('toast-subtitle').innerText = subtitle;
-    toast.classList.remove('opacity-0','translate-y-[-24px]','pointer-events-none');
-    toast.classList.add('opacity-100','translate-y-0');
+    document.getElementById('toast-title').innerText = title; document.getElementById('toast-subtitle').innerText = subtitle;
+    toast.classList.remove('opacity-0','translate-y-[-24px]','pointer-events-none'); toast.classList.add('opacity-100','translate-y-0');
     navigator.vibrate && navigator.vibrate([100, 50, 100]);
-    setTimeout(() => {
-        toast.classList.add('opacity-0','translate-y-[-24px]','pointer-events-none');
-        toast.classList.remove('opacity-100','translate-y-0');
-    }, 5000);
+    setTimeout(() => { toast.classList.add('opacity-0','translate-y-[-24px]','pointer-events-none'); toast.classList.remove('opacity-100','translate-y-0'); }, 5000);
 }
 
 function checkGoals(liveMatches) {
     liveMatches.forEach(m => {
-        const id = m.id; const h = parseInt(m.homeTeam.score) || 0; const a = parseInt(m.awayTeam.score) || 0;
+        const id = m.id, h = parseInt(m.homeTeam.score) || 0, a = parseInt(m.awayTeam.score) || 0;
         if (previousScores[id]) {
             if (h > previousScores[id].home) {
-                const g = m.homeGoals.length > 0 ? m.homeGoals[m.homeGoals.length-1] : 'ဂိုးသွင်းသူ မသိရသေးပါ';
-                const t = m.homeTeam.team.name.substring(0,18);
+                const g = m.homeGoals.length > 0 ? m.homeGoals[m.homeGoals.length-1] : 'ဂိုးသွင်းသူ မသိရသေးပါ', t = m.homeTeam.team.name.substring(0,18);
                 showGoalToast(`${t} ဂိုးသွင်း!`, g); addNotification(`${t} ဂိုးသွင်း!`, g);
             }
             if (a > previousScores[id].away) {
-                const g = m.awayGoals.length > 0 ? m.awayGoals[m.awayGoals.length-1] : 'ဂိုးသွင်းသူ မသိရသေးပါ';
-                const t = m.awayTeam.team.name.substring(0,18);
+                const g = m.awayGoals.length > 0 ? m.awayGoals[m.awayGoals.length-1] : 'ဂိုးသွင်းသူ မသိရသေးပါ', t = m.awayTeam.team.name.substring(0,18);
                 showGoalToast(`${t} ဂိုးသွင်း!`, g); addNotification(`${t} ဂိုးသွင်း!`, g);
             }
         }
@@ -674,9 +606,7 @@ function checkGoals(liveMatches) {
 
 // --- Date Selector ---
 function renderDateSelector() {
-    const container = document.getElementById('date-selector');
-    const today = new Date();
-    const dates = [{ label:'အားလုံး', value:'all' }];
+    const container = document.getElementById('date-selector'), today = new Date(), dates = [{ label:'အားလုံး', value:'all' }];
     for (let i=-1; i<=7; i++) {
         const d = new Date(today); d.setDate(today.getDate()+i);
         const val = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -696,14 +626,36 @@ function onSearch() { searchQuery = document.getElementById('search-input').valu
 
 // --- Countdown ---
 function renderCountdown(matchId, targetDate) {
-    const el = document.getElementById(`cd-${matchId}`);
-    if (!el) { delete countdownTimers[matchId]; return; }
+    const el = document.getElementById(`cd-${matchId}`); if (!el) { delete countdownTimers[matchId]; return; }
     const diff = Math.max(0, targetDate.getTime() - Date.now());
     if (diff === 0) { el.innerHTML = '<span class="text-red-500 font-bold text-[12px] animate-pulse">Starting Now!</span>'; delete countdownTimers[matchId]; return; }
-    const h = Math.floor(diff / 3600000); const m = Math.floor((diff % 3600000) / 60000); const s = Math.floor((diff % 60000) / 1000);
+    const h = Math.floor(diff / 3600000), m = Math.floor((diff % 3600000) / 60000), s = Math.floor((diff % 60000) / 1000);
     const unit = (v,l) => `<div class="countdown-unit"><span class="val">${String(v).padStart(2,'0')}</span><span class="lbl">${l}</span></div>`;
     el.innerHTML = `<div class="countdown-wrap">${h?unit(h,'Hrs'):''}${unit(m,'Min')}${unit(s,'Sec')}</div>`;
     countdownTimers[matchId] = setTimeout(() => renderCountdown(matchId, targetDate), 1000);
+}
+
+// --- Render Home Top Matches ---
+function renderHomeTopMatches() {
+    const container = document.getElementById('home-top-matches'); if (!container) return;
+    let matches = [...allCachedMatches.live, ...allCachedMatches.upcoming].slice(0, 4);
+    if (matches.length === 0) { container.innerHTML = `<div class="w-full text-center py-6 text-slate-500 text-[11px] bg-slate-100 dark:bg-slate-800/50 rounded-2xl">ယနေ့အတွက် အထူးပွဲစဉ် မရှိသေးပါ</div>`; return; }
+    
+    const px = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
+    container.innerHTML = matches.map(m => {
+        const isLive = m.status === 'in';
+        return `
+        <div class="snap-start min-w-[240px] w-[240px] glass-card rounded-2xl p-4 flex flex-col relative cursor-pointer" onclick="openStatsModal('${m.id}')">
+            ${isLive ? '<span class="absolute -top-1 -right-1 bg-red-600 text-white text-[8px] px-2 py-0.5 rounded-full font-bold animate-pulse">LIVE</span>' : ''}
+            <div class="text-[9px] font-bold text-slate-400 mb-2 truncate text-center">${m.leagueName}</div>
+            <div class="flex justify-between items-center">
+                <div class="flex flex-col items-center w-[40%]"><img src="${m.homeTeam.team.logo || px}" class="w-8 h-8 object-contain mb-1.5" onerror="this.src='${px}'"><span class="text-[10px] font-black truncate w-full text-center text-slate-800 dark:text-white">${m.homeTeam.team.name.substring(0,12)}</span></div>
+                <div class="text-[12px] font-black ${isLive ? 'text-red-500' : 'text-slate-500'}">${isLive ? m.homeTeam.score + ' - ' + m.awayTeam.score : 'VS'}</div>
+                <div class="flex flex-col items-center w-[40%]"><img src="${m.awayTeam.team.logo || px}" class="w-8 h-8 object-contain mb-1.5" onerror="this.src='${px}'"><span class="text-[10px] font-black truncate w-full text-center text-slate-800 dark:text-white">${m.awayTeam.team.name.substring(0,12)}</span></div>
+            </div>
+            ${!isLive ? `<div class="text-[9px] text-center text-slate-400 font-bold mt-2">${m.date.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}</div>` : ''}
+        </div>`;
+    }).join('');
 }
 
 // --- Match Renderers ---
@@ -711,12 +663,8 @@ function filterAndRenderMatches() {
     const filterByDate = arr => currentSelectedDate === 'all' ? arr : arr.filter(m => `${m.date.getFullYear()}-${String(m.date.getMonth()+1).padStart(2,'0')}-${String(m.date.getDate()).padStart(2,'0')}` === currentSelectedDate);
     const filterBySearch = arr => !searchQuery ? arr : arr.filter(m => m.homeTeam.team.name.toLowerCase().includes(searchQuery) || m.awayTeam.team.name.toLowerCase().includes(searchQuery) || m.leagueName.toLowerCase().includes(searchQuery));
 
-    let live = filterBySearch(filterByDate(allCachedMatches.live));
-    let upcoming = filterBySearch(filterByDate(allCachedMatches.upcoming));
-    let finished = filterBySearch(filterByDate(allCachedMatches.finished));
-
-    const container = document.getElementById('matches-container');
-    const finishedContainer = document.getElementById('finished-matches-container');
+    let live = filterBySearch(filterByDate(allCachedMatches.live)), upcoming = filterBySearch(filterByDate(allCachedMatches.upcoming)), finished = filterBySearch(filterByDate(allCachedMatches.finished));
+    const container = document.getElementById('matches-container'), finishedContainer = document.getElementById('finished-matches-container');
 
     Object.keys(countdownTimers).forEach(id => { clearTimeout(countdownTimers[id]); delete countdownTimers[id]; });
 
@@ -739,23 +687,19 @@ function renderMatchCard(match, isCompact) {
     const sh = hn.substring(0,16), sa = an.substring(0,16);
     
     const utdBadge = isUtd ? `<div class="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full z-10 animate-bounce">GGMU</div>` : '';
-    const hReds = `<span class="red-card-indicator"></span>`.repeat(match.homeRedCards||0);
-    const aReds = `<span class="red-card-indicator"></span>`.repeat(match.awayRedCards||0);
+    const hReds = `<span class="red-card-indicator"></span>`.repeat(match.homeRedCards||0), aReds = `<span class="red-card-indicator"></span>`.repeat(match.awayRedCards||0);
 
-    let statusHtml='', hScore='', aScore='';
-    const sc = isCompact ? 'text-xl' : 'text-2xl';
+    let statusHtml='', hScore='', aScore=''; const sc = isCompact ? 'text-xl' : 'text-2xl';
 
     if (match.isPostponed) {
-        statusHtml = `<span class="text-[10px] bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-bold">ရွှေ့ဆိုင်း</span>`;
-        hScore = aScore = `<div class="text-sm font-black text-slate-400">-</div>`;
+        statusHtml = `<span class="text-[10px] bg-orange-100 text-orange-600 px-2 py-0.5 rounded font-bold">ရွှေ့ဆိုင်း</span>`; hScore = aScore = `<div class="text-sm font-black text-slate-400">-</div>`;
     } else if (isPost) {
         statusHtml = `<span class="text-[10px] bg-slate-200 dark:bg-slate-700 px-2 py-0.5 rounded font-bold">FT</span>`;
         hScore = `<div class="${sc} font-black ${parseInt(match.homeTeam.score)>parseInt(match.awayTeam.score)?'text-green-500':'text-slate-400'}">${match.homeTeam.score}</div>`;
         aScore = `<div class="${sc} font-black ${parseInt(match.awayTeam.score)>parseInt(match.homeTeam.score)?'text-green-500':'text-slate-400'}">${match.awayTeam.score}</div>`;
     } else if (isLive) {
         statusHtml = `<span class="text-[10px] bg-red-600 text-white px-2 py-0.5 rounded font-bold animate-pulse">LIVE ${match.displayClock}</span>`;
-        hScore = `<div class="${sc} font-black text-red-500">${match.homeTeam.score}</div>`;
-        aScore = `<div class="${sc} font-black text-red-500">${match.awayTeam.score}</div>`;
+        hScore = `<div class="${sc} font-black text-red-500">${match.homeTeam.score}</div>`; aScore = `<div class="${sc} font-black text-red-500">${match.awayTeam.score}</div>`;
     } else {
         statusHtml = `<span class="text-[10px] text-slate-500 dark:text-slate-400 font-bold">${match.date.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}</span>`;
         hScore = aScore = `<div class="text-sm font-black text-slate-400">-</div>`;
@@ -763,17 +707,10 @@ function renderMatchCard(match, isCompact) {
 
     let goalRow = '';
     if ((match.homeGoals?.length > 0 || match.awayGoals?.length > 0) && !isCompact) {
-        goalRow = `<div class="flex justify-between px-1 mt-3 text-[10px] text-slate-500 dark:text-slate-400 leading-snug">
-            <div class="text-left flex-1">${match.homeGoals.map(g=>`<div><i class="fas fa-futbol text-[9px] mr-1"></i>${g}</div>`).join('')}</div>
-            <div class="w-4"></div>
-            <div class="text-right flex-1">${match.awayGoals.map(g=>`<div>${g}<i class="fas fa-futbol text-[9px] ml-1"></i></div>`).join('')}</div>
-        </div>`;
+        goalRow = `<div class="flex justify-between px-1 mt-3 text-[10px] text-slate-500 dark:text-slate-400 leading-snug"><div class="text-left flex-1">${match.homeGoals.map(g=>`<div><i class="fas fa-futbol text-[9px] mr-1"></i>${g}</div>`).join('')}</div><div class="w-4"></div><div class="text-right flex-1">${match.awayGoals.map(g=>`<div>${g}<i class="fas fa-futbol text-[9px] ml-1"></i></div>`).join('')}</div></div>`;
     }
 
-    let oddsHtml = (!isCompact && isPre && !match.isPostponed) ? `
-        <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800 text-center" onclick="event.stopPropagation()">
-            <a href="https://reffpa.com/L?tag=d_5044643m_97c_&site=5044643&ad=97&r=registration" target="_top" class="inline-block w-full py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white rounded-lg font-bold text-[12px] active:scale-95 transition">🔥 1XBET ကြေးကြည့်မည်</a>
-        </div>` : '';
+    let oddsHtml = (!isCompact && isPre && !match.isPostponed) ? `<div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800 text-center" onclick="event.stopPropagation()"><a href="https://reffpa.com/L?tag=d_5044128m_97c_Slot&site=5044128&ad=97&r=slots" target="_top" class="inline-block w-full py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white rounded-lg font-bold text-[12px] active:scale-95 transition">🔥 1XBET ကြေးကြည့်မည်</a></div>` : '';
 
     let probHtml = '';
     if (!isCompact && isPre && !match.isPostponed) {
@@ -783,129 +720,50 @@ function renderMatchCard(match, isCompact) {
         if (tops.some(t=>hn.includes(t))) { hP+=28; aP-=12; } if (tops.some(t=>an.includes(t))) { aP+=28; hP-=12; }
         hP=Math.max(8,hP); aP=Math.max(8,aP); let dP=Math.max(8,100-hP-aP); const tot=hP+aP+dP;
         hP=Math.round(hP/tot*100); aP=Math.round(aP/tot*100); dP=100-hP-aP;
-        probHtml = `
-        <div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800">
-            <div class="flex justify-between text-[10px] font-bold mb-1 px-1 text-slate-500"><span>H ${hP}%</span><span>D ${dP}%</span><span>A ${aP}%</span></div>
-            <div class="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full flex overflow-hidden">
-                <div class="h-full bg-blue-500" style="width:${hP}%"></div>
-                <div class="h-full bg-gray-400" style="width:${dP}%"></div>
-                <div class="h-full bg-red-500" style="width:${aP}%"></div>
-            </div>
-        </div>`;
+        probHtml = `<div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800"><div class="flex justify-between text-[10px] font-bold mb-1 px-1 text-slate-500"><span>H ${hP}%</span><span>D ${dP}%</span><span>A ${aP}%</span></div><div class="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full flex overflow-hidden"><div class="h-full bg-blue-500" style="width:${hP}%"></div><div class="h-full bg-gray-400" style="width:${dP}%"></div><div class="h-full bg-red-500" style="width:${aP}%"></div></div></div>`;
     }
 
     const cdHtml = (!isCompact && isPre && !match.isPostponed) ? `<div id="cd-${match.id}" class="mt-3 flex justify-center"></div>` : '';
 
     return `<div class="${isCompact?'finished-match-card':'match-card'} ${isUtd?'man-utd':''} ${isLive&&!isCompact?'live-card':''} p-${isCompact?'3':'4'} relative flex flex-col justify-between" onclick="openStatsModal('${match.id}')">
         ${utdBadge}
-        <div class="flex justify-between items-center ${isCompact?'mb-2':'mb-4'}">
-            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wide bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded truncate max-w-[120px]">${match.leagueName}</span>
-            ${statusHtml}
-        </div>
+        <div class="flex justify-between items-center ${isCompact?'mb-2':'mb-4'}"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-wide bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded truncate max-w-[120px]">${match.leagueName}</span>${statusHtml}</div>
         <div class="flex justify-between items-center px-1">
-            <div class="text-center flex-1 flex flex-col items-center">
-                <img src="${match.homeTeam.team.logo||px}" class="${isCompact?'w-8 h-8':'w-12 h-12'} mb-2 object-contain" onerror="this.src='${px}'">
-                <h4 class="font-black ${isCompact?'text-[11px]':'text-[13px]'} leading-tight ${isUtd&&sh.includes('Man Utd')?'text-red-600':''}">${sh}${hReds}</h4>
-                ${hScore}
-            </div>
+            <div class="text-center flex-1 flex flex-col items-center"><img src="${match.homeTeam.team.logo||px}" class="${isCompact?'w-8 h-8':'w-12 h-12'} mb-2 object-contain" onerror="this.src='${px}'"><h4 class="font-black ${isCompact?'text-[11px]':'text-[13px]'} leading-tight ${isUtd&&sh.includes('Man Utd')?'text-red-600':''}">${sh}${hReds}</h4>${hScore}</div>
             <div class="mx-2 text-[10px] font-black text-slate-400 italic mb-4">VS</div>
-            <div class="text-center flex-1 flex flex-col items-center">
-                <img src="${match.awayTeam.team.logo||px}" class="${isCompact?'w-8 h-8':'w-12 h-12'} mb-2 object-contain" onerror="this.src='${px}'">
-                <h4 class="font-black ${isCompact?'text-[11px]':'text-[13px]'} leading-tight ${isUtd&&sa.includes('Man Utd')?'text-red-600':''}">${sa}${aReds}</h4>
-                ${aScore}
-            </div>
+            <div class="text-center flex-1 flex flex-col items-center"><img src="${match.awayTeam.team.logo||px}" class="${isCompact?'w-8 h-8':'w-12 h-12'} mb-2 object-contain" onerror="this.src='${px}'"><h4 class="font-black ${isCompact?'text-[11px]':'text-[13px]'} leading-tight ${isUtd&&sa.includes('Man Utd')?'text-red-600':''}">${sa}${aReds}</h4>${aScore}</div>
         </div>
-        ${goalRow}
-        ${cdHtml}
-        ${probHtml}
-        ${oddsHtml}
+        ${goalRow}${cdHtml}${probHtml}${oddsHtml}
     </div>`;
 }
 
 // --- Stats Modal Logic ---
 async function openStatsModal(matchId) {
-    const match = globalMatchesMap[matchId];
-    if (!match) return;
-    const modal = document.getElementById('stats-modal');
-    const content = document.getElementById('stats-modal-content');
-    const cont = document.getElementById('stats-container');
-    
-    modal.classList.remove('hidden');
-    requestAnimationFrame(() => {
-        modal.classList.remove('opacity-0');
-        content.classList.remove('translate-y-full');
-        content.classList.add('translate-y-0');
-    });
+    const match = globalMatchesMap[matchId]; if (!match) return;
+    const modal = document.getElementById('stats-modal'), content = document.getElementById('stats-modal-content'), cont = document.getElementById('stats-container');
+    modal.classList.remove('hidden'); requestAnimationFrame(() => { modal.classList.remove('opacity-0'); content.classList.remove('translate-y-full'); content.classList.add('translate-y-0'); });
 
     const px = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
-    const headerHtml = `
-    <div class="flex items-center justify-between px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
-        <div class="flex flex-col items-center flex-1">
-            <img src="${match.homeTeam.team.logo||px}" class="w-10 h-10 object-contain mb-1">
-            <span class="text-[12px] font-black text-slate-800 dark:text-white">${match.homeTeam.team.name.substring(0,12)}</span>
-        </div>
-        <div class="text-center px-2">
-            <span class="text-sm font-black bg-slate-200 dark:bg-slate-900 px-3 py-1 rounded-lg text-slate-700 dark:text-white">
-                ${match.status==='in'||match.status==='post' ? match.homeTeam.score+' - '+match.awayTeam.score : 'VS'}
-            </span>
-        </div>
-        <div class="flex flex-col items-center flex-1">
-            <img src="${match.awayTeam.team.logo||px}" class="w-10 h-10 object-contain mb-1">
-            <span class="text-[12px] font-black text-slate-800 dark:text-white">${match.awayTeam.team.name.substring(0,12)}</span>
-        </div>
-    </div>`;
-
+    const headerHtml = `<div class="flex items-center justify-between px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700"><div class="flex flex-col items-center flex-1"><img src="${match.homeTeam.team.logo||px}" class="w-10 h-10 object-contain mb-1"><span class="text-[12px] font-black text-slate-800 dark:text-white">${match.homeTeam.team.name.substring(0,12)}</span></div><div class="text-center px-2"><span class="text-sm font-black bg-slate-200 dark:bg-slate-900 px-3 py-1 rounded-lg text-slate-700 dark:text-white">${match.status==='in'||match.status==='post' ? match.homeTeam.score+' - '+match.awayTeam.score : 'VS'}</span></div><div class="flex flex-col items-center flex-1"><img src="${match.awayTeam.team.logo||px}" class="w-10 h-10 object-contain mb-1"><span class="text-[12px] font-black text-slate-800 dark:text-white">${match.awayTeam.team.name.substring(0,12)}</span></div></div>`;
     cont.innerHTML = headerHtml + `<div class="flex flex-col items-center justify-center py-10 text-slate-500"><div class="loader mb-3"></div><span class="text-[12px] font-bold">Woxy 🦊 Stats ရှာပေးနေပါတယ်...</span></div>`;
 
     try {
-        const res  = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${match.leagueId}/summary?event=${matchId}`);
-        const data = await res.json();
-        const bs   = data.boxscore;
+        const res  = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${match.leagueId}/summary?event=${matchId}`), data = await res.json(), bs = data.boxscore;
         if (!bs?.teams || bs.teams.length < 2) throw new Error('no stats');
-
-        const t1 = bs.teams[0], t2 = bs.teams[1];
-        const hSt = t1.team.id === match.homeTeam.team.id ? t1.statistics : t2.statistics;
-        const aSt = t1.team.id === match.homeTeam.team.id ? t2.statistics : t1.statistics;
-
-        const keys = [
-            { k:'possessionPct', l:'ဘောလုံးပိုင်ဆိုင်မှု (%)' },
-            { k:'shotsSummary', l:'ဂိုးကန်သွင်းမှု' },
-            { k:'shotsOnTarget', a:'shotsOnGoal', l:'ဂိုးပေါက်တည့်မှု' },
-            { k:'cornerKicks', l:'ထောင့်ကန်ဘော' },
-            { k:'foulsCommitted', l:'ပြစ်ဒဏ်' },
-            { k:'yellowCards', l:'အဝါကတ်' },
-            { k:'redCards', l:'အနီကတ်' }
-        ];
+        const t1 = bs.teams[0], t2 = bs.teams[1], hSt = t1.team.id === match.homeTeam.team.id ? t1.statistics : t2.statistics, aSt = t1.team.id === match.homeTeam.team.id ? t2.statistics : t1.statistics;
+        const keys = [{ k:'possessionPct', l:'ဘောလုံးပိုင်ဆိုင်မှု (%)' }, { k:'shotsSummary', l:'ဂိုးကန်သွင်းမှု' }, { k:'shotsOnTarget', a:'shotsOnGoal', l:'ဂိုးပေါက်တည့်မှု' }, { k:'cornerKicks', l:'ထောင့်ကန်ဘော' }, { k:'foulsCommitted', l:'ပြစ်ဒဏ်' }, { k:'yellowCards', l:'အဝါကတ်' }, { k:'redCards', l:'အနီကတ်' }];
         let statsHtml = '';
         keys.forEach(({k,a,l}) => {
-            const hO = hSt.find(x=>x.name===k||(a&&x.name===a));
-            const aO = aSt.find(x=>x.name===k||(a&&x.name===a));
-            if (!hO||!aO) return;
-            const hV = parseFloat(hO.displayValue)||0, aV = parseFloat(aO.displayValue)||0;
-            const tot = hV+aV || 1;
-            const hPct = (hV/tot)*100, aPct=(aV/tot)*100;
-            statsHtml += `
-            <div class="mb-5">
-                <div class="flex justify-between text-[12px] font-bold text-slate-600 dark:text-slate-300 mb-1.5">
-                    <span>${hO.displayValue}</span><span class="text-[10px] text-slate-400">${l}</span><span>${aO.displayValue}</span>
-                </div>
-                <div class="flex h-2 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-                    <div class="h-full bg-blue-500" style="width:${hPct}%"></div>
-                    <div class="h-full bg-red-500" style="width:${aPct}%"></div>
-                </div>
-            </div>`;
+            const hO = hSt.find(x=>x.name===k||(a&&x.name===a)), aO = aSt.find(x=>x.name===k||(a&&x.name===a)); if (!hO||!aO) return;
+            const hV = parseFloat(hO.displayValue)||0, aV = parseFloat(aO.displayValue)||0, tot = hV+aV || 1, hPct = (hV/tot)*100, aPct=(aV/tot)*100;
+            statsHtml += `<div class="mb-5"><div class="flex justify-between text-[12px] font-bold text-slate-600 dark:text-slate-300 mb-1.5"><span>${hO.displayValue}</span><span class="text-[10px] text-slate-400">${l}</span><span>${aO.displayValue}</span></div><div class="flex h-2 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-blue-500" style="width:${hPct}%"></div><div class="h-full bg-red-500" style="width:${aPct}%"></div></div></div>`;
         });
         cont.innerHTML = headerHtml + `<div class="p-6 pt-5 animate-fade-up">${statsHtml||'<div class="text-center text-[12px] font-bold text-slate-400 py-6">Stats မရရှိနိုင်သေးပါ</div>'}</div>`;
-    } catch {
-        cont.innerHTML = headerHtml + `<div class="p-8 text-center text-slate-400 font-bold text-[12px]">ဒီပွဲ Stats မရရှိနိုင်သေးပါ</div>`;
-    }
+    } catch { cont.innerHTML = headerHtml + `<div class="p-8 text-center text-slate-400 font-bold text-[12px]">ဒီပွဲ Stats မရရှိနိုင်သေးပါ</div>`; }
 }
 function closeStatsModal() {
-    const modal = document.getElementById('stats-modal');
-    const content = document.getElementById('stats-modal-content');
-    modal.classList.add('opacity-0');
-    content.classList.add('translate-y-full');
-    content.classList.remove('translate-y-0');
+    const modal = document.getElementById('stats-modal'), content = document.getElementById('stats-modal-content');
+    modal.classList.add('opacity-0'); content.classList.add('translate-y-full'); content.classList.remove('translate-y-0');
     setTimeout(() => modal.classList.add('hidden'), 300);
 }
 
@@ -914,136 +772,82 @@ function renderManUtdBanner(match) {
     const banner = document.getElementById('man-utd-banner');
     if (!match) { banner.classList.add('hidden'); if(manUtdCountdownTimer) clearInterval(manUtdCountdownTimer); return; }
     banner.classList.remove('hidden');
-    
-    const isHome = match.homeTeam.team.name.includes('Manchester United');
-    const opp = isHome ? match.awayTeam.team : match.homeTeam.team;
-    
-    document.getElementById('mu-opponent-logo').src = opp.logo || '';
-    document.getElementById('mu-opponent-name').textContent = opp.name.substring(0,12);
+    const isHome = match.homeTeam.team.name.includes('Manchester United'), opp = isHome ? match.awayTeam.team : match.homeTeam.team;
+    document.getElementById('mu-opponent-logo').src = opp.logo || ''; document.getElementById('mu-opponent-name').textContent = opp.name.substring(0,12);
     
     const updateTime = () => {
         const dist = match.date.getTime() - Date.now();
         if (dist < 0) { document.getElementById('mu-countdown').innerHTML = `<span class="text-red-500">LIVE NOW</span>`; return; }
-        const d = Math.floor(dist / 86400000); const h = Math.floor((dist % 86400000) / 3600000); const m = Math.floor((dist % 3600000) / 60000); const s = Math.floor((dist % 60000) / 1000);
+        const d = Math.floor(dist / 86400000), h = Math.floor((dist % 86400000) / 3600000), m = Math.floor((dist % 3600000) / 60000), s = Math.floor((dist % 60000) / 1000);
         document.getElementById('mu-countdown').innerHTML = `<div class="flex flex-col items-center"><span>${d}</span><span class="text-[8px]">Days</span></div><div>:</div><div class="flex flex-col items-center"><span>${h}</span><span class="text-[8px]">Hrs</span></div><div>:</div><div class="flex flex-col items-center"><span>${m}</span><span class="text-[8px]">Min</span></div><div>:</div><div class="flex flex-col items-center"><span class="text-red-400">${s}</span><span class="text-[8px]">Sec</span></div>`;
     };
-    if (manUtdCountdownTimer) clearInterval(manUtdCountdownTimer);
-    updateTime(); manUtdCountdownTimer = setInterval(updateTime, 1000);
+    if (manUtdCountdownTimer) clearInterval(manUtdCountdownTimer); updateTime(); manUtdCountdownTimer = setInterval(updateTime, 1000);
 }
 
 async function fetchStandings(leagueId) {
     const cont = document.getElementById('standings-container');
     cont.innerHTML = `<div class="flex flex-col items-center justify-center py-12 text-slate-500"><div class="loader mb-3"></div><span class="text-[12px] font-bold">Livey 🦊 က ဇယားကို ယူဆောင်လာပါပြီ...</span></div>`;
     try {
-        const res = await fetch(`https://site.api.espn.com/apis/v2/sports/soccer/${leagueId}/standings`);
-        const data = await res.json();
-        const entries = data.children[0].standings.entries;
+        const res = await fetch(`https://site.api.espn.com/apis/v2/sports/soccer/${leagueId}/standings`), data = await res.json(), entries = data.children[0].standings.entries;
         let html = `<table class="w-full text-left text-[12px]"><thead class="bg-slate-100 dark:bg-slate-800 text-slate-500"><tr><th class="py-2.5 pl-3">#</th><th>Club</th><th class="text-center">MP</th><th class="text-center">+/-</th><th class="py-2.5 pr-3 text-center">Pts</th></tr></thead><tbody class="divide-y divide-slate-100 dark:divide-slate-800">`;
         entries.forEach(e => {
             const isUtd = e.team.name.includes('Manchester United');
             html += `<tr class="${isUtd?'bg-red-50 dark:bg-red-900/20 text-red-600':''}"><td class="py-3 pl-3 text-slate-400">${e.team.rank}</td><td class="py-3 font-bold flex items-center gap-2"><img src="${e.team.logos?.[0]?.href||''}" class="w-5 h-5 object-contain"><span class="truncate max-w-[100px]">${e.team.shortDisplayName}</span></td><td class="py-3 text-center text-slate-500">${e.stats.find(s=>s.name==='gamesPlayed')?.displayValue}</td><td class="py-3 text-center text-slate-500">${e.stats.find(s=>s.name==='pointDifferential')?.displayValue}</td><td class="py-3 pr-3 text-center font-black">${e.stats.find(s=>s.name==='points')?.displayValue}</td></tr>`;
         });
         cont.innerHTML = html + `</tbody></table>`;
-    } catch {
-        cont.innerHTML = `<div class="py-12 text-center text-[12px] text-slate-500">ဇယား မရရှိနိုင်သေးပါ</div>`;
-    }
+    } catch { cont.innerHTML = `<div class="py-12 text-center text-[12px] text-slate-500">ဇယား မရရှိနိုင်သေးပါ</div>`; }
 }
 
 async function fetchMatches(isManual=false) {
-    if (isFetching && !isManual) return;
-    isFetching = true;
-    if (isManual) {
-        const icon = document.getElementById('refresh-icon');
-        icon.style.animation = 'spin 0.8s linear infinite';
-        setTimeout(()=>icon.style.animation='',1000);
-    }
+    if (isFetching && !isManual) return; isFetching = true;
+    if (isManual) { const icon = document.getElementById('refresh-icon'); icon.style.animation = 'spin 0.8s linear infinite'; setTimeout(()=>icon.style.animation='',1000); }
 
-    // ကလပ်အသင်းများနှင့် နိုင်ငံတကာပြိုင်ပွဲများ အစုံအလင် (World Cup Qualifiers, Nations League, Friendlies)
-    const leagues = [
-        'eng.1','uefa.champions','uefa.europa','ita.1','esp.1','ger.1','fra.1','eng.fa','eng.2','ksa.1','usa.1','afc.champions',
-        'uefa.nations', 'fifa.worldq.uefa', 'fifa.worldq.conmebol', 'fifa.worldq.afc', 'fifa.worldq.concacaf', 'fifa.worldq.caf', 'fifa.friendly'
-    ];
-    const now  = new Date();
-    const past = new Date(now.getTime()-2*86400000);
-    const next = new Date(now.getTime()+7*86400000);
+    const leagues = ['eng.1','uefa.champions','uefa.europa','ita.1','esp.1','ger.1','fra.1','eng.fa','eng.2','ksa.1','usa.1','afc.champions','uefa.nations', 'fifa.worldq.uefa', 'fifa.worldq.conmebol', 'fifa.worldq.afc', 'fifa.worldq.concacaf', 'fifa.worldq.caf', 'fifa.friendly'];
+    const now  = new Date(), past = new Date(now.getTime()-2*86400000), next = new Date(now.getTime()+7*86400000);
     const fmt  = d => `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
 
     try {
-        const results = await Promise.all(leagues.map(id => 
-            fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${id}/scoreboard?dates=${fmt(past)}-${fmt(next)}`)
-                .then(r=>r.ok?r.json().then(d=>({data:d,id})):null).catch(()=>null)
-        ));
-
+        const results = await Promise.all(leagues.map(id => fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${id}/scoreboard?dates=${fmt(past)}-${fmt(next)}`).then(r=>r.ok?r.json().then(d=>({data:d,id})):null).catch(()=>null)));
         let live=[], upcoming=[], finished=[];
 
         results.forEach(res=>{
             if (!res?.data?.events) return;
             res.data.events.forEach(ev=>{
-                const comp  = ev.competitions[0];
-                const state = comp.status.type.state;
-                const date  = new Date(ev.date);
-                const home  = comp.competitors.find(c=>c.homeAway==='home');
-                const away  = comp.competitors.find(c=>c.homeAway==='away');
+                const comp = ev.competitions[0], state = comp.status.type.state, date = new Date(ev.date);
+                const home = comp.competitors.find(c=>c.homeAway==='home'), away = comp.competitors.find(c=>c.homeAway==='away');
                 if (!home||!away) return;
                 
-                let homeGoals=[], awayGoals=[], homeReds=0, awayReds=0;
-                if (home.statistics) homeReds = parseInt(home.statistics.find(s=>s.name==='redCards')?.displayValue||0);
-                if (away.statistics) awayReds = parseInt(away.statistics.find(s=>s.name==='redCards')?.displayValue||0);
-                
-                const sName = comp.status.type.name||'';
-                const isPost2 = sName.includes('POSTPONED')||sName.includes('CANCELED');
+                let homeGoals=[], awayGoals=[], homeReds=parseInt(home.statistics?.find(s=>s.name==='redCards')?.displayValue||0), awayReds=parseInt(away.statistics?.find(s=>s.name==='redCards')?.displayValue||0);
+                const isPost2 = (comp.status.type.name||'').includes('POSTPONED')||(comp.status.type.name||'').includes('CANCELED');
 
                 if (comp.details) {
                     comp.details.forEach(det=>{
-                        const isRed = det.redCard||det.type?.text?.toLowerCase().includes('red card');
-                        if (isRed) { if (det.team?.id===home.team.id && homeReds===0) homeReds++; else if (det.team?.id===away.team.id && awayReds===0) awayReds++; }
+                        if (det.redCard||det.type?.text?.toLowerCase().includes('red card')) { if (det.team?.id===home.team.id && homeReds===0) homeReds++; else if (det.team?.id===away.team.id && awayReds===0) awayReds++; }
                         if (det.scoringPlay) {
-                            const time = (det.clock?.displayValue||'') + "'";
-                            let player= det.athletesInvolved?.[0]?.shortName || det.participants?.[0]?.athlete?.shortName || '';
-                            const og = det.type?.text?.toLowerCase().includes('own')?'(OG)':'';
-                            const gl = `${player} ${time}${og}`.trim();
-                            if (det.team?.id===home.team.id) homeGoals.push(gl);
-                            else if (det.team?.id===away.team.id) awayGoals.push(gl);
+                            const time = (det.clock?.displayValue||'') + "'", player= det.athletesInvolved?.[0]?.shortName || det.participants?.[0]?.athlete?.shortName || '', og = det.type?.text?.toLowerCase().includes('own')?'(OG)':'', gl = `${player} ${time}${og}`.trim();
+                            if (det.team?.id===home.team.id) homeGoals.push(gl); else if (det.team?.id===away.team.id) awayGoals.push(gl);
                         }
                     });
                 }
 
-                const obj={
-                    id:ev.id, leagueId:res.id, leagueName:res.data.leagues[0].abbreviation||res.data.leagues[0].name,
-                    homeTeam:home, awayTeam:away, status:state, displayClock:comp.status.displayClock||comp.status.type.shortDetail,
-                    date, homeGoals, awayGoals, homeRedCards:homeReds, awayRedCards:awayReds, isPostponed:isPost2
-                };
+                const obj={ id:ev.id, leagueId:res.id, leagueName:res.data.leagues[0].abbreviation||res.data.leagues[0].name, homeTeam:home, awayTeam:away, status:state, displayClock:comp.status.displayClock||comp.status.type.shortDetail, date, homeGoals, awayGoals, homeRedCards:homeReds, awayRedCards:awayReds, isPostponed:isPost2 };
                 globalMatchesMap[ev.id]=obj;
 
-                if (isPost2) { /* hidden */ }
-                else if (state==='in') live.push(obj);
-                else if (state==='post' && date<=now && date>=past) finished.push(obj);
-                else if (date<next) upcoming.push(obj);
+                if (isPost2) { /* hidden */ } else if (state==='in') live.push(obj); else if (state==='post' && date<=now && date>=past) finished.push(obj); else if (date<next) upcoming.push(obj);
             });
         });
 
         if (!isManual && live.length>0) checkGoals(live);
-
         live.sort((a,b)=>a.date-b.date); upcoming.sort((a,b)=>a.date-b.date); finished.sort((a,b)=>b.date-a.date);
-        const nextMU = upcoming.find(m => m.homeTeam.team.name.includes('Manchester United') || m.awayTeam.team.name.includes('Manchester United'));
-        renderManUtdBanner(nextMU);
+        renderManUtdBanner(upcoming.find(m => m.homeTeam.team.name.includes('Manchester United') || m.awayTeam.team.name.includes('Manchester United')));
 
         allCachedMatches={live,upcoming,finished};
-        renderDateSelector();
-        filterAndRenderMatches();
-    } catch(e) {
-        console.error(e);
-    } finally {
-        isFetching=false;
-    }
+        renderDateSelector(); filterAndRenderMatches(); renderHomeTopMatches();
+    } catch(e) { console.error(e); } finally { isFetching=false; }
 }
 
 // --- Init ---
-document.addEventListener('DOMContentLoaded', () => {
-    fetchMatches();
-    setInterval(() => fetchMatches(), 90000);
-    setTimeout(showWelcomeModal, 2000);
-});
+document.addEventListener('DOMContentLoaded', () => { fetchMatches(); setInterval(() => fetchMatches(), 90000); setTimeout(showWelcomeModal, 2000); });
 </script>
 </body>
 </html>

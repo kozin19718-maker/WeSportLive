@@ -67,9 +67,7 @@
             90% { opacity: 0.08; }
             100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; }
         }
-        .dark @keyframes float-up {
-            10% { opacity: 0.15; } 90% { opacity: 0.15; }
-        }
+        .dark @keyframes float-up { 10% { opacity: 0.15; } 90% { opacity: 0.15; } }
         .bg-particle { position: fixed; pointer-events: none; z-index: -1; opacity: 0; animation: float-up linear infinite; }
 
         .animate-fade-up  { animation: fadeSlideUp .4s ease-out both; }
@@ -175,6 +173,10 @@
             <div class="flex items-center space-x-4"><div class="w-10 h-10 bg-blue-100 dark:bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-600"><i class="fas fa-user-plus text-lg"></i></div><span class="font-bold text-[13px]">1XBET အကောင့်ဖွင့်မယ်</span></div>
             <i class="fas fa-chevron-right text-slate-400 text-xs"></i>
         </a>
+        <a href="https://reffpa.com/L?tag=d_5044128m_70865c_&site=5044128&ad=70865" target="_top" class="glass-card flex items-center justify-between p-4 rounded-2xl active:scale-95 transition">
+            <div class="flex items-center space-x-4"><div class="w-10 h-10 bg-indigo-100 dark:bg-indigo-500/20 rounded-xl flex items-center justify-center text-indigo-600"><i class="fas fa-download text-lg"></i></div><span class="font-bold text-[13px]">1XBET App ဒေါင်းရန်</span></div>
+            <i class="fas fa-chevron-right text-slate-400 text-xs"></i>
+        </a>
         <a href="https://t.me/WinExpress99" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl active:scale-95 transition">
             <div class="flex items-center space-x-4"><div class="w-10 h-10 bg-green-100 dark:bg-green-500/20 rounded-xl flex items-center justify-center text-green-600"><i class="fas fa-wallet text-lg"></i></div><span class="font-bold text-[13px]">1XBET ငွေသွင်း/ထုတ်</span></div>
             <i class="fas fa-chevron-right text-slate-400 text-xs"></i>
@@ -266,6 +268,15 @@
             <a href="https://t.me/WinExpress99" target="_blank" class="glass-card rounded-2xl py-4 flex flex-col items-center justify-center text-slate-800 dark:text-white">
                 <i class="fas fa-wallet text-2xl mb-2 text-brand-gold"></i>
                 <span class="text-[12px] font-black text-center">1XBET<br>ငွေသွင်း/ထုတ်</span>
+            </a>
+            <a href="https://reffpa.com/L?tag=d_5044128m_70865c_&site=5044128&ad=70865" target="_top" class="col-span-2 glass-card rounded-2xl py-4 flex flex-col items-center justify-center text-slate-800 dark:text-white bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border-blue-500/20">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-download text-3xl text-blue-500 animate-bounce"></i>
+                    <div>
+                        <span class="text-[14px] font-black block">1XBET App တိုက်ရိုက်ဒေါင်းရန်</span>
+                        <span class="text-[10px] text-slate-500 font-bold">100% Bonus - Promo: ZINXBET</span>
+                    </div>
+                </div>
             </a>
         </div>
 
@@ -382,6 +393,9 @@
             <div class="flex items-center space-x-4"><div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full flex items-center justify-center text-xl"><i class="fas fa-arrow-down"></i></div><div class="text-left"><h4 class="font-black text-[14px] text-slate-900 dark:text-white">App ကို ဖုန်းထဲထည့်မယ်</h4><p class="text-[11px] font-bold text-slate-500">Home Screen ကနေ အလွယ်တကူ ဝင်ကြည့်ရန်</p></div></div><i class="fas fa-chevron-right text-slate-400"></i>
         </button>
         <div class="grid grid-cols-1 gap-3">
+            <a href="https://reffpa.com/L?tag=d_5044128m_70865c_&site=5044128&ad=70865" target="_top" class="glass-card flex items-center justify-between p-4 rounded-2xl active:scale-95 transition">
+                <div class="flex items-center space-x-4"><div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-indigo-600"><i class="fas fa-cloud-download-alt text-xl"></i></div><span class="font-bold text-[14px]">1XBET App ဒေါင်းရန်</span></div><i class="fas fa-chevron-right text-slate-400"></i>
+            </a>
             <a href="https://t.me/WinExpress99" target="_blank" class="glass-card flex items-center justify-between p-4 rounded-2xl active:scale-95 transition">
                 <div class="flex items-center space-x-4"><div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-blue-600"><i class="fas fa-comment-dots text-xl"></i></div><span class="font-bold text-[14px]">Agent ကို စကားပြောမယ်</span></div><i class="fas fa-chevron-right text-slate-400"></i>
             </a>
@@ -463,12 +477,19 @@
 </div>
 
 <script>
-// --- State & Variables ---
+// --- State & Variables (With 5 AM Global Match Day Logic) ---
 let allCachedMatches = { live: [], upcoming: [], finished: [] };
 let globalMatchesMap = {};
 let previousScores = {};
-const todayObj = new Date();
-let currentSelectedDate = `${todayObj.getFullYear()}-${String(todayObj.getMonth()+1).padStart(2,'0')}-${String(todayObj.getDate()).padStart(2,'0')}`;
+
+// မနက် ၅ နာရီအထိကို ဒီနေ့ (Today) လို့ သတ်မှတ်ရန် တွက်ချက်မှု (Global Date Shift)
+function getMatchDayString(dateObj) {
+    const d = new Date(dateObj.getTime() - 5 * 3600000); // Shift back by 5 hours
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+const todayShifted = new Date(Date.now() - 5 * 3600000);
+let currentSelectedDate = `${todayShifted.getFullYear()}-${String(todayShifted.getMonth()+1).padStart(2,'0')}-${String(todayShifted.getDate()).padStart(2,'0')}`;
+
 let notifications = [];
 let notifPanelOpen = false;
 let searchQuery = '';
@@ -606,9 +627,10 @@ function checkGoals(liveMatches) {
 
 // --- Date Selector ---
 function renderDateSelector() {
-    const container = document.getElementById('date-selector'), today = new Date(), dates = [{ label:'အားလုံး', value:'all' }];
+    const container = document.getElementById('date-selector'), dates = [{ label:'အားလုံး', value:'all' }];
+    const baseDate = new Date(Date.now() - 5 * 3600000);
     for (let i=-1; i<=7; i++) {
-        const d = new Date(today); d.setDate(today.getDate()+i);
+        const d = new Date(baseDate); d.setDate(baseDate.getDate()+i);
         const val = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
         let label = i===-1?'Yesterday':i===0?'Today':i===1?'Tomorrow':d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
         dates.push({ label, value:val });
@@ -635,10 +657,14 @@ function renderCountdown(matchId, targetDate) {
     countdownTimers[matchId] = setTimeout(() => renderCountdown(matchId, targetDate), 1000);
 }
 
-// --- Render Home Top Matches ---
+// --- Render Home Top Matches (5 AM Logic Included) ---
 function renderHomeTopMatches() {
     const container = document.getElementById('home-top-matches'); if (!container) return;
-    let matches = [...allCachedMatches.live, ...allCachedMatches.upcoming].slice(0, 4);
+    
+    let cutoff = new Date();
+    if (cutoff.getHours() < 5) { cutoff.setHours(5, 0, 0, 0); } else { cutoff.setDate(cutoff.getDate() + 1); cutoff.setHours(5, 0, 0, 0); }
+    let matches = [...allCachedMatches.live, ...allCachedMatches.upcoming].filter(m => m.date <= cutoff).slice(0, 10);
+    
     if (matches.length === 0) { container.innerHTML = `<div class="w-full text-center py-6 text-slate-500 text-[11px] bg-slate-100 dark:bg-slate-800/50 rounded-2xl">ယနေ့အတွက် အထူးပွဲစဉ် မရှိသေးပါ</div>`; return; }
     
     const px = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
@@ -660,7 +686,8 @@ function renderHomeTopMatches() {
 
 // --- Match Renderers ---
 function filterAndRenderMatches() {
-    const filterByDate = arr => currentSelectedDate === 'all' ? arr : arr.filter(m => `${m.date.getFullYear()}-${String(m.date.getMonth()+1).padStart(2,'0')}-${String(m.date.getDate()).padStart(2,'0')}` === currentSelectedDate);
+    // Uses getMatchDayString to properly align midnight matches with the previous calendar day
+    const filterByDate = arr => currentSelectedDate === 'all' ? arr : arr.filter(m => getMatchDayString(m.date) === currentSelectedDate);
     const filterBySearch = arr => !searchQuery ? arr : arr.filter(m => m.homeTeam.team.name.toLowerCase().includes(searchQuery) || m.awayTeam.team.name.toLowerCase().includes(searchQuery) || m.leagueName.toLowerCase().includes(searchQuery));
 
     let live = filterBySearch(filterByDate(allCachedMatches.live)), upcoming = filterBySearch(filterByDate(allCachedMatches.upcoming)), finished = filterBySearch(filterByDate(allCachedMatches.finished));
